@@ -1,0 +1,33 @@
+name: tutility
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.16.2 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_launcher_icons: ^0.9.2
+  flutter_localizations:
+    sdk: flutter
+    version: ^0.0.0
+  json_annotation: ^4.5.0
+  package_info_plus: ^1.4.2
+  shared_preferences: ^2.0.15
+  url_launcher: ^6.1.2
+  webview_flutter: ^3.0.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^1.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/get_timetable.js
+
+flutter_icons:
+  ios: true
+  image_path: 'assets/icon_ios.png'
