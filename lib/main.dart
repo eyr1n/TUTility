@@ -16,12 +16,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'TUTility',
-        localizationsDelegates: GlobalMaterialLocalizations.delegates,
-        supportedLocales: const [Locale('ja')],
-        theme: ThemeData(
-          primarySwatch: Colors.red,
-        ),
-        home: const TUTilityAppBar());
+      title: 'TUTility',
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
+      supportedLocales: const [Locale('ja')],
+      theme: ThemeData(
+        primarySwatch: Colors.red,
+      ),
+      home: const TUTilityAppBar(),
+      debugShowCheckedModeBanner: false,
+    );
   }
 }
