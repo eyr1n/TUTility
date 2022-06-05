@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 
 import '../utils/palette.dart';
 import '../utils/tile_data.dart';
@@ -98,7 +98,7 @@ class TimetableTile extends StatelessWidget {
                         TextButton(
                           child: const Text("シラバス"),
                           onPressed: () {
-                            launchUrl(Uri.parse(tileData.syllabus));
+                            launch(tileData.syllabus);
                           },
                         ),
                         TextButton(
