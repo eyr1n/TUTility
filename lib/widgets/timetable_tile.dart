@@ -5,7 +5,7 @@ import '../utils/palette.dart';
 import '../utils/tile_data.dart';
 
 class TimetableTile extends StatelessWidget {
-  const TimetableTile({Key? key, required this.tileData}) : super(key: key);
+  const TimetableTile({Key? key, this.tileData}) : super(key: key);
 
   final TileData? tileData;
 

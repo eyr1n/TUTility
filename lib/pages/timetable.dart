@@ -94,20 +94,16 @@ class _TimetablePageState extends State<TimetablePage> {
                             Center(child: Text('金')),
                           ],
                         ),
-                        ...tiles.asMap().entries.map(
-                              (item) => TableRow(
-                                children: [
-                                  Text((item.key + 1).toString()),
-                                  ...item.value.map(
-                                    (item) {
-                                      return TimetableTile(
-                                        tileData: item,
-                                      );
-                                    },
-                                  )
-                                ],
-                              ),
-                            )
+                        for (int i = 0; i < 6; i++)
+                          TableRow(
+                            children: [
+                              Text('${(i + 1)}'),
+                              for (int j = 0; j < 5; j++)
+                                TimetableTile(
+                                  tileData: tiles[i][j],
+                                ),
+                            ],
+                          ),
                       ],
                     ),
                   ),

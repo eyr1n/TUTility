@@ -10,14 +10,14 @@ final List<Widget> _pages = <Widget>[
   const MiscPage(),
 ];
 
-class TUTilityAppBar extends StatefulWidget {
-  const TUTilityAppBar({Key? key}) : super(key: key);
+class TUTilityNavBar extends StatefulWidget {
+  const TUTilityNavBar({Key? key}) : super(key: key);
 
   @override
-  State<TUTilityAppBar> createState() => _TUTilityAppBarState();
+  State<TUTilityNavBar> createState() => _TUTilityNavBarState();
 }
 
-class _TUTilityAppBarState extends State<TUTilityAppBar> {
+class _TUTilityNavBarState extends State<TUTilityNavBar> {
   int _selectedIndex = 0;
 
   @override
