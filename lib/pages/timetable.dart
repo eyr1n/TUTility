@@ -72,9 +72,9 @@ class _TimetablePageState extends State<TimetablePage> {
       ),
       body: getDate.isNotEmpty
           ? SingleChildScrollView(
-              child: Align(
+              child: Container(
                 alignment: Alignment.center,
-                child: ConstrainedBox(
+                child: Container(
                   constraints: const BoxConstraints(
                     maxWidth: 640,
                   ),
