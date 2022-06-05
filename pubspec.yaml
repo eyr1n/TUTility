@@ -1,6 +1,6 @@
 name: tutility
 publish_to: 'none'
-version: 1.1.4+4
+version: 1.1.5+5
 
 environment:
   sdk: '>=2.16.2 <3.0.0'
@@ -8,6 +8,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_custom_tabs: ^1.0.4
   flutter_launcher_icons: ^0.9.2
   flutter_localizations:
     sdk: flutter
@@ -15,7 +16,6 @@ dependencies:
   json_annotation: ^4.5.0
   package_info_plus: ^1.4.2
   shared_preferences: ^2.0.15
-  url_launcher: ^6.1.2
   webview_flutter: ^3.0.4
 
 dev_dependencies:

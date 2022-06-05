@@ -6,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../widgets/timetable_tile.dart';
 import 'get_timetable.dart';
-
 import '../utils/tile_data.dart';
 
 class TimetablePage extends StatefulWidget {
@@ -19,6 +18,7 @@ class TimetablePage extends StatefulWidget {
 class _TimetablePageState extends State<TimetablePage> {
   List<List<TileData?>> tiles = [];
   String getDate = '';
+  String noTimetable = '';
 
   void _loadTimetable() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -33,6 +33,10 @@ class _TimetablePageState extends State<TimetablePage> {
           getDate = DateFormat('y年M月d日').format(parsed);
         });
       }
+    } else {
+      setState(() {
+        noTimetable = '右上のボタンから時間割を取得できます';
+      });
     }
   }
 
@@ -65,53 +69,61 @@ class _TimetablePageState extends State<TimetablePage> {
       ),
       body: getDate.isNotEmpty
           ? SingleChildScrollView(
-              child: Column(
-                children: [
-                  Container(
-                    width: double.infinity,
-                    margin: const EdgeInsets.all(8),
-                    child: Text(
-                      '取得日: ' + getDate,
-                      textAlign: TextAlign.right,
-                    ),
+              child: Container(
+                alignment: Alignment.center,
+                child: Container(
+                  constraints: const BoxConstraints(
+                    maxWidth: 640,
                   ),
-                  Container(
-                    margin: const EdgeInsets.all(8),
-                    child: Table(
-                      columnWidths: const {
-                        0: IntrinsicColumnWidth(),
-                      },
-                      defaultVerticalAlignment:
-                          TableCellVerticalAlignment.middle,
-                      children: <TableRow>[
-                        const TableRow(
-                          children: [
-                            Center(),
-                            Center(child: Text('月')),
-                            Center(child: Text('火')),
-                            Center(child: Text('水')),
-                            Center(child: Text('木')),
-                            Center(child: Text('金')),
+                  child: Column(
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        margin: const EdgeInsets.all(8),
+                        child: Text(
+                          '取得日: ' + getDate,
+                          textAlign: TextAlign.right,
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.all(8),
+                        child: Table(
+                          columnWidths: const {
+                            0: IntrinsicColumnWidth(),
+                          },
+                          defaultVerticalAlignment:
+                              TableCellVerticalAlignment.middle,
+                          children: <TableRow>[
+                            const TableRow(
+                              children: [
+                                Center(),
+                                Center(child: Text('月')),
+                                Center(child: Text('火')),
+                                Center(child: Text('水')),
+                                Center(child: Text('木')),
+                                Center(child: Text('金')),
+                              ],
+                            ),
+                            for (int i = 0; i < 6; i++)
+                              TableRow(
+                                children: [
+                                  Text('${(i + 1)}'),
+                                  for (int j = 0; j < 5; j++)
+                                    TimetableTile(
+                                      tileData: tiles[i][j],
+                                    ),
+                                ],
+                              ),
                           ],
                         ),
-                        for (int i = 0; i < 6; i++)
-                          TableRow(
-                            children: [
-                              Text('${(i + 1)}'),
-                              for (int j = 0; j < 5; j++)
-                                TimetableTile(
-                                  tileData: tiles[i][j],
-                                ),
-                            ],
-                          ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             )
-          : const Center(
-              child: Text('右上のボタンから時間割を取得できます'),
+          : Center(
+              child: Text(noTimetable),
             ),
     );
   }

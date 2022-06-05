@@ -41,9 +41,9 @@ class _TUTilityNavBarState extends State<TUTilityNavBar> {
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.red[800],
-        onTap: (int index) {
+        onTap: (int idx) {
           setState(() {
-            _selectedIndex = index;
+            _selectedIndex = idx;
           });
         },
         type: BottomNavigationBarType.fixed,

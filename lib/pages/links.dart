@@ -1,7 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 
 class LinkItem {
   final String name;
@@ -37,12 +35,7 @@ class LinksPage extends StatelessWidget {
                 (item) => ListTile(
                   title: Text(item.name),
                   onTap: () {
-                    if (Platform.isIOS) {
-                      launchUrl(Uri.parse(item.url));
-                    } else {
-                      launchUrl(Uri.parse(item.url),
-                          mode: LaunchMode.externalApplication);
-                    }
+                    launch(item.url);
                   },
                 ),
               )
