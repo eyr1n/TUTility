@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../widgets/timetable_tile.dart';
+import '../widgets/timetable.dart';
 import 'get_timetable.dart';
 import '../utils/tile_data.dart';
 
@@ -43,6 +43,7 @@ class _TimetablePageState extends State<TimetablePage> {
   @override
   void initState() {
     super.initState();
+    print(noTimetable);
     setState(() {
       noTimetable = '';
     });
@@ -70,7 +71,7 @@ class _TimetablePageState extends State<TimetablePage> {
           ),
         ],
       ),
-      body: getDate.isNotEmpty
+      body: tiles.isNotEmpty
           ? SingleChildScrollView(
               child: Align(
                 alignment: Alignment.center,
@@ -88,38 +89,7 @@ class _TimetablePageState extends State<TimetablePage> {
                           textAlign: TextAlign.right,
                         ),
                       ),
-                      Container(
-                        margin: const EdgeInsets.all(8),
-                        child: Table(
-                          columnWidths: const {
-                            0: IntrinsicColumnWidth(),
-                          },
-                          defaultVerticalAlignment:
-                              TableCellVerticalAlignment.middle,
-                          children: <TableRow>[
-                            const TableRow(
-                              children: [
-                                Center(),
-                                Center(child: Text('月')),
-                                Center(child: Text('火')),
-                                Center(child: Text('水')),
-                                Center(child: Text('木')),
-                                Center(child: Text('金')),
-                              ],
-                            ),
-                            for (int i = 0; i < 6; i++)
-                              TableRow(
-                                children: [
-                                  Text('${(i + 1)}'),
-                                  for (int j = 0; j < 5; j++)
-                                    TimetableTile(
-                                      tileData: tiles[i][j],
-                                    ),
-                                ],
-                              ),
-                          ],
-                        ),
-                      ),
+                      Timetable(tiles: tiles)
                     ],
                   ),
                 ),

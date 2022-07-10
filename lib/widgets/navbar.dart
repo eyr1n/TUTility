@@ -1,17 +1,10 @@
 import 'package:flutter/material.dart';
-
-import '../pages/timetable.dart';
-import '../pages/links.dart';
-import '../pages/misc.dart';
-
-final List<Widget> _pages = <Widget>[
-  const TimetablePage(),
-  const LinksPage(),
-  const MiscPage(),
-];
+import 'package:tuple/tuple.dart';
 
 class TUTilityNavBar extends StatefulWidget {
-  const TUTilityNavBar({Key? key}) : super(key: key);
+  const TUTilityNavBar({Key? key, required this.items}) : super(key: key);
+
+  final List<Tuple2<BottomNavigationBarItem, Widget>> items;
 
   @override
   State<TUTilityNavBar> createState() => _TUTilityNavBarState();
@@ -23,22 +16,9 @@ class _TUTilityNavBarState extends State<TUTilityNavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages[_selectedIndex],
+      body: widget.items[_selectedIndex].item2,
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_month),
-            label: '時間割',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.language),
-            label: 'リンク',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.more_horiz),
-            label: 'その他',
-          ),
-        ],
+        items: widget.items.map((item) => item.item1).toList(),
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.red[800],
         onTap: (int idx) {
