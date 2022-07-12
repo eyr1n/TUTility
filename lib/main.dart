@@ -40,32 +40,40 @@ class TUTilityApp extends StatelessWidget {
       supportedLocales: const [Locale('ja')],
       locale: const Locale('ja'),
       theme: ThemeData(
-        primarySwatch: tutilityPalette,
+        useMaterial3: true,
+        colorSchemeSeed: Colors.red,
+        brightness: Brightness.light,
       ),
+      darkTheme: ThemeData(
+        useMaterial3: true,
+        colorSchemeSeed: Colors.red,
+        brightness: Brightness.dark,
+      ),
+      //themeMode: ThemeMode.system,
       home: const TUTilityNavBar(items: [
         Tuple2(
-          BottomNavigationBarItem(
+          NavigationDestination(
             icon: Icon(Icons.calendar_month),
             label: '時間割',
           ),
           TimetablePage(),
         ),
-        Tuple2(
-          BottomNavigationBarItem(
+        /* Tuple2(
+          NavigationDestination(
             icon: Icon(Icons.restaurant),
             label: '食堂',
           ),
           LinksPage(),
-        ),
+        ), */
         Tuple2(
-          BottomNavigationBarItem(
+          NavigationDestination(
             icon: Icon(Icons.language),
             label: 'リンク',
           ),
           LinksPage(),
         ),
         Tuple2(
-          BottomNavigationBarItem(
+          NavigationDestination(
             icon: Icon(Icons.more_horiz),
             label: 'その他',
           ),

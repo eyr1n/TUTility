@@ -3,8 +3,9 @@ import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
-import '../widgets/timetable.dart';
+import '../widgets/timetable/table.dart';
 import 'get_timetable.dart';
 import '../utils/tile_data.dart';
 
@@ -52,9 +53,36 @@ class _TimetablePageState extends State<TimetablePage> {
 
   @override
   Widget build(BuildContext context) {
+    var appBarHeight = AppBar().preferredSize.height;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('TUTility'),
+        title: Row(
+          children: [
+            Container(
+              child: SvgPicture.asset('assets/icon_appbar.svg'),
+              width: appBarHeight - 16,
+              height: appBarHeight - 16,
+              margin: EdgeInsets.all(8),
+              padding: EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onBackground
+                        .withOpacity(0.1),
+                    spreadRadius: 1,
+                    blurRadius: 1,
+                    offset: Offset(0, 1),
+                  ),
+                ],
+              ),
+            ),
+            const Text('TUTility')
+          ],
+        ),
         actions: [
           IconButton(
             tooltip: '時間割の取得',

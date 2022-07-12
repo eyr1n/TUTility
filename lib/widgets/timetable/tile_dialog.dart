@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 
-import '../utils/tile_data.dart';
+import '../../utils/tile_data.dart';
 
 class TimetableTileDialog extends StatelessWidget {
   const TimetableTileDialog({Key? key, required this.tileData})
