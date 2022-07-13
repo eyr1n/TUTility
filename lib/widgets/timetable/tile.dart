@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../../utils/palette.dart';
 import '../../utils/tile_data.dart';
-import 'tile_dialog.dart';
+import './tile_dialog.dart';
+import '../../utils/font_scaler.dart';
 
+@immutable
 class TimetableTile extends StatelessWidget {
   const TimetableTile(this.tileData, {Key? key}) : super(key: key);
 
@@ -23,27 +25,28 @@ class TimetableTile extends StatelessWidget {
               constraints: const BoxConstraints.expand(),
               decoration: BoxDecoration(
                 color: palette[tileData.id.hashCode % palette.length][100],
-                borderRadius: BorderRadius.circular(4),
                 border: Border.all(
                   color: palette[tileData.id.hashCode % palette.length][200]!,
                   width: 1,
                 ),
+                borderRadius: BorderRadius.circular(4),
               ),
               child: Text(
                 tileData.name,
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 3,
-                style: const TextStyle(
+                style: TextStyle(
                   height: 1.2,
                   color: Colors.black87,
+                  fontSize: 12.scale(context),
                 ),
               ),
             ),
             if (tileData.room.isNotEmpty)
               Container(
                 width: double.infinity,
-                height: 22,
+                height: 22.scale(context),
                 margin: const EdgeInsets.all(2),
                 padding: const EdgeInsets.all(2),
                 alignment: Alignment.center,
@@ -57,8 +60,8 @@ class TimetableTile extends StatelessWidget {
                   tileData.room,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 11,
+                  style: TextStyle(
+                    fontSize: 11.scale(context),
                     color: Colors.black87,
                   ),
                 ),
@@ -69,7 +72,7 @@ class TimetableTile extends StatelessWidget {
       onTap: () {
         showDialog(
           context: context,
-          builder: (context) => TimetableTileDialog(
+          builder: (context) => TimetableTileOnTapDialog(
             tileData: tileData,
           ),
         );

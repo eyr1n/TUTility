@@ -10,6 +10,7 @@ class MiscPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('その他'),
+        centerTitle: false,
       ),
       body: ListView(
         children: ListTile.divideTiles(

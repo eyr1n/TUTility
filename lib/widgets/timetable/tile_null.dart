@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+@immutable
 class TimetableTileNull extends StatelessWidget {
   const TimetableTileNull({Key? key}) : super(key: key);
 

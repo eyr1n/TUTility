@@ -3,8 +3,8 @@ import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 
 import '../../utils/tile_data.dart';
 
-class TimetableTileDialog extends StatelessWidget {
-  const TimetableTileDialog({Key? key, required this.tileData})
+class TimetableTileOnTapDialog extends StatelessWidget {
+  const TimetableTileOnTapDialog({Key? key, required this.tileData})
       : super(key: key);
 
   final TileData tileData;

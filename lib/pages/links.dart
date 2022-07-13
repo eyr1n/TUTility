@@ -26,6 +26,7 @@ class LinksPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('リンク'),
+        centerTitle: false,
       ),
       body: ListView(
         children: ListTile.divideTiles(

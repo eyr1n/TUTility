@@ -1,9 +1,12 @@
 import 'dart:convert';
+import 'dart:async';
 import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:tuple/tuple.dart';
+import 'package:tutility/utils/font_scaler.dart';
 
 import '../widgets/timetable/table.dart';
 import 'get_timetable.dart';
@@ -21,22 +24,18 @@ class _TimetablePageState extends State<TimetablePage> {
   String getDate = '';
   String noTimetable = '';
 
+  final _streamController = StreamController<Tuple2<String, String>>();
+
   void _loadTimetable() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? timetableJson = prefs.getString('timetable_json');
     String? timetableGetDate = prefs.getString('timetable_get_date');
 
     if (timetableGetDate != null && timetableJson != null) {
-      DateTime parsed = DateTime.parse(timetableGetDate).toLocal();
-      if (mounted) {
-        setState(() {
-          tiles = _parseTimetableJson(timetableJson);
-          getDate = DateFormat('y年M月d日').format(parsed);
-        });
-      }
+      _streamController.sink.add(Tuple2(timetableJson, timetableGetDate));
     } else {
       setState(() {
-        noTimetable = '右上のボタンから時間割を取得できます';
+        noTimetable = "右上のボタンから時間割を取得できます";
       });
     }
   }
@@ -44,16 +43,19 @@ class _TimetablePageState extends State<TimetablePage> {
   @override
   void initState() {
     super.initState();
-    print(noTimetable);
-    setState(() {
-      noTimetable = '';
-    });
     _loadTimetable();
+  }
+
+  @override
+  void dispose() {
+    _streamController.close();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     var appBarHeight = AppBar().preferredSize.height;
+
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -83,13 +85,15 @@ class _TimetablePageState extends State<TimetablePage> {
             const Text('TUTility')
           ],
         ),
+        centerTitle: false,
         actions: [
           IconButton(
             tooltip: '時間割の取得',
             onPressed: () async {
               await Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => GetTimetablePage(),
+                  builder: (context) =>
+                      GetTimetablePage(sink: _streamController.sink),
                   fullscreenDialog: true,
                 ),
               );
@@ -99,33 +103,45 @@ class _TimetablePageState extends State<TimetablePage> {
           ),
         ],
       ),
-      body: tiles.isNotEmpty
-          ? SingleChildScrollView(
-              child: Align(
-                alignment: Alignment.center,
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(
-                    maxWidth: 640,
-                  ),
-                  child: Column(
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        margin: const EdgeInsets.all(8),
-                        child: Text(
-                          '取得日: ' + getDate,
-                          textAlign: TextAlign.right,
-                        ),
+      body: StreamBuilder<Tuple2<String, String>>(
+        stream: _streamController.stream,
+        builder: (BuildContext context,
+            AsyncSnapshot<Tuple2<String, String>> snapshot) {
+          if (!snapshot.hasData) {
+            return Center(
+              child: Text(noTimetable),
+            );
+          }
+
+          DateTime parsed = DateTime.parse(snapshot.data!.item2).toLocal();
+
+          return SingleChildScrollView(
+            child: Align(
+              alignment: Alignment.center,
+              child: Container(
+                margin: EdgeInsets.all(8),
+                constraints: const BoxConstraints(
+                  maxWidth: 640,
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      margin: const EdgeInsets.all(8),
+                      child: Text(
+                        '取得日: ${DateFormat('y年M月d日').format(parsed)}',
+                        textAlign: TextAlign.right,
+                        style: TextStyle(fontSize: 11.scale(context)),
                       ),
-                      Timetable(tiles: tiles)
-                    ],
-                  ),
+                    ),
+                    Timetable(tiles: _parseTimetableJson(snapshot.data!.item1))
+                  ],
                 ),
               ),
-            )
-          : Center(
-              child: Text(noTimetable),
             ),
+          );
+        },
+      ),
     );
   }
 }

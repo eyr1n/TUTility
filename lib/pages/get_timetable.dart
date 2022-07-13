@@ -3,13 +3,16 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tuple/tuple.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 import '../utils/tile_data.dart';
 
 class GetTimetablePage extends StatelessWidget {
-  GetTimetablePage({Key? key}) : super(key: key);
+  GetTimetablePage({Key? key, required this.sink}) : super(key: key);
+
+  final StreamSink<Tuple2<String, String>> sink;
 
   final Completer<WebViewController> _controller =
       Completer<WebViewController>();
@@ -19,6 +22,7 @@ class GetTimetablePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('時間割の取得'),
+        centerTitle: false,
       ),
       body: WebView(
         initialUrl: 'https://kyomu.office.tut.ac.jp/portal/',
@@ -33,7 +37,7 @@ class GetTimetablePage extends StatelessWidget {
           JavascriptChannel(
             name: 'GetTimetable',
             onMessageReceived: (message) {
-              _getTimetableJson(context, message);
+              _getTimetableJson(context, message, sink);
             },
           )
         },
@@ -74,7 +78,8 @@ void _operateWebView(BuildContext context,
 }
 
 // JavaScriptから受け取ったJSONを加工・保存
-void _getTimetableJson(BuildContext context, JavascriptMessage message) async {
+void _getTimetableJson(BuildContext context, JavascriptMessage message,
+    StreamSink<Tuple2<String, String>> sink) async {
   List<String> day = ['月', '火', '水', '木', '金'];
 
   List<dynamic> json = jsonDecode(message.message);
@@ -121,6 +126,8 @@ void _getTimetableJson(BuildContext context, JavascriptMessage message) async {
   prefs.setString('timetable_json', jsonEncode(tiles));
   prefs.setString(
       'timetable_get_date', DateTime.now().toUtc().toIso8601String());
+
+  sink.add(Tuple2(jsonEncode(tiles), DateTime.now().toUtc().toIso8601String()));
 
   Navigator.of(context).pop();
   Navigator.of(context).pop();
