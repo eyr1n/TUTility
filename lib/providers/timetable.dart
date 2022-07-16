@@ -1,10 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:tutility/providers/timetable_visibility.dart';
 
 part 'timetable.g.dart';
 
@@ -53,13 +51,13 @@ class TimetableNotifier extends StateNotifier<Timetable?> {
   TimetableNotifier(Timetable? timetable) : super(timetable);
 
   Future<void> update(Timetable timetable) async {
-    (await prefs).setString('tutility_timetable', jsonEncode(timetable));
     state = timetable;
+    (await prefs).setString('tutility_timetable', jsonEncode(timetable));
   }
 
   Future<void> clear() async {
-    (await prefs).remove('tutility_timetable');
     state = null;
+    (await prefs).remove('tutility_timetable');
   }
 }
 

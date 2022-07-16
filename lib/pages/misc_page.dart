@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../providers/timetable.dart';
-import '../main.dart';
 
+@immutable
 class MiscPage extends ConsumerWidget {
   const MiscPage({Key? key}) : super(key: key);
 
@@ -22,23 +21,41 @@ class MiscPage extends ConsumerWidget {
           tiles: <ListTile>[
             ListTile(
               title: const Text('時間割をリセット'),
-              onTap: () async {
+              onTap: () {
                 showDialog(
                   context: context,
                   builder: (context) {
                     return AlertDialog(
-                      content: const Text("時間割をリセットしますか?"),
+                      content: const Text('時間割をリセットしますか?'),
                       actions: <TextButton>[
                         TextButton(
-                          child: const Text("いいえ"),
+                          child: const Text('いいえ'),
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
                         ),
                         TextButton(
-                          child: const Text("はい"),
-                          onPressed: () {
-                            _resetTimetable(context, ref);
+                          child: const Text('はい'),
+                          onPressed: () async {
+                            await ref.read(timetableProvider.notifier).clear();
+                            Navigator.of(context).pop();
+
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  content: const Text("時間割のリセットが完了しました"),
+                                  actions: <TextButton>[
+                                    TextButton(
+                                      child: const Text("閉じる"),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
                           },
                         ),
                       ],
@@ -63,26 +80,4 @@ class MiscPage extends ConsumerWidget {
       ),
     );
   }
-}
-
-void _resetTimetable(BuildContext context, WidgetRef ref) async {
-  ref.read(timetableProvider.notifier).clear();
-  Navigator.of(context).pop();
-
-  showDialog(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        content: const Text("時間割のリセットが完了しました"),
-        actions: <TextButton>[
-          TextButton(
-            child: const Text("閉じる"),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },
-  );
 }

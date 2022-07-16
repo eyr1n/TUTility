@@ -7,7 +7,9 @@
       Array.from(row.querySelectorAll(':scope > td'))
         .slice(1, 6)
         .map((col) =>
-          Array.from(col.querySelectorAll(':scope > div > div > div > span[id$="_lblSbjName"] > a')).map((item) => {
+          Array.from(
+            col.querySelectorAll(':scope > div > div > div:not(.cancel-done) > span[id$="_lblSbjName"] > a')
+          ).map((item) => {
             const url = new URL(item.href);
             if (!year) year = url.searchParams.get('lct_year');
             return url.searchParams.get('lct_cd');
