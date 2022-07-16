@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 
-class LinkItem {
+@immutable
+class _LinkItem {
   final String name;
   final String url;
 
-  const LinkItem({required this.name, required this.url});
+  const _LinkItem({required this.name, required this.url});
 }
 
-const List<LinkItem> _links = [
-  LinkItem(name: '大学ホームページ', url: 'https://www.tut.ac.jp/'),
-  LinkItem(name: '教務情報システム', url: 'https://kyomu.office.tut.ac.jp/portal/'),
-  LinkItem(
+const List<_LinkItem> _links = [
+  _LinkItem(name: '大学ホームページ', url: 'https://www.tut.ac.jp/'),
+  _LinkItem(name: '教務情報システム', url: 'https://kyomu.office.tut.ac.jp/portal/'),
+  _LinkItem(
       name: '休講情報・案内',
       url: 'https://kyomu.office.tut.ac.jp/portal/Public/Board/BoardList.aspx'),
-  LinkItem(name: 'TUT LMS', url: 'https://lms.imc.tut.ac.jp/'),
+  _LinkItem(name: 'TUT LMS', url: 'https://lms.imc.tut.ac.jp/'),
 ];
 
 class LinksPage extends StatelessWidget {
@@ -31,7 +32,7 @@ class LinksPage extends StatelessWidget {
         children: ListTile.divideTiles(
           context: context,
           tiles: _links
-              .map<ListTile>(
+              .map(
                 (item) => ListTile(
                   title: Text(item.name),
                   onTap: () {

@@ -1,11 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http/http.dart' as http;
-
 import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:http/http.dart' as http;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import '../providers/timetable.dart';
 import '../providers/timetable_visibility.dart';
@@ -57,8 +56,7 @@ class GetTimetablePage extends ConsumerWidget {
               'https://kyomu.office.tut.ac.jp/portal/StudentApp/Regist/RegistList.aspx') {
             String json = await controller.runJavascriptReturningResult(
                 await rootBundle.loadString('assets/get_timetable.js'));
-
-            await _getTimetableJson(context, ref, json);
+            await _updateTimetable(context, ref, json);
           }
         },
       ),
@@ -67,19 +65,19 @@ class GetTimetablePage extends ConsumerWidget {
 }
 
 // JavaScriptから受け取ったJSONを加工・保存
-Future<void> _getTimetableJson(
+Future<void> _updateTimetable(
     BuildContext context, WidgetRef ref, String json) async {
   final decoded = jsonDecode(json);
 
+  // シラバスのJSONを取得
   final allSyllabusesJson = await http.get(Uri.parse(
       'https://syllabus.rinrin.me/ja/${decoded["year"]}/all.min.json'));
   if (allSyllabusesJson.statusCode != 200) {
     return;
   }
-
   Map<String, dynamic> allSyllabuses = jsonDecode(allSyllabusesJson.body);
 
-  List<List<List<Subject>>> test = (decoded["timetable"] as List)
+  List<List<List<Subject>>> timetableList = (decoded["timetable"] as List)
       .map((row) => (row as List)
           .map(
             (col) => (col as List)
@@ -88,17 +86,15 @@ Future<void> _getTimetableJson(
           )
           .toList())
       .toList();
-
-  List<List<int?>> asdf = (decoded["timetable"] as List)
-      .map((e) => (e as List).map((e) => e.isNotEmpty ? 0 : null).toList())
+  List<List<int?>> visibilityList = timetableList
+      .map((e) => e.map((e) => e.isNotEmpty ? 0 : null).toList())
       .toList();
 
-  await ref
-      .read(timetableProvider.notifier)
-      .update(Timetable(list: test, lastUpdated: DateTime.now().toUtc()));
+  await ref.read(timetableProvider.notifier).update(
+      Timetable(list: timetableList, lastUpdated: DateTime.now().toUtc()));
   await ref
       .read(timetableVisibilityProvider.notifier)
-      .update(TimetableVisibility(list: asdf));
+      .update(TimetableVisibility(list: visibilityList));
 
   Navigator.of(context).pop();
   Navigator.of(context).pop();
@@ -107,10 +103,10 @@ Future<void> _getTimetableJson(
     context: context,
     builder: (context) {
       return AlertDialog(
-        content: const Text("時間割の取得が完了しました"),
+        content: const Text('時間割の取得が完了しました\n\nタイルの長押しで「科目」の切り替えや「非表示」ができます'),
         actions: <TextButton>[
           TextButton(
-            child: const Text("閉じる"),
+            child: const Text('閉じる'),
             onPressed: () {
               Navigator.of(context).pop();
             },

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../font_scaler.dart';
 import '../constants.dart';
+import '../font_scaler.dart';
 
 @immutable
 class TimetableWeekdayTile extends StatelessWidget {
-  const TimetableWeekdayTile(this.weekday, {Key? key}) : super(key: key);
+  const TimetableWeekdayTile({Key? key, required this.weekday})
+      : super(key: key);
 
   final int weekday;
 
@@ -14,22 +15,27 @@ class TimetableWeekdayTile extends StatelessWidget {
     int weekdayNow = DateTime.now().weekday;
 
     return Align(
-        alignment: Alignment.center,
-        child: Container(
-          margin: EdgeInsets.symmetric(vertical: 2.scale(context)),
-          padding: EdgeInsets.symmetric(
-              horizontal: 16.scale(context), vertical: 2.scale(context)),
-          decoration: weekdayNow == weekday
-              ? BoxDecoration(
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                  borderRadius: BorderRadius.circular(50),
-                )
-              : null,
-          child: Text(
-            weekdays[weekday],
-            style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: 13.scale(context)),
+      alignment: Alignment.center,
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 2.scale(context)),
+        padding: EdgeInsets.symmetric(
+          horizontal: 16.scale(context),
+          vertical: 2.scale(context),
+        ),
+        decoration: weekdayNow == weekday
+            ? BoxDecoration(
+                color: Theme.of(context).colorScheme.primaryContainer,
+                borderRadius: BorderRadius.circular(50),
+              )
+            : null,
+        child: Text(
+          weekdays[weekday],
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 13.scale(context),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

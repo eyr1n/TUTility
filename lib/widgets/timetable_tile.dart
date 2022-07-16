@@ -7,8 +7,6 @@ import '../constants.dart';
 import '../providers/timetable.dart';
 import '../providers/timetable_visibility.dart';
 
-List<String> day = ['月', '火', '水', '木', '金'];
-
 @immutable
 class TimetableTile extends ConsumerWidget {
   const TimetableTile({Key? key, required this.row, required this.col})
@@ -129,6 +127,7 @@ class TimetableTile extends ConsumerWidget {
   }
 }
 
+@immutable
 class _SubjectDetailsDialog extends StatelessWidget {
   const _SubjectDetailsDialog({Key? key, required this.subject})
       : super(key: key);
@@ -169,6 +168,7 @@ class _SubjectDetailsDialog extends StatelessWidget {
   }
 }
 
+@immutable
 class _SubjectSelectorDialog extends ConsumerWidget {
   const _SubjectSelectorDialog({Key? key, required this.row, required this.col})
       : super(key: key);
@@ -190,7 +190,7 @@ class _SubjectSelectorDialog extends ConsumerWidget {
     }
 
     return SimpleDialog(
-      title: Text('${day[col]}曜 ${row + 1}限 の授業を選択'),
+      title: Text('${weekdays[col + 1]}曜 ${row + 1}限 の科目を選択'),
       children: [
         ...subjects.asMap().entries.map<Widget>((item) {
           return SimpleDialogOption(
