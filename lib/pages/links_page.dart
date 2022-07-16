@@ -8,14 +8,13 @@ class LinkItem {
   const LinkItem({required this.name, required this.url});
 }
 
-const _links = <LinkItem>[
+const List<LinkItem> _links = [
   LinkItem(name: '大学ホームページ', url: 'https://www.tut.ac.jp/'),
   LinkItem(name: '教務情報システム', url: 'https://kyomu.office.tut.ac.jp/portal/'),
   LinkItem(
       name: '休講情報・案内',
       url: 'https://kyomu.office.tut.ac.jp/portal/Public/Board/BoardList.aspx'),
   LinkItem(name: 'TUT LMS', url: 'https://lms.imc.tut.ac.jp/'),
-  LinkItem(name: 'Google Classroom', url: 'https://classroom.google.com/'),
 ];
 
 class LinksPage extends StatelessWidget {

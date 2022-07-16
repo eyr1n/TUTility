@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-class MiscPage extends StatelessWidget {
+import '../providers/timetable.dart';
+import '../main.dart';
+
+class MiscPage extends ConsumerWidget {
   const MiscPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('その他'),
@@ -34,7 +38,7 @@ class MiscPage extends StatelessWidget {
                         TextButton(
                           child: const Text("はい"),
                           onPressed: () {
-                            _resetTimetable(context);
+                            _resetTimetable(context, ref);
                           },
                         ),
                       ],
@@ -61,10 +65,8 @@ class MiscPage extends StatelessWidget {
   }
 }
 
-void _resetTimetable(BuildContext context) async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.remove('timetable_json');
-  prefs.remove('timetable_date');
+void _resetTimetable(BuildContext context, WidgetRef ref) async {
+  ref.read(timetableProvider.notifier).clear();
   Navigator.of(context).pop();
 
   showDialog(

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../../utils/font_scaler.dart';
+import '../font_scaler.dart';
+import '../constants.dart';
 
 @immutable
 class TimetableWeekdayTile extends StatelessWidget {
   const TimetableWeekdayTile(this.weekday, {Key? key}) : super(key: key);
 
   final int weekday;
-  static const List<String> weekdays = ['日', '月', '火', '水', '木', '金', '土'];
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class TimetableWeekdayTile extends StatelessWidget {
           child: Text(
             weekdays[weekday],
             style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: 12.scale(context)),
+                fontWeight: FontWeight.bold, fontSize: 13.scale(context)),
           ),
         ));
   }
