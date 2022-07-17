@@ -1,4 +1,4 @@
-(() => {
+{
   let year = null;
 
   const timetable = Array.from(document.querySelectorAll('#tblLecture > tbody > tr'))
@@ -17,8 +17,10 @@
         )
     );
 
-  return JSON.stringify({
-    year,
-    timetable,
-  });
-})();
+  GetTimetable.postMessage(
+    JSON.stringify({
+      year,
+      timetable,
+    })
+  );
+}

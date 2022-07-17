@@ -25,6 +25,14 @@ class GetTimetablePage extends ConsumerWidget {
       body: WebView(
         initialUrl: 'https://kyomu.office.tut.ac.jp/portal/',
         javascriptMode: JavascriptMode.unrestricted,
+        javascriptChannels: {
+          JavascriptChannel(
+            name: 'GetTimetable',
+            onMessageReceived: (message) {
+              _updateTimetable(context, ref, message);
+            },
+          )
+        },
         onWebViewCreated: (controller) {
           _controller.complete(controller);
         },
@@ -54,9 +62,8 @@ class GetTimetablePage extends ConsumerWidget {
 
           if (url ==
               'https://kyomu.office.tut.ac.jp/portal/StudentApp/Regist/RegistList.aspx') {
-            String json = await controller.runJavascriptReturningResult(
+            await controller.runJavascript(
                 await rootBundle.loadString('assets/get_timetable.js'));
-            await _updateTimetable(context, ref, json);
           }
         },
       ),
@@ -66,8 +73,8 @@ class GetTimetablePage extends ConsumerWidget {
 
 // JavaScriptから受け取ったJSONを加工・保存
 Future<void> _updateTimetable(
-    BuildContext context, WidgetRef ref, String json) async {
-  final decoded = jsonDecode(json);
+    BuildContext context, WidgetRef ref, JavascriptMessage message) async {
+  final Map<String, dynamic> decoded = jsonDecode(message.message);
 
   // シラバスのJSONを取得
   final allSyllabusesJson = await http.get(Uri.parse(
@@ -75,9 +82,9 @@ Future<void> _updateTimetable(
   if (allSyllabusesJson.statusCode != 200) {
     return;
   }
-  Map<String, dynamic> allSyllabuses = jsonDecode(allSyllabusesJson.body);
+  final Map<String, dynamic> allSyllabuses = jsonDecode(allSyllabusesJson.body);
 
-  List<List<List<Subject>>> timetableList = (decoded["timetable"] as List)
+  final List<List<List<Subject>>> timetableList = (decoded["timetable"] as List)
       .map((row) => (row as List)
           .map(
             (col) => (col as List)
@@ -86,7 +93,7 @@ Future<void> _updateTimetable(
           )
           .toList())
       .toList();
-  List<List<int?>> visibilityList = timetableList
+  final List<List<int?>> visibilityList = timetableList
       .map((e) => e.map((e) => e.isNotEmpty ? 0 : null).toList())
       .toList();
 
