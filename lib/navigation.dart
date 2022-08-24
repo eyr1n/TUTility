@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tutility/pages/canteen_page.dart';
 
 import 'pages/timetable_page.dart';
 import 'pages/links_page.dart';
@@ -19,6 +20,13 @@ const List<_NavigationItem> _items = [
       label: '時間割',
     ),
     page: TimetablePage(),
+  ),
+  _NavigationItem(
+    destination: NavigationDestination(
+      icon: Icon(Icons.restaurant),
+      label: '食堂',
+    ),
+    page: CanteenPage(),
   ),
   _NavigationItem(
     destination: NavigationDestination(
