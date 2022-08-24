@@ -1,11 +1,12 @@
 name: tutility
 publish_to: 'none'
-version: 1.2.0+10
+version: 1.2.1+11
 
 environment:
   sdk: '>=2.16.2 <3.0.0'
 
 dependencies:
+  connectivity_plus: ^2.3.6+1
   flutter:
     sdk: flutter
   flutter_custom_tabs: ^1.0.4

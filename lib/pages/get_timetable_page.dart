@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:http/http.dart' as http;
@@ -17,6 +18,29 @@ class GetTimetablePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      (Connectivity().checkConnectivity()).then((value) {
+        if (value == ConnectivityResult.none) {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                content: const Text('ネットワークに接続されていません'),
+                actions: <TextButton>[
+                  TextButton(
+                    child: const Text('閉じる'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        }
+      });
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('時間割の取得'),
