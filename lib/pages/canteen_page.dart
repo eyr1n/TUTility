@@ -39,6 +39,7 @@ class CanteenPage extends StatelessWidget {
       body: const WebView(
         initialUrl: 'https://tut-canteen-menu.rinrin.me/inapp',
         javascriptMode: JavascriptMode.unrestricted,
+        backgroundColor: Colors.transparent,
       ),
     );
   }
