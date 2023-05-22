@@ -59,7 +59,7 @@ class TimetableTile extends ConsumerWidget {
                     style: TextStyle(
                       height: 1.2,
                       color: Colors.black87,
-                      fontSize: 13.scale(context),
+                      fontSize: 12.scale(context),
                     ),
                   ),
                 ),
