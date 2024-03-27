@@ -13,8 +13,7 @@ import '../providers/timetable_visibility.dart';
 class GetTimetablePage extends ConsumerWidget {
   GetTimetablePage({Key? key}) : super(key: key);
 
-  final Completer<WebViewController> _controller =
-      Completer<WebViewController>();
+  late WebViewController _controller;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -41,63 +40,61 @@ class GetTimetablePage extends ConsumerWidget {
       });
     });
 
+    _controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onPageFinished: (url) async {
+            if (url ==
+                'https://kyomu.office.tut.ac.jp/portal/StudentApp/Top.aspx') {
+              showGeneralDialog(
+                context: context,
+                barrierDismissible: false,
+                barrierColor: Colors.black.withOpacity(0.5),
+                pageBuilder: (context, animation, secondaryAnimation) =>
+                    const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+              await _controller.runJavaScript(
+                  'document.querySelector("#ctl00_bhHeader_ctl16_lnk").click()');
+            }
+
+            if (url ==
+                'https://kyomu.office.tut.ac.jp/portal/StudentApp/Blank.aspx#regist_results') {
+              await _controller.runJavaScript(
+                  'document.querySelector("#ctl00_bhHeader_ctl30_lnk").click()');
+            }
+
+            if (url ==
+                'https://kyomu.office.tut.ac.jp/portal/StudentApp/Regist/RegistList.aspx') {
+              await _controller.runJavaScript(
+                  await rootBundle.loadString('assets/get_timetable.js'));
+            }
+          },
+        ),
+      )
+      ..addJavaScriptChannel(
+        'GetTimetable',
+        onMessageReceived: (JavaScriptMessage message) {
+          _updateTimetable(context, ref, message);
+        },
+      )
+      ..loadRequest(Uri.parse('https://kyomu.office.tut.ac.jp/portal/'));
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('時間割の取得'),
         centerTitle: false,
       ),
-      body: WebView(
-        initialUrl: 'https://kyomu.office.tut.ac.jp/portal/',
-        javascriptMode: JavascriptMode.unrestricted,
-        javascriptChannels: {
-          JavascriptChannel(
-            name: 'GetTimetable',
-            onMessageReceived: (message) {
-              _updateTimetable(context, ref, message);
-            },
-          )
-        },
-        onWebViewCreated: (controller) {
-          _controller.complete(controller);
-        },
-        onPageFinished: (url) async {
-          final controller = await _controller.future;
-
-          if (url ==
-              'https://kyomu.office.tut.ac.jp/portal/StudentApp/Top.aspx') {
-            showGeneralDialog(
-              context: context,
-              barrierDismissible: false,
-              barrierColor: Colors.black.withOpacity(0.5),
-              pageBuilder: (context, animation, secondaryAnimation) =>
-                  const Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
-            await controller.runJavascript(
-                'document.querySelector("#ctl00_bhHeader_ctl16_lnk").click()');
-          }
-
-          if (url ==
-              'https://kyomu.office.tut.ac.jp/portal/StudentApp/Blank.aspx#regist_results') {
-            await controller.runJavascript(
-                'document.querySelector("#ctl00_bhHeader_ctl30_lnk").click()');
-          }
-
-          if (url ==
-              'https://kyomu.office.tut.ac.jp/portal/StudentApp/Regist/RegistList.aspx') {
-            await controller.runJavascript(
-                await rootBundle.loadString('assets/get_timetable.js'));
-          }
-        },
-      ),
+      body: WebViewWidget(controller: _controller),
     );
   }
 }
 
 // JavaScriptから受け取ったJSONを加工・保存
 Future<void> _updateTimetable(
-    BuildContext context, WidgetRef ref, JavascriptMessage message) async {
+    BuildContext context, WidgetRef ref, JavaScriptMessage message) async {
   final Map<String, dynamic> decoded = jsonDecode(message.message);
 
   // シラバスのJSONを取得

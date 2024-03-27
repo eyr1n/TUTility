@@ -67,6 +67,7 @@ android {
             signingConfig signingConfigs.release
         }
     }
+    namespace 'me.rinrin.tutility'
 }
 
 flutter {

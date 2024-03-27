@@ -1,32 +1,32 @@
 name: tutility
-publish_to: 'none'
+publish_to: "none"
 version: 1.2.3+13
 
 environment:
-  sdk: '>=2.16.2 <3.0.0'
+  sdk: ">=3.3.2 <4.0.0"
 
 dependencies:
-  connectivity_plus: ^2.3.6+1
-  file: ^6.1.4
+  connectivity_plus: ^6.0.1
+  file: ^7.0.0
   flutter:
     sdk: flutter
-  flutter_custom_tabs: ^1.0.4
-  flutter_launcher_icons: ^0.9.2
+  flutter_custom_tabs: ^2.0.0+1
+  flutter_launcher_icons: ^0.13.1
   flutter_localizations:
     sdk: flutter
     version: ^0.0.0
-  flutter_riverpod: ^1.0.4
-  flutter_svg: ^1.1.1+1
-  http: ^0.13.4
+  flutter_riverpod: ^2.5.1
+  flutter_svg: ^2.0.10+1
+  http: ^1.2.1
   json_annotation: ^4.5.0
-  package_info_plus: ^5.0.1
+  package_info_plus: ^6.0.0
   shared_preferences: ^2.0.15
-  webview_flutter: ^3.0.4
+  webview_flutter: ^4.7.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^1.0.0
+  flutter_lints: ^3.0.2
   build_runner: ^2.1.11
   json_serializable: ^6.2.0
 
@@ -39,6 +39,6 @@ flutter:
 flutter_icons:
   ios: true
   android: true
-  image_path: 'assets/icon.png'
-  adaptive_icon_background: '#FFFFFF'
-  adaptive_icon_foreground: 'assets/icon_adaptive.png'
+  image_path: "assets/icon.png"
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/icon_adaptive.png"

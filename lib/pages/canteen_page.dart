@@ -8,6 +8,11 @@ class CanteenPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final WebViewController controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(Colors.transparent)
+      ..loadRequest(Uri.parse('https://tut-canteen-menu.rinrin.me/inapp'));
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       (Connectivity().checkConnectivity()).then((value) {
         if (value == ConnectivityResult.none) {
@@ -36,10 +41,8 @@ class CanteenPage extends StatelessWidget {
         title: const Text('食堂メニュー'),
         centerTitle: false,
       ),
-      body: const WebView(
-        initialUrl: 'https://tut-canteen-menu.rinrin.me/inapp',
-        javascriptMode: JavascriptMode.unrestricted,
-        backgroundColor: Colors.transparent,
+      body: WebViewWidget(
+        controller: controller,
       ),
     );
   }

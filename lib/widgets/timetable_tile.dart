@@ -153,8 +153,8 @@ class _SubjectDetailsDialog extends StatelessWidget {
       actions: <Widget>[
         TextButton(
           child: const Text("シラバス"),
-          onPressed: () {
-            launch(subject.url);
+          onPressed: () async {
+            await launchUrl(Uri.parse(subject.url));
           },
         ),
         TextButton(

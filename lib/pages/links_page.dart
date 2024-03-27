@@ -38,8 +38,10 @@ class LinksPage extends StatelessWidget {
               .map(
                 (item) => ListTile(
                   title: Text(item.name),
-                  onTap: () {
-                    launch(item.url);
+                  onTap: () async {
+                    await launchUrl(
+                      Uri.parse(item.url),
+                    );
                   },
                 ),
               )
