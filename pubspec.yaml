@@ -19,7 +19,7 @@ dependencies:
   flutter_svg: ^1.1.1+1
   http: ^0.13.4
   json_annotation: ^4.5.0
-  package_info_plus: ^1.4.2
+  package_info_plus: ^5.0.1
   shared_preferences: ^2.0.15
   webview_flutter: ^3.0.4
 
