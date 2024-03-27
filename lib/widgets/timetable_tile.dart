@@ -154,7 +154,11 @@ class _SubjectDetailsDialog extends StatelessWidget {
         TextButton(
           child: const Text("シラバス"),
           onPressed: () async {
-            await launchUrl(Uri.parse(subject.url));
+            await launchUrl(
+              Uri.parse(subject.url),
+              customTabsOptions: const CustomTabsOptions(),
+              safariVCOptions: const SafariViewControllerOptions(),
+            );
           },
         ),
         TextButton(

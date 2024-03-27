@@ -26,6 +26,8 @@ class LinksPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('リンク'),
@@ -41,6 +43,8 @@ class LinksPage extends StatelessWidget {
                   onTap: () async {
                     await launchUrl(
                       Uri.parse(item.url),
+                      customTabsOptions: const CustomTabsOptions(),
+                      safariVCOptions: const SafariViewControllerOptions(),
                     );
                   },
                 ),

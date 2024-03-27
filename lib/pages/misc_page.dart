@@ -71,7 +71,7 @@ class MiscPage extends ConsumerWidget {
                 showAboutDialog(
                   context: context,
                   applicationVersion: packageInfo.version,
-                  applicationLegalese: '\u00a9 2022 rin4046.',
+                  applicationLegalese: '\u00a9 2022 eyr1n',
                 );
               },
             ),
