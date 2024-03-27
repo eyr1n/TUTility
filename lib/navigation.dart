@@ -46,7 +46,7 @@ const List<_NavigationItem> _items = [
 
 @immutable
 class TUTilityNavigation extends StatefulWidget {
-  const TUTilityNavigation({Key? key}) : super(key: key);
+  const TUTilityNavigation({super.key});
 
   @override
   State<TUTilityNavigation> createState() => _TUTilityNavigationState();

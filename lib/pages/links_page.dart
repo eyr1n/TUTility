@@ -22,12 +22,10 @@ const List<_LinkItem> _links = [
 ];
 
 class LinksPage extends StatelessWidget {
-  const LinksPage({Key? key}) : super(key: key);
+  const LinksPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('リンク'),

@@ -5,8 +5,7 @@ import '../font_scaler.dart';
 
 @immutable
 class TimetableWeekdayTile extends StatelessWidget {
-  const TimetableWeekdayTile({Key? key, required this.weekday})
-      : super(key: key);
+  const TimetableWeekdayTile({super.key, required this.weekday});
 
   final int weekday;
 

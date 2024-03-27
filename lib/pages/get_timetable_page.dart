@@ -11,15 +11,15 @@ import '../providers/timetable.dart';
 import '../providers/timetable_visibility.dart';
 
 class GetTimetablePage extends ConsumerWidget {
-  GetTimetablePage({Key? key}) : super(key: key);
+  GetTimetablePage({super.key});
 
-  late WebViewController _controller;
+  final WebViewController _controller = WebViewController();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       (Connectivity().checkConnectivity()).then((value) {
-        if (value == ConnectivityResult.none) {
+        if (value.contains(ConnectivityResult.none)) {
           showDialog(
             context: context,
             builder: (context) {
@@ -40,7 +40,7 @@ class GetTimetablePage extends ConsumerWidget {
       });
     });
 
-    _controller = WebViewController()
+    _controller
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
         NavigationDelegate(

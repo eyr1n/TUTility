@@ -4,7 +4,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 @immutable
 class CanteenPage extends StatelessWidget {
-  const CanteenPage({Key? key}) : super(key: key);
+  const CanteenPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class CanteenPage extends StatelessWidget {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       (Connectivity().checkConnectivity()).then((value) {
-        if (value == ConnectivityResult.none) {
+        if (value.contains(ConnectivityResult.none)) {
           showDialog(
             context: context,
             builder: (context) {

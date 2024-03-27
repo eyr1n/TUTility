@@ -6,7 +6,7 @@ import '../providers/timetable.dart';
 
 @immutable
 class MiscPage extends ConsumerWidget {
-  const MiscPage({Key? key}) : super(key: key);
+  const MiscPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

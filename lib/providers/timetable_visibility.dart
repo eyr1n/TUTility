@@ -22,8 +22,7 @@ class TimetableVisibility {
 class TimetableVisibilityNotifier extends StateNotifier<TimetableVisibility?> {
   final Future<SharedPreferences> prefs = SharedPreferences.getInstance();
 
-  TimetableVisibilityNotifier(TimetableVisibility? visibility)
-      : super(visibility);
+  TimetableVisibilityNotifier(super.visibility);
 
   Future<void> update(TimetableVisibility visibility) async {
     state = visibility;

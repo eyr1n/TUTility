@@ -12,7 +12,7 @@ import './get_timetable_page.dart';
 
 @immutable
 class TimetablePage extends ConsumerWidget {
-  const TimetablePage({Key? key}) : super(key: key);
+  const TimetablePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -26,7 +26,6 @@ class TimetablePage extends ConsumerWidget {
         title: Row(
           children: [
             Container(
-              child: SvgPicture.asset('assets/icon_appbar.svg'),
               width: appBarHeight - 16,
               height: appBarHeight - 16,
               margin: const EdgeInsets.all(8),
@@ -46,6 +45,7 @@ class TimetablePage extends ConsumerWidget {
                   ),
                 ],
               ),
+              child: SvgPicture.asset('assets/icon_appbar.svg'),
             ),
             const Text('TUTility')
           ],

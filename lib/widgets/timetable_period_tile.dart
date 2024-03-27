@@ -4,7 +4,7 @@ import '../font_scaler.dart';
 
 @immutable
 class TimetablePeriodTile extends StatelessWidget {
-  const TimetablePeriodTile({Key? key, required this.period}) : super(key: key);
+  const TimetablePeriodTile({super.key, required this.period});
 
   final int period;
 

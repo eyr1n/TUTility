@@ -43,7 +43,7 @@ Future<void> main() async {
 }
 
 class TUTilityApp extends StatelessWidget {
-  const TUTilityApp({Key? key}) : super(key: key);
+  const TUTilityApp({super.key});
 
   @override
   Widget build(BuildContext context) {

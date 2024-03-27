@@ -9,8 +9,7 @@ import '../providers/timetable_visibility.dart';
 
 @immutable
 class TimetableTile extends ConsumerWidget {
-  const TimetableTile({Key? key, required this.row, required this.col})
-      : super(key: key);
+  const TimetableTile({super.key, required this.row, required this.col});
 
   final int row, col;
 
@@ -129,8 +128,7 @@ class TimetableTile extends ConsumerWidget {
 
 @immutable
 class _SubjectDetailsDialog extends StatelessWidget {
-  const _SubjectDetailsDialog({Key? key, required this.subject})
-      : super(key: key);
+  const _SubjectDetailsDialog({required this.subject});
 
   final Subject subject;
 
@@ -174,8 +172,7 @@ class _SubjectDetailsDialog extends StatelessWidget {
 
 @immutable
 class _SubjectSelectorDialog extends ConsumerWidget {
-  const _SubjectSelectorDialog({Key? key, required this.row, required this.col})
-      : super(key: key);
+  const _SubjectSelectorDialog({required this.row, required this.col});
 
   final int row, col;
 

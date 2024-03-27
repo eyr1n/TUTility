@@ -48,7 +48,7 @@ class Timetable {
 class TimetableNotifier extends StateNotifier<Timetable?> {
   final Future<SharedPreferences> prefs = SharedPreferences.getInstance();
 
-  TimetableNotifier(Timetable? timetable) : super(timetable);
+  TimetableNotifier(super.timetable);
 
   Future<void> update(Timetable timetable) async {
     state = timetable;
