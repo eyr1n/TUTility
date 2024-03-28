@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
@@ -30,6 +34,13 @@ class TimetableTile extends ConsumerWidget {
     if (selected != null) {
       Subject subject = subjects[selected];
 
+      final color =
+          Uint8List.fromList(sha256.convert(utf8.encode(subject.id)).bytes)
+                  .buffer
+                  .asByteData()
+                  .getUint32(0, Endian.little) %
+              palette.length;
+
       return GestureDetector(
         child: Container(
           margin: const EdgeInsets.all(2),
@@ -42,10 +53,9 @@ class TimetableTile extends ConsumerWidget {
                   padding: const EdgeInsets.all(2),
                   constraints: const BoxConstraints.expand(),
                   decoration: BoxDecoration(
-                    color: palette[subject.id.hashCode % palette.length][100],
+                    color: palette[color][100],
                     border: Border.all(
-                      color: palette[subject.id.hashCode % palette.length]
-                          [200]!,
+                      color: palette[color][200]!,
                       width: 1,
                     ),
                     borderRadius: BorderRadius.circular(4),
@@ -69,7 +79,7 @@ class TimetableTile extends ConsumerWidget {
                     padding: const EdgeInsets.all(2),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: palette[subject.id.hashCode % palette.length][200],
+                      color: palette[color][200],
                       borderRadius: const BorderRadius.vertical(
                         bottom: Radius.circular(4),
                       ),

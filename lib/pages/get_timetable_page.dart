@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:http/http.dart' as http;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tutility/totp.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../providers/timetable.dart';
@@ -46,16 +47,24 @@ class GetTimetablePage extends ConsumerWidget {
         NavigationDelegate(
           onPageFinished: (url) async {
             if (url ==
+                'https://kyomu.office.tut.ac.jp/portal/StudentApp/Blank.aspx#regist_results') {
+              await _controller.runJavaScript(
+                  'document.querySelector("#ctl00_bhHeader_ctl30_lnk").click()');
+            }
+
+            if (url ==
                 'https://kyomu.office.tut.ac.jp/portal/StudentApp/Top.aspx') {
-              showGeneralDialog(
-                context: context,
-                barrierDismissible: false,
-                barrierColor: Colors.black.withOpacity(0.5),
-                pageBuilder: (context, animation, secondaryAnimation) =>
-                    const Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
+              if (context.mounted) {
+                showGeneralDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  barrierColor: Colors.black.withOpacity(0.5),
+                  pageBuilder: (context, animation, secondaryAnimation) =>
+                      const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              }
               await _controller.runJavaScript(
                   'document.querySelector("#ctl00_bhHeader_ctl16_lnk").click()');
             }

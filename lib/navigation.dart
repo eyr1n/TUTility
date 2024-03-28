@@ -30,8 +30,8 @@ const List<_NavigationItem> _items = [
   ),
   _NavigationItem(
     destination: NavigationDestination(
-      icon: Icon(Icons.language),
-      label: 'リンク',
+      icon: Icon(Icons.timer),
+      label: 'OTP',
     ),
     page: LinksPage(),
   ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:tutility/pages/in_app_browser.dart';
 
 import '../constants.dart';
 import '../providers/timetable.dart';
@@ -58,7 +59,8 @@ class TimetablePage extends ConsumerWidget {
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => GetTimetablePage(),
+                  builder: (context) => InAppBrowser(
+                      uri: Uri.parse('https://kyomu.office.tut.ac.jp/portal/')),
                   fullscreenDialog: true,
                 ),
               );
