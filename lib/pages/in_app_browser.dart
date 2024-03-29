@@ -40,17 +40,17 @@ class AutoLogin extends ConsumerWidget {
             },
           ),
         ],
-      ),
-      body: Stack(
-        children: [
-          WebViewWidget(controller: controller),
-          loading
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(4.0),
+          child: loading
               ? LinearProgressIndicator(
                   value: progress / 100,
+                  minHeight: 4.0,
                 )
-              : const SizedBox(),
-        ],
+              : const SizedBox.shrink(),
+        ),
       ),
+      body: WebViewWidget(controller: controller),
     );
   }
 }
