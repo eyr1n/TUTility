@@ -1,65 +1,55 @@
-import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'shared_preferences.dart';
+
+part 'timetable.freezed.dart';
 part 'timetable.g.dart';
 
-@immutable
-@JsonSerializable()
-class Subject {
-  final String id, url, name;
-  final String? area, term, required, units, grade, staff, room;
-
-  const Subject({
-    required this.id,
-    required this.url,
-    required this.name,
-    this.area,
-    this.term,
-    this.required,
-    this.units,
-    this.grade,
-    this.staff,
-    this.room,
-  });
+@freezed
+class Subject with _$Subject {
+  const factory Subject({
+    required String id,
+    required String url,
+    required String name,
+    String? area,
+    String? term,
+    String? required,
+    String? units,
+    String? grade,
+    String? staff,
+    String? room,
+  }) = _Subject;
 
   factory Subject.fromJson(Map<String, dynamic> json) =>
       _$SubjectFromJson(json);
-
-  Map<String, dynamic> toJson() => _$SubjectToJson(this);
 }
 
-@immutable
-@JsonSerializable()
-class Timetable {
-  final List<List<List<Subject>>> list;
-  final DateTime lastUpdated;
+@freezed
+class Timetable2 with _$Timetable2 {
+  const factory Timetable2({
+    required int period,
+    required int firstOrSecond,
+    required List<List<Subject?>> firstHalf,
+    required List<List<Subject?>> secondHalf,
+  }) = _Timetable2;
 
-  const Timetable({required this.list, required this.lastUpdated});
+  factory Timetable2.fromJson(Map<String, dynamic> json) =>
+      _$Timetable2FromJson(json);
+}
+
+@freezed
+class Timetable with _$Timetable {
+  const factory Timetable({
+    required List<List<List<Subject>>> list,
+  }) = _Timetable;
 
   factory Timetable.fromJson(Map<String, dynamic> json) =>
       _$TimetableFromJson(json);
-
-  Map<String, dynamic> toJson() => _$TimetableToJson(this);
 }
 
-class TimetableNotifier extends StateNotifier<Timetable?> {
-  final Future<SharedPreferences> prefs = SharedPreferences.getInstance();
-
-  TimetableNotifier(super.timetable);
-
-  Future<void> update(Timetable timetable) async {
-    state = timetable;
-    (await prefs).setString('tutility_timetable', jsonEncode(timetable));
-  }
-
-  Future<void> clear() async {
-    state = null;
-    (await prefs).remove('tutility_timetable');
-  }
-}
-
-late final StateNotifierProvider<TimetableNotifier, Timetable?>
-    timetableProvider;
+final timetableProvider = sharedPreferencesProvider<Timetable2?>(
+  key: "_timetable",
+  defaultValue: null,
+  fromJson: Timetable2.fromJson,
+  toJson: (value) => value?.toJson(),
+);

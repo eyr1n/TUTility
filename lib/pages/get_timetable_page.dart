@@ -1,16 +1,16 @@
-import 'dart:async';
 import 'dart:convert';
+import 'package:auto_route/auto_route.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:http/http.dart' as http;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tutility/totp.dart';
+import 'package:tutility/scope_functions.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../providers/timetable.dart';
-import '../providers/timetable_visibility.dart';
 
+@RoutePage()
 class GetTimetablePage extends ConsumerWidget {
   GetTimetablePage({super.key});
 
@@ -18,7 +18,7 @@ class GetTimetablePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    /* WidgetsBinding.instance.addPostFrameCallback((_) {
       (Connectivity().checkConnectivity()).then((value) {
         if (value.contains(ConnectivityResult.none)) {
           showDialog(
@@ -39,7 +39,7 @@ class GetTimetablePage extends ConsumerWidget {
           );
         }
       });
-    });
+    }); */
 
     _controller
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
@@ -79,15 +79,38 @@ class GetTimetablePage extends ConsumerWidget {
                 'https://kyomu.office.tut.ac.jp/portal/StudentApp/Regist/RegistList.aspx') {
               await _controller.runJavaScript(
                   await rootBundle.loadString('assets/get_timetable.js'));
+              final String json =
+                  await _controller.runJavaScriptReturningResult(
+                      'JSON.stringify(getTimetable())') as String;
+
+              final Map<String, dynamic> decoded = jsonDecode(json);
+              final timetable = Timetable.fromJson({"list": decoded["normal"]});
+              final timetable_ = await _getHalfTimetable(timetable, "2024", 0);
+
+              await ref.watch(timetableProvider.notifier).set(timetable_);
+
+              Navigator.of(context).pop();
+
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    content: const Text('時間割の取得が完了しました'),
+                    actions: <TextButton>[
+                      TextButton(
+                        child: const Text('閉じる'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          context.router.pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
             }
           },
         ),
-      )
-      ..addJavaScriptChannel(
-        'GetTimetable',
-        onMessageReceived: (JavaScriptMessage message) {
-          _updateTimetable(context, ref, message);
-        },
       )
       ..loadRequest(Uri.parse('https://kyomu.office.tut.ac.jp/portal/'));
 
@@ -101,55 +124,44 @@ class GetTimetablePage extends ConsumerWidget {
   }
 }
 
-// JavaScriptから受け取ったJSONを加工・保存
-Future<void> _updateTimetable(
-    BuildContext context, WidgetRef ref, JavaScriptMessage message) async {
-  final Map<String, dynamic> decoded = jsonDecode(message.message);
-
-  // シラバスのJSONを取得
-  final allSyllabusesJson = await http.get(Uri.parse(
-      'https://syllabus.rinrin.me/ja/${decoded["year"]}/all.min.json'));
+Future<Timetable2> _getHalfTimetable(
+    Timetable timetable, String year, int period) async {
+  final allSyllabusesJson = await http
+      .get(Uri.parse('https://syllabus.rinrin.me/ja/$year/all.min.json'));
   if (allSyllabusesJson.statusCode != 200) {
-    return;
+    throw Exception();
   }
   final Map<String, dynamic> allSyllabuses = jsonDecode(allSyllabusesJson.body);
 
-  final List<List<List<Subject>>> timetableList = (decoded["timetable"] as List)
-      .map((row) => (row as List)
-          .map(
-            (col) => (col as List)
-                .map((id) => Subject.fromJson({"id": id, ...allSyllabuses[id]}))
-                .toList(),
-          )
-          .toList())
-      .toList();
-  final List<List<int?>> visibilityList = timetableList
-      .map((e) => e.map((e) => e.isNotEmpty ? 0 : null).toList())
-      .toList();
+  final replaced = timetable.list.map((row) => row.map((col) => col.map(
+      (subject) => allSyllabuses.containsKey(subject.id)
+          ? Subject.fromJson(allSyllabuses[subject.id])
+          : subject)));
 
-  await ref.read(timetableProvider.notifier).update(
-      Timetable(list: timetableList, lastUpdated: DateTime.now().toUtc()));
-  await ref
-      .read(timetableVisibilityProvider.notifier)
-      .update(TimetableVisibility(list: visibilityList));
-
-  Navigator.of(context).pop();
-  Navigator.of(context).pop();
-
-  showDialog(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        content: const Text('時間割の取得が完了しました\n\nタイルの長押しで「科目」の切り替えや「非表示」ができます'),
-        actions: <TextButton>[
-          TextButton(
-            child: const Text('閉じる'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },
+  return Timetable2(
+    period: period,
+    firstOrSecond: 0,
+    firstHalf: replaced
+        .map((row) => row
+            .map((col) => col
+                .where((subject) =>
+                    subject.term?.let((term) => period == 0
+                        ? (!term.contains("前期2") || !term.contains("前2"))
+                        : (!term.contains("後期2") || !term.contains("後2"))) ??
+                    true)
+                .firstOrNull)
+            .toList())
+        .toList(),
+    secondHalf: replaced
+        .map((row) => row
+            .map((col) => col
+                .where((subject) =>
+                    subject.term?.let((term) => period == 0
+                        ? (!term.contains("前期1") || !term.contains("前1"))
+                        : (!term.contains("後期1") || !term.contains("後1"))) ??
+                    true)
+                .firstOrNull)
+            .toList())
+        .toList(),
   );
 }

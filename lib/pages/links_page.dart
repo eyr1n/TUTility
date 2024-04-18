@@ -1,6 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
-import 'package:tutility/pages/in_app_browser.dart';
+import 'package:tutility/pages/in_app_browser_page.dart';
+import 'package:tutility/widgets/page_scaffold.dart';
 
 @immutable
 class _LinkItem {
@@ -22,16 +23,14 @@ const List<_LinkItem> _links = [
   _LinkItem(name: "バス時刻表 (豊橋駅前)", url: "https://www.toyotetsu.jp/station/1/P2/")
 ];
 
+@RoutePage()
 class LinksPage extends StatelessWidget {
   const LinksPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('リンク'),
-        centerTitle: false,
-      ),
+    return PageScaffold(
+      title: const Text('リンク'),
       body: ListView(
         children: ListTile.divideTiles(
           context: context,
@@ -43,15 +42,10 @@ class LinksPage extends StatelessWidget {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) =>
-                            InAppBrowser(uri: Uri.parse(item.url)),
+                            InAppBrowserPage(uri: Uri.parse(item.url)),
                         fullscreenDialog: true,
                       ),
                     );
-                    /*  await launchUrl(
-                      Uri.parse(item.url),
-                      customTabsOptions: const CustomTabsOptions(),
-                      safariVCOptions: const SafariViewControllerOptions(),
-                    ); */
                   },
                 ),
               )

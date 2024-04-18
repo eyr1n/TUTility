@@ -6,7 +6,8 @@ part of 'timetable.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Subject _$SubjectFromJson(Map<String, dynamic> json) => Subject(
+_$SubjectImpl _$$SubjectImplFromJson(Map<String, dynamic> json) =>
+    _$SubjectImpl(
       id: json['id'] as String,
       url: json['url'] as String,
       name: json['name'] as String,
@@ -19,7 +20,8 @@ Subject _$SubjectFromJson(Map<String, dynamic> json) => Subject(
       room: json['room'] as String?,
     );
 
-Map<String, dynamic> _$SubjectToJson(Subject instance) => <String, dynamic>{
+Map<String, dynamic> _$$SubjectImplToJson(_$SubjectImpl instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'url': instance.url,
       'name': instance.name,
@@ -32,7 +34,36 @@ Map<String, dynamic> _$SubjectToJson(Subject instance) => <String, dynamic>{
       'room': instance.room,
     };
 
-Timetable _$TimetableFromJson(Map<String, dynamic> json) => Timetable(
+_$Timetable2Impl _$$Timetable2ImplFromJson(Map<String, dynamic> json) =>
+    _$Timetable2Impl(
+      period: json['period'] as int,
+      firstOrSecond: json['firstOrSecond'] as int,
+      firstHalf: (json['firstHalf'] as List<dynamic>)
+          .map((e) => (e as List<dynamic>)
+              .map((e) => e == null
+                  ? null
+                  : Subject.fromJson(e as Map<String, dynamic>))
+              .toList())
+          .toList(),
+      secondHalf: (json['secondHalf'] as List<dynamic>)
+          .map((e) => (e as List<dynamic>)
+              .map((e) => e == null
+                  ? null
+                  : Subject.fromJson(e as Map<String, dynamic>))
+              .toList())
+          .toList(),
+    );
+
+Map<String, dynamic> _$$Timetable2ImplToJson(_$Timetable2Impl instance) =>
+    <String, dynamic>{
+      'period': instance.period,
+      'firstOrSecond': instance.firstOrSecond,
+      'firstHalf': instance.firstHalf,
+      'secondHalf': instance.secondHalf,
+    };
+
+_$TimetableImpl _$$TimetableImplFromJson(Map<String, dynamic> json) =>
+    _$TimetableImpl(
       list: (json['list'] as List<dynamic>)
           .map((e) => (e as List<dynamic>)
               .map((e) => (e as List<dynamic>)
@@ -40,10 +71,9 @@ Timetable _$TimetableFromJson(Map<String, dynamic> json) => Timetable(
                   .toList())
               .toList())
           .toList(),
-      lastUpdated: DateTime.parse(json['lastUpdated'] as String),
     );
 
-Map<String, dynamic> _$TimetableToJson(Timetable instance) => <String, dynamic>{
+Map<String, dynamic> _$$TimetableImplToJson(_$TimetableImpl instance) =>
+    <String, dynamic>{
       'list': instance.list,
-      'lastUpdated': instance.lastUpdated.toIso8601String(),
     };

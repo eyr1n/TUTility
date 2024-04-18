@@ -41,12 +41,10 @@ class TimetablePeriodTile extends StatelessWidget {
     return Container(
       margin: EdgeInsets.all(2.scale(context)),
       child: Column(
-        //margin: EdgeInsets.all(4.scale(context)),
         children: [
           Text(
             begin,
             style: TextStyle(
-              //fontWeight: FontWeight.bold,
               fontSize: 10.scale(context),
             ),
           ),
@@ -63,7 +61,6 @@ class TimetablePeriodTile extends StatelessWidget {
           Text(
             end,
             style: TextStyle(
-              //fontWeight: FontWeight.bold,
               fontSize: 10.scale(context),
             ),
           ),

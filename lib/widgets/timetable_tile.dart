@@ -1,146 +1,102 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
+import 'package:tutility/router/app_router.dart';
 
 import '../font_scaler.dart';
 import '../constants.dart';
 import '../providers/timetable.dart';
-import '../providers/timetable_visibility.dart';
 
 @immutable
-class TimetableTile extends ConsumerWidget {
-  const TimetableTile({super.key, required this.row, required this.col});
+class TimetableTile extends StatelessWidget {
+  final Subject subject;
 
-  final int row, col;
+  const TimetableTile({super.key, required this.subject});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    Timetable? timetable = ref.watch(timetableProvider);
-    TimetableVisibility? visibility = ref.watch(timetableVisibilityProvider);
-    if (timetable == null || visibility == null) {
-      return const SizedBox.shrink();
-    }
+  Widget build(BuildContext context) {
+    final color =
+        Uint8List.fromList(sha256.convert(utf8.encode(subject.id)).bytes)
+                .buffer
+                .asByteData()
+                .getUint32(0, Endian.little) %
+            palette.length;
 
-    List<Subject> subjects = timetable.list[row][col];
-    int? selected = visibility.list[row][col];
-    if (subjects.isEmpty && selected != null) {
-      throw const SizedBox.shrink();
-    }
-
-    if (selected != null) {
-      Subject subject = subjects[selected];
-
-      final color =
-          Uint8List.fromList(sha256.convert(utf8.encode(subject.id)).bytes)
-                  .buffer
-                  .asByteData()
-                  .getUint32(0, Endian.little) %
-              palette.length;
-
-      return GestureDetector(
-        child: Container(
-          margin: const EdgeInsets.all(2),
-          child: AspectRatio(
-            aspectRatio: 0.75,
-            child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: [
+    return GestureDetector(
+      child: Container(
+        margin: const EdgeInsets.all(2),
+        child: AspectRatio(
+          aspectRatio: 0.75,
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(2),
+                constraints: const BoxConstraints.expand(),
+                decoration: BoxDecoration(
+                  color: palette[color][100],
+                  border: Border.all(
+                    color: palette[color][200]!,
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Text(
+                  subject.name,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 3,
+                  style: TextStyle(
+                    height: 1.2,
+                    color: Colors.black87,
+                    fontSize: 12.scale(context),
+                  ),
+                ),
+              ),
+              if (subject.room != null)
                 Container(
+                  width: double.infinity,
+                  height: 22.scale(context),
                   padding: const EdgeInsets.all(2),
-                  constraints: const BoxConstraints.expand(),
+                  alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: palette[color][100],
-                    border: Border.all(
-                      color: palette[color][200]!,
-                      width: 1,
+                    color: palette[color][200],
+                    borderRadius: const BorderRadius.vertical(
+                      bottom: Radius.circular(4),
                     ),
-                    borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text(
-                    subject.name,
+                    subject.room!,
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
-                    maxLines: 3,
                     style: TextStyle(
-                      height: 1.2,
+                      fontSize: 11.scale(context),
                       color: Colors.black87,
-                      fontSize: 12.scale(context),
                     ),
                   ),
                 ),
-                if (subject.room != null)
-                  Container(
-                    width: double.infinity,
-                    height: 22.scale(context),
-                    padding: const EdgeInsets.all(2),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: palette[color][200],
-                      borderRadius: const BorderRadius.vertical(
-                        bottom: Radius.circular(4),
-                      ),
-                    ),
-                    child: Text(
-                      subject.room!,
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: 11.scale(context),
-                        color: Colors.black87,
-                      ),
-                    ),
-                  ),
-              ],
-            ),
+            ],
           ),
         ),
-        onTap: () {
-          showDialog(
-            context: context,
-            builder: (context) => _SubjectDetailsDialog(subject: subject),
-          );
-        },
-        onLongPress: () {
-          showDialog(
-            context: context,
-            builder: (context) => _SubjectSelectorDialog(row: row, col: col),
-          );
-        },
-      );
-    } else {
-      return GestureDetector(
-        child: Container(
-          margin: const EdgeInsets.all(2),
-          child: AspectRatio(
-            aspectRatio: 0.75,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.onInverseSurface,
-                borderRadius: BorderRadius.circular(4),
-              ),
-            ),
-          ),
-        ),
-        onLongPress: () {
-          showDialog(
-            context: context,
-            builder: (context) => _SubjectSelectorDialog(row: row, col: col),
-          );
-        },
-      );
-    }
+      ),
+      onTap: () {
+        showDialog(
+          context: context,
+          builder: (context) => _SubjectDetailsDialog(subject: subject),
+        );
+      },
+    );
   }
 }
 
 @immutable
 class _SubjectDetailsDialog extends StatelessWidget {
-  const _SubjectDetailsDialog({required this.subject});
-
   final Subject subject;
+
+  const _SubjectDetailsDialog({required this.subject});
 
   @override
   Widget build(BuildContext context) {
@@ -162,11 +118,7 @@ class _SubjectDetailsDialog extends StatelessWidget {
         TextButton(
           child: const Text("シラバス"),
           onPressed: () async {
-            await launchUrl(
-              Uri.parse(subject.url),
-              customTabsOptions: const CustomTabsOptions(),
-              safariVCOptions: const SafariViewControllerOptions(),
-            );
+            context.router.push(InAppBrowserRoute(uri: Uri.parse(subject.url)));
           },
         ),
         TextButton(
@@ -175,59 +127,6 @@ class _SubjectDetailsDialog extends StatelessWidget {
             Navigator.of(context).pop();
           },
         ),
-      ],
-    );
-  }
-}
-
-@immutable
-class _SubjectSelectorDialog extends ConsumerWidget {
-  const _SubjectSelectorDialog({required this.row, required this.col});
-
-  final int row, col;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    Timetable? timetable = ref.watch(timetableProvider);
-    TimetableVisibility? visibility = ref.watch(timetableVisibilityProvider);
-    if (timetable == null || visibility == null) {
-      return const SizedBox.shrink();
-    }
-
-    List<Subject> subjects = timetable.list[row][col];
-    int? selected = visibility.list[row][col];
-    if (subjects.isEmpty && selected != null) {
-      throw const SizedBox.shrink();
-    }
-
-    return SimpleDialog(
-      title: Text('${weekdays[col + 1]}曜 ${row + 1}限 の科目を選択'),
-      children: [
-        ...subjects.asMap().entries.map<Widget>((item) {
-          return SimpleDialogOption(
-            onPressed: () async {
-              visibility.list[row][col] = item.key;
-              await ref
-                  .read(timetableVisibilityProvider.notifier)
-                  .update(TimetableVisibility(list: visibility.list));
-              Navigator.of(context).pop();
-            },
-            child: Text(
-              '${item.value.name} (${item.value.staff})',
-              overflow: TextOverflow.ellipsis,
-            ),
-          );
-        }),
-        SimpleDialogOption(
-          onPressed: () async {
-            visibility.list[row][col] = null;
-            await ref
-                .read(timetableVisibilityProvider.notifier)
-                .update(TimetableVisibility(list: visibility.list));
-            Navigator.of(context).pop();
-          },
-          child: const Text('非表示'),
-        )
       ],
     );
   }
