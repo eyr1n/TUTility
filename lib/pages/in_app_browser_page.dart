@@ -5,11 +5,11 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 @RoutePage()
+@immutable
 class InAppBrowserPage extends HookWidget {
   final Uri uri;
-  final WebViewController controller = WebViewController();
 
-  InAppBrowserPage({super.key, required this.uri});
+  const InAppBrowserPage({super.key, required this.uri});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,6 @@ class InAppBrowserPage extends HookWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(urlState.value),
-        centerTitle: false,
         actions: [
           IconButton(
             icon: const Icon(Icons.open_in_browser),

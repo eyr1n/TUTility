@@ -24,16 +24,8 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'TUTility',
-      theme: ThemeData(
-        useMaterial3: true,
-        colorSchemeSeed: Colors.red,
-        brightness: Brightness.light,
-      ),
-      darkTheme: ThemeData(
-        useMaterial3: true,
-        colorSchemeSeed: Colors.red,
-        brightness: Brightness.dark,
-      ),
+      theme: _themeData(Brightness.light),
+      darkTheme: _themeData(Brightness.dark),
       locale: const Locale('ja'),
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
       supportedLocales: const [Locale('ja')],
@@ -41,3 +33,10 @@ class App extends StatelessWidget {
     );
   }
 }
+
+ThemeData _themeData(Brightness brightness) => ThemeData(
+      useMaterial3: true,
+      colorSchemeSeed: Colors.red,
+      appBarTheme: const AppBarTheme(centerTitle: false),
+      brightness: brightness,
+    );

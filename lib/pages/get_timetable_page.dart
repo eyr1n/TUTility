@@ -1,46 +1,23 @@
 import 'dart:convert';
+
 import 'package:auto_route/auto_route.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tutility/providers/timetable.dart';
 import 'package:tutility/scope_functions.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import '../providers/timetable.dart';
-
 @RoutePage()
+@immutable
 class GetTimetablePage extends ConsumerWidget {
-  GetTimetablePage({super.key});
-
   final WebViewController _controller = WebViewController();
+
+  GetTimetablePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    /* WidgetsBinding.instance.addPostFrameCallback((_) {
-      (Connectivity().checkConnectivity()).then((value) {
-        if (value.contains(ConnectivityResult.none)) {
-          showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                content: const Text('ネットワークに接続されていません'),
-                actions: <TextButton>[
-                  TextButton(
-                    child: const Text('閉じる'),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              );
-            },
-          );
-        }
-      });
-    }); */
-
     _controller
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
@@ -117,7 +94,6 @@ class GetTimetablePage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('時間割の取得'),
-        centerTitle: false,
       ),
       body: WebViewWidget(controller: _controller),
     );

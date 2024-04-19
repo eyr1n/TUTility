@@ -46,8 +46,12 @@ class SharedPreferencesNotifier<T> extends Notifier<T> {
   @override
   T build() {
     prefs = ref.watch(_sharedPreferencesProvider).requireValue;
-    final str = prefs.getString(key);
-    return str != null ? fromJson(jsonDecode(str)) : defaultValue;
+    try {
+      final str = prefs.getString(key);
+      return str != null ? fromJson(jsonDecode(str)) : defaultValue;
+    } catch (e) {
+      return defaultValue;
+    }
   }
 
   Future<bool> set(T value) {

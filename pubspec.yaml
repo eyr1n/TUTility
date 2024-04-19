@@ -7,7 +7,6 @@ environment:
 
 dependencies:
   auto_route: ^8.0.3
-  connectivity_plus: ^6.0.1
   crypto: ^3.0.3
   file: ^7.0.0
   flutter:
@@ -18,7 +17,6 @@ dependencies:
     sdk: flutter
     version: ^0.0.0
   flutter_riverpod: ^2.5.1
-  flutter_svg: ^2.0.10+1
   freezed_annotation: ^2.4.1
   hooks_riverpod: ^2.5.1
   http: ^1.2.1
@@ -44,7 +42,6 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/icon_appbar.svg
     - assets/get_timetable.js
 
 flutter_icons:

@@ -1,14 +1,12 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:auto_route/auto_route.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
-import 'package:tutility/router/app_router.dart';
-
-import '../font_scaler.dart';
-import '../constants.dart';
-import '../providers/timetable.dart';
+import 'package:tutility/constants.dart';
+import 'package:tutility/font_scaler.dart';
+import 'package:tutility/providers/timetable.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 @immutable
 class TimetableTile extends StatelessWidget {
@@ -117,8 +115,12 @@ class _SubjectDetailsDialog extends StatelessWidget {
       actions: <Widget>[
         TextButton(
           child: const Text("シラバス"),
-          onPressed: () async {
-            context.router.push(InAppBrowserRoute(uri: Uri.parse(subject.url)));
+          onPressed: () {
+            launchUrl(
+              Uri.parse(subject.url),
+              mode: LaunchMode.inAppBrowserView,
+            );
+            //context.router.push(InAppBrowserRoute(uri: Uri.parse(subject.url)));
           },
         ),
         TextButton(

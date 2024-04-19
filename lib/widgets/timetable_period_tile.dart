@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../font_scaler.dart';
+import 'package:tutility/font_scaler.dart';
 
 @immutable
 class TimetablePeriodTile extends StatelessWidget {

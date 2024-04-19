@@ -1,7 +1,7 @@
 import 'dart:math';
-import 'package:flutter/widgets.dart';
 
-import './constants.dart';
+import 'package:flutter/widgets.dart';
+import 'package:tutility/constants.dart';
 
 extension FontScaler on num {
   double scale(BuildContext context) {

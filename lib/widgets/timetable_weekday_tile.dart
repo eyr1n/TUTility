@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../constants.dart';
-import '../font_scaler.dart';
+import 'package:tutility/constants.dart';
+import 'package:tutility/font_scaler.dart';
 
 @immutable
 class TimetableWeekdayTile extends StatelessWidget {

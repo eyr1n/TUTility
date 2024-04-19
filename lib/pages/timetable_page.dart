@@ -1,15 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tutility/constants.dart';
+import 'package:tutility/providers/timetable.dart';
+import 'package:tutility/router/app_router.dart';
 import 'package:tutility/scope_functions.dart';
 import 'package:tutility/widgets/empty_tile.dart';
-import 'package:tutility/widgets/page_scaffold.dart';
-
-import '../constants.dart';
-import '../providers/timetable.dart';
-import '../widgets/timetable_tile.dart';
-import '../widgets/timetable_period_tile.dart';
-import '../widgets/timetable_weekday_tile.dart';
+import 'package:tutility/widgets/timetable_period_tile.dart';
+import 'package:tutility/widgets/timetable_tile.dart';
+import 'package:tutility/widgets/timetable_weekday_tile.dart';
 
 @RoutePage()
 @immutable
@@ -23,9 +22,42 @@ class TimetablePage extends ConsumerWidget {
     final halfTimetable = timetable
         ?.let((p0) => p0.firstOrSecond == 0 ? p0.firstHalf : p0.secondHalf);
 
-    return PageScaffold(
-      title: timetable?.let((timetable) => Text(
-          '${timetable.period == 0 ? "前期" : "後期"}${timetable.firstOrSecond == 0 ? 1 : 2}')),
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: timetable?.let(
+          (timetable) => SegmentedButton<int>(
+            multiSelectionEnabled: false,
+            emptySelectionAllowed: false,
+            showSelectedIcon: false,
+            segments: [
+              ButtonSegment(
+                value: 0,
+                label: Text('${timetable.period == 0 ? "前期" : "後期"}1'),
+              ),
+              ButtonSegment(
+                value: 1,
+                label: Text('${timetable.period == 0 ? "前期" : "後期"}2'),
+              ),
+            ],
+            selected: {timetable.firstOrSecond},
+            onSelectionChanged: (newSelection) {
+              ref
+                  .watch(timetableProvider.notifier)
+                  .set(timetable.copyWith(firstOrSecond: newSelection.first));
+            },
+          ),
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.download),
+            tooltip: '時間割の取得',
+            onPressed: () {
+              context.router.push(GetTimetableRoute());
+            },
+          ),
+        ],
+      ),
       body: halfTimetable != null
           ? SingleChildScrollView(
               child: Align(
