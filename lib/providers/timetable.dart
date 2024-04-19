@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import 'shared_preferences.dart';
+import 'package:tutility/providers/shared_preferences.dart';
 
 part 'timetable.freezed.dart';
 part 'timetable.g.dart';
@@ -48,7 +47,7 @@ class Timetable with _$Timetable {
 }
 
 final timetableProvider = sharedPreferencesProvider<Timetable2?>(
-  key: "_timetable",
+  key: '_timetable',
   defaultValue: null,
   fromJson: Timetable2.fromJson,
   toJson: (value) => value?.toJson(),

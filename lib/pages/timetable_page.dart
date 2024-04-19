@@ -5,10 +5,10 @@ import 'package:tutility/constants.dart';
 import 'package:tutility/providers/timetable.dart';
 import 'package:tutility/router/app_router.dart';
 import 'package:tutility/scope_functions.dart';
-import 'package:tutility/widgets/empty_tile.dart';
-import 'package:tutility/widgets/timetable_period_tile.dart';
-import 'package:tutility/widgets/timetable_tile.dart';
-import 'package:tutility/widgets/timetable_weekday_tile.dart';
+import 'package:tutility/widgets/timetable_empty_tile.dart';
+import 'package:tutility/widgets/timetable_period.dart';
+import 'package:tutility/widgets/timetable_subject_tile.dart';
+import 'package:tutility/widgets/timetable_weekday.dart';
 
 @RoutePage()
 @immutable
@@ -53,7 +53,7 @@ class TimetablePage extends ConsumerWidget {
             icon: const Icon(Icons.download),
             tooltip: '時間割の取得',
             onPressed: () {
-              context.router.push(GetTimetableRoute());
+              AutoRouter.of(context).push(GetTimetableRoute());
             },
           ),
         ],
@@ -81,17 +81,18 @@ class TimetablePage extends ConsumerWidget {
                             children: [
                               const SizedBox.shrink(),
                               for (int i = 1; i < 6; i++)
-                                TimetableWeekdayTile(weekday: i),
+                                TimetableWeekday(weekday: i),
                             ],
                           ),
                           for (int row = 0; row < 6; row++)
                             TableRow(
                               children: [
-                                TimetablePeriodTile(period: row + 1),
+                                TimetablePeriod(period: row + 1),
                                 for (int col = 0; col < 5; col++)
                                   halfTimetable[row][col]?.let((subject) =>
-                                          TimetableTile(subject: subject)) ??
-                                      const EmptyTile(),
+                                          TimetableSubjectTile(
+                                              subject: subject)) ??
+                                      const TimetableEmptyTile(),
                               ],
                             ),
                         ],

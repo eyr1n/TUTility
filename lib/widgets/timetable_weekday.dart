@@ -3,14 +3,14 @@ import 'package:tutility/constants.dart';
 import 'package:tutility/font_scaler.dart';
 
 @immutable
-class TimetableWeekdayTile extends StatelessWidget {
-  const TimetableWeekdayTile({super.key, required this.weekday});
-
+class TimetableWeekday extends StatelessWidget {
   final int weekday;
+
+  const TimetableWeekday({super.key, required this.weekday});
 
   @override
   Widget build(BuildContext context) {
-    int weekdayNow = DateTime.now().weekday;
+    final weekdayNow = DateTime.now().weekday;
 
     return Align(
       alignment: Alignment.center,

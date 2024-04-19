@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart' as http;
 import 'package:tutility/providers/timetable.dart';
 import 'package:tutility/scope_functions.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -26,7 +26,7 @@ class GetTimetablePage extends ConsumerWidget {
             if (url ==
                 'https://kyomu.office.tut.ac.jp/portal/StudentApp/Blank.aspx#regist_results') {
               await _controller.runJavaScript(
-                  'document.querySelector("#ctl00_bhHeader_ctl30_lnk").click()');
+                  'document.querySelector("#ctl00_bhHeader_ctl30_lnk").click();');
             }
 
             if (url ==
@@ -43,48 +43,49 @@ class GetTimetablePage extends ConsumerWidget {
                 );
               }
               await _controller.runJavaScript(
-                  'document.querySelector("#ctl00_bhHeader_ctl16_lnk").click()');
+                  'document.querySelector("#ctl00_bhHeader_ctl16_lnk").click();');
             }
 
             if (url ==
                 'https://kyomu.office.tut.ac.jp/portal/StudentApp/Blank.aspx#regist_results') {
               await _controller.runJavaScript(
-                  'document.querySelector("#ctl00_bhHeader_ctl30_lnk").click()');
+                  'document.querySelector("#ctl00_bhHeader_ctl30_lnk").click();');
             }
 
             if (url ==
                 'https://kyomu.office.tut.ac.jp/portal/StudentApp/Regist/RegistList.aspx') {
               await _controller.runJavaScript(
                   await rootBundle.loadString('assets/get_timetable.js'));
-              final String json =
-                  await _controller.runJavaScriptReturningResult(
-                      'JSON.stringify(getTimetable())') as String;
+              final json = await _controller.runJavaScriptReturningResult(
+                  'JSON.stringify(getTimetable());') as String;
 
-              final Map<String, dynamic> decoded = jsonDecode(json);
-              final timetable = Timetable.fromJson({"list": decoded["normal"]});
-              final timetable_ = await _getHalfTimetable(timetable, "2024", 0);
+              final decoded = jsonDecode(json);
+              final timetable = Timetable.fromJson({'list': decoded['normal']});
+              final timetable_ = await _getHalfTimetable(timetable, '2024', 0);
 
               await ref.watch(timetableProvider.notifier).set(timetable_);
 
-              Navigator.of(context).pop();
+              if (context.mounted) {
+                Navigator.of(context).pop();
 
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    content: const Text('時間割の取得が完了しました'),
-                    actions: <TextButton>[
-                      TextButton(
-                        child: const Text('閉じる'),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          context.router.pop();
-                        },
-                      ),
-                    ],
-                  );
-                },
-              );
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      content: const Text('時間割の取得が完了しました'),
+                      actions: <TextButton>[
+                        TextButton(
+                          child: const Text('閉じる'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            AutoRouter.of(context).maybePop();
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
             }
           },
         ),
@@ -122,8 +123,8 @@ Future<Timetable2> _getHalfTimetable(
             .map((col) => col
                 .where((subject) =>
                     subject.term?.let((term) => period == 0
-                        ? (!term.contains("前期2") || !term.contains("前2"))
-                        : (!term.contains("後期2") || !term.contains("後2"))) ??
+                        ? (!term.contains('前期2') || !term.contains('前2'))
+                        : (!term.contains('後期2') || !term.contains('後2'))) ??
                     true)
                 .firstOrNull)
             .toList())
@@ -133,8 +134,8 @@ Future<Timetable2> _getHalfTimetable(
             .map((col) => col
                 .where((subject) =>
                     subject.term?.let((term) => period == 0
-                        ? (!term.contains("前期1") || !term.contains("前1"))
-                        : (!term.contains("後期1") || !term.contains("後1"))) ??
+                        ? (!term.contains('前期1') || !term.contains('前1'))
+                        : (!term.contains('後期1') || !term.contains('後1'))) ??
                     true)
                 .firstOrNull)
             .toList())

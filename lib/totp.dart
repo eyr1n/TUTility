@@ -2,14 +2,14 @@ import 'dart:typed_data';
 
 import 'package:crypto/crypto.dart';
 
-final _base32Alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"
+final _base32Alphabets = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567'
     .runes
     .toList()
     .asMap()
     .map((k, v) => MapEntry(v, k));
 
 Uint8List _base32(String input) {
-  final trimmed = input.replaceAll(RegExp(r"=*$"), "").toUpperCase();
+  final trimmed = input.replaceAll(RegExp(r'=*$'), '').toUpperCase();
   final output = Uint8List((trimmed.length * 5) >>> 3);
 
   var byte = 0;

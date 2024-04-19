@@ -43,10 +43,10 @@ class MiscPage extends ConsumerWidget {
                               context: context,
                               builder: (context) {
                                 return AlertDialog(
-                                  content: const Text("時間割のリセットが完了しました"),
+                                  content: const Text('時間割のリセットが完了しました'),
                                   actions: <TextButton>[
                                     TextButton(
-                                      child: const Text("閉じる"),
+                                      child: const Text('閉じる'),
                                       onPressed: () {
                                         Navigator.of(context).pop();
                                       },
@@ -67,11 +67,13 @@ class MiscPage extends ConsumerWidget {
               title: const Text('このアプリについて'),
               onTap: () async {
                 PackageInfo packageInfo = await PackageInfo.fromPlatform();
-                showAboutDialog(
-                  context: context,
-                  applicationVersion: packageInfo.version,
-                  applicationLegalese: '\u00a9 2022 eyr1n',
-                );
+                if (context.mounted) {
+                  showAboutDialog(
+                    context: context,
+                    applicationVersion: packageInfo.version,
+                    applicationLegalese: '\u00a9 2022 eyr1n',
+                  );
+                }
               },
             ),
           ],

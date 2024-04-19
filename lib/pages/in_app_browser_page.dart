@@ -15,7 +15,7 @@ class InAppBrowserPage extends HookWidget {
   Widget build(BuildContext context) {
     final progressState = useState(0);
     final loadingState = useState(false);
-    final urlState = useState("");
+    final urlState = useState('');
 
     final controller = useMemoized(() {
       final controller = WebViewController();
