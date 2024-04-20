@@ -26,7 +26,7 @@ mixin _$Subject {
   String? get area => throw _privateConstructorUsedError;
   String? get required => throw _privateConstructorUsedError;
   String? get term => throw _privateConstructorUsedError;
-  int? get units => throw _privateConstructorUsedError;
+  String? get units => throw _privateConstructorUsedError;
   String? get grade => throw _privateConstructorUsedError;
   String? get staff => throw _privateConstructorUsedError;
   String? get room => throw _privateConstructorUsedError;
@@ -48,7 +48,7 @@ abstract class $SubjectCopyWith<$Res> {
       String? area,
       String? required,
       String? term,
-      int? units,
+      String? units,
       String? grade,
       String? staff,
       String? room});
@@ -106,7 +106,7 @@ class _$SubjectCopyWithImpl<$Res, $Val extends Subject>
       units: freezed == units
           ? _value.units
           : units // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       grade: freezed == grade
           ? _value.grade
           : grade // ignore: cast_nullable_to_non_nullable
@@ -137,7 +137,7 @@ abstract class _$$SubjectImplCopyWith<$Res> implements $SubjectCopyWith<$Res> {
       String? area,
       String? required,
       String? term,
-      int? units,
+      String? units,
       String? grade,
       String? staff,
       String? room});
@@ -193,7 +193,7 @@ class __$$SubjectImplCopyWithImpl<$Res>
       units: freezed == units
           ? _value.units
           : units // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       grade: freezed == grade
           ? _value.grade
           : grade // ignore: cast_nullable_to_non_nullable
@@ -241,7 +241,7 @@ class _$SubjectImpl implements _Subject {
   @override
   final String? term;
   @override
-  final int? units;
+  final String? units;
   @override
   final String? grade;
   @override
@@ -299,7 +299,7 @@ abstract class _Subject implements Subject {
       final String? area,
       final String? required,
       final String? term,
-      final int? units,
+      final String? units,
       final String? grade,
       final String? staff,
       final String? room}) = _$SubjectImpl;
@@ -319,7 +319,7 @@ abstract class _Subject implements Subject {
   @override
   String? get term;
   @override
-  int? get units;
+  String? get units;
   @override
   String? get grade;
   @override

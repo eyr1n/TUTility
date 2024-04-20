@@ -14,7 +14,7 @@ _$SubjectImpl _$$SubjectImplFromJson(Map<String, dynamic> json) =>
       area: json['area'] as String?,
       required: json['required'] as String?,
       term: json['term'] as String?,
-      units: json['units'] as int?,
+      units: json['units'] as String?,
       grade: json['grade'] as String?,
       staff: json['staff'] as String?,
       room: json['room'] as String?,

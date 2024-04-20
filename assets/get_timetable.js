@@ -41,11 +41,11 @@ function getTimetable() {
 
     return {
       id,
-      url: url.toString(),
+      url,
       name,
-      required: required?.slice(1, -1),
+      required,
       term,
-      units: units ? parseInt(units) : null,
+      units,
       staff,
     };
   };

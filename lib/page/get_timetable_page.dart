@@ -4,6 +4,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart' as http;
+import 'package:tutility/model/subject.dart';
 import 'package:tutility/model/timetable.dart';
 import 'package:tutility/provider/timetable.dart';
 import 'package:tutility/widget/alert_dialog.dart';
@@ -64,7 +66,7 @@ class GetTimetablePage extends ConsumerWidget {
         onMessageReceived: (JavaScriptMessage message) async {
           try {
             final timetable = Timetable.fromJson(jsonDecode(message.message));
-            /* final syllabusJson = await http.get(Uri.parse(
+            final syllabusJson = await http.get(Uri.parse(
                 'https://syllabus.rinrin.me/ja/${timetable.year}/all.min.json'));
             final Map<String, dynamic> syllabus = jsonDecode(syllabusJson.body);
 
@@ -84,8 +86,7 @@ class GetTimetablePage extends ConsumerWidget {
               firstHalf: replaceWithSubject(timetable.firstHalf),
               secondHalf: replaceWithSubject(timetable.secondHalf),
               intensive: replaceWithSubject(timetable.firstHalf),
-            ); */
-            final replaced = timetable;
+            );
             await ref.watch(timetableNotifierProvider.notifier).set(replaced);
 
             if (context.mounted) {

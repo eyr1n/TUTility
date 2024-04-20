@@ -12,7 +12,7 @@ class Subject with _$Subject {
     String? area,
     String? required,
     String? term,
-    int? units,
+    String? units,
     String? grade,
     String? staff,
     String? room,
