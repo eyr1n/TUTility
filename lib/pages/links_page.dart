@@ -50,6 +50,9 @@ const List<_Link> _links = [
       title: '休講情報・案内',
       url: 'https://kyomu.office.tut.ac.jp/portal/Public/Board/BoardList.aspx'),
   _Link(title: 'TUT LMS', url: 'https://lms.imc.tut.ac.jp/login/index.php'),
+  _Link(
+      title: 'キャンパスマップ',
+      url: 'https://www.tut.ac.jp/about/overview/docs/202310map.pdf'),
   _Link(title: 'バス時刻表 (技科大前)', url: 'https://www.toyotetsu.jp/station/82/P2/'),
   _Link(title: 'バス時刻表 (豊橋駅前)', url: 'https://www.toyotetsu.jp/station/1/P2/')
 ];

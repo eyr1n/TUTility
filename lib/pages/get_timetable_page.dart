@@ -23,80 +23,91 @@ class GetTimetablePage extends ConsumerWidget {
       ..setNavigationDelegate(
         NavigationDelegate(
           onPageFinished: (url) async {
-            if (url ==
-                'https://kyomu.office.tut.ac.jp/portal/StudentApp/Blank.aspx#regist_results') {
-              await _controller.runJavaScript(
-                  'document.querySelector("#ctl00_bhHeader_ctl30_lnk").click();');
-            }
-
-            if (url ==
-                'https://kyomu.office.tut.ac.jp/portal/StudentApp/Top.aspx') {
-              if (context.mounted) {
+            try {
+              if (url ==
+                  'https://kyomu.office.tut.ac.jp/portal/StudentApp/Top.aspx') {
                 showGeneralDialog(
                   context: context,
                   barrierDismissible: false,
                   barrierColor: Colors.black.withOpacity(0.5),
                   pageBuilder: (context, animation, secondaryAnimation) =>
-                      const Center(
-                    child: CircularProgressIndicator(),
-                  ),
+                      const Center(child: CircularProgressIndicator()),
                 );
+                await _controller.runJavaScript(
+                    'document.querySelector("#ctl00_bhHeader_ctl16_lnk").click();');
+                return;
               }
-              await _controller.runJavaScript(
-                  'document.querySelector("#ctl00_bhHeader_ctl16_lnk").click();');
-            }
 
-            if (url ==
-                'https://kyomu.office.tut.ac.jp/portal/StudentApp/Blank.aspx#regist_results') {
-              await _controller.runJavaScript(
-                  'document.querySelector("#ctl00_bhHeader_ctl30_lnk").click();');
-            }
-
-            if (url ==
-                'https://kyomu.office.tut.ac.jp/portal/StudentApp/Regist/RegistList.aspx') {
-              await _controller.runJavaScript(
-                  await rootBundle.loadString('assets/get_timetable.js'));
-              final json = await _controller.runJavaScriptReturningResult(
-                  'JSON.stringify(getTimetable());') as String;
-
-              final decoded = jsonDecode(json);
-              final timetable = Timetable.fromJson({'list': decoded['normal']});
-              final timetable_ = await _getHalfTimetable(timetable, '2024', 0);
-
-              await ref.watch(timetableProvider.notifier).set(timetable_);
-
-              if (context.mounted) {
-                Navigator.of(context).pop();
-
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      content: const Text('時間割の取得が完了しました'),
-                      actions: <TextButton>[
-                        TextButton(
-                          child: const Text('閉じる'),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            AutoRouter.of(context).maybePop();
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                );
+              if (url ==
+                  'https://kyomu.office.tut.ac.jp/portal/StudentApp/Blank.aspx#regist_results') {
+                await _controller.runJavaScript(
+                    'document.querySelector("#ctl00_bhHeader_ctl30_lnk").click();');
+                return;
               }
+
+              if (url ==
+                  'https://kyomu.office.tut.ac.jp/portal/StudentApp/Regist/RegistList.aspx') {
+                await _controller.runJavaScript(
+                    await rootBundle.loadString('assets/get_timetable.js'));
+                await _controller.runJavaScript(
+                    'GetTimetable.postMessage(JSON.stringify(getTimetable()));');
+                return;
+              }
+            } catch (_) {
+              // 時間割取得時にエラー発生
+              Navigator.of(context).pop();
             }
           },
         ),
       )
+      ..addJavaScriptChannel(
+        'GetTimetable',
+        onMessageReceived: (JavaScriptMessage message) async {
+          try {
+            await AutoRouter.of(context).maybePop();
+            final decoded = jsonDecode(message.message);
+            final timetable = Timetable.fromJson({'list': decoded['normal']});
+            final timetable_ = await _getHalfTimetable(timetable, '2024', 0);
+            await ref.watch(timetableProvider.notifier).set(timetable_);
+
+            if (context.mounted) {
+              Navigator.of(context).pop();
+              showDialog(
+                context: context,
+                builder: (context) => const CompletedDialog(),
+              );
+            }
+          } catch (_) {
+            // 時間割取得時にエラー発生
+            if (context.mounted) {
+              Navigator.of(context).pop();
+            }
+          }
+        },
+      )
       ..loadRequest(Uri.parse('https://kyomu.office.tut.ac.jp/portal/'));
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('時間割の取得'),
-      ),
+      appBar: AppBar(title: const Text('時間割の取得')),
       body: WebViewWidget(controller: _controller),
+    );
+  }
+}
+
+@immutable
+class CompletedDialog extends StatelessWidget {
+  const CompletedDialog({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      content: const Text('時間割の取得が完了しました'),
+      actions: [
+        TextButton(
+          child: const Text('閉じる'),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ],
     );
   }
 }

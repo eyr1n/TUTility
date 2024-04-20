@@ -18,7 +18,7 @@ abstract class _$AppRouter extends RootStackRouter {
     CanteenRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const CanteenPage(),
+        child: CanteenPage(),
       );
     },
     GetTimetableRoute.name: (routeData) {

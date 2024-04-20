@@ -5,20 +5,18 @@ import 'package:webview_flutter/webview_flutter.dart';
 @RoutePage()
 @immutable
 class CanteenPage extends StatelessWidget {
-  const CanteenPage({super.key});
+  final WebViewController _controller = WebViewController()
+    ..setJavaScriptMode(JavaScriptMode.unrestricted)
+    ..setBackgroundColor(Colors.transparent)
+    ..loadRequest(Uri.parse('https://tut-canteen-menu.rinrin.me/inapp'));
+
+  CanteenPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setBackgroundColor(Colors.transparent)
-      ..loadRequest(Uri.parse('https://tut-canteen-menu.rinrin.me/inapp'));
-
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('食堂メニュー'),
-      ),
-      body: WebViewWidget(controller: controller),
+      appBar: AppBar(title: const Text('食堂メニュー')),
+      body: WebViewWidget(controller: _controller),
     );
   }
 }

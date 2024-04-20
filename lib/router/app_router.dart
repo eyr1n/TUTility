@@ -25,6 +25,5 @@ class AppRouter extends _$AppRouter {
           ],
         ),
         AutoRoute(page: GetTimetableRoute.page, fullscreenDialog: true),
-        // AutoRoute(page: InAppBrowserRoute.page, fullscreenDialog: true),
       ];
 }

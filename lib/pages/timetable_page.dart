@@ -62,43 +62,36 @@ class TimetablePage extends ConsumerWidget {
           ? SingleChildScrollView(
               child: Align(
                 alignment: Alignment.topCenter,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.all(8),
-                      constraints: const BoxConstraints(
-                        maxWidth: maxTimetableWidth,
-                      ),
-                      child: Table(
-                        columnWidths: const {
-                          0: IntrinsicColumnWidth(),
-                        },
-                        defaultVerticalAlignment:
-                            TableCellVerticalAlignment.middle,
+                child: Container(
+                  margin: const EdgeInsets.all(8),
+                  constraints: const BoxConstraints(
+                    maxWidth: maxTimetableWidth,
+                  ),
+                  child: Table(
+                    columnWidths: const {
+                      0: IntrinsicColumnWidth(),
+                    },
+                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                    children: [
+                      TableRow(
                         children: [
-                          TableRow(
-                            children: [
-                              const SizedBox.shrink(),
-                              for (int i = 1; i < 6; i++)
-                                TimetableWeekday(weekday: i),
-                            ],
-                          ),
-                          for (int row = 0; row < 6; row++)
-                            TableRow(
-                              children: [
-                                TimetablePeriod(period: row + 1),
-                                for (int col = 0; col < 5; col++)
-                                  halfTimetable[row][col]?.let((subject) =>
-                                          TimetableSubjectTile(
-                                              subject: subject)) ??
-                                      const TimetableEmptyTile(),
-                              ],
-                            ),
+                          const SizedBox.shrink(),
+                          for (int col = 0; col < 5; col++)
+                            TimetableWeekday(weekday: col + 1),
                         ],
                       ),
-                    ),
-                  ],
+                      for (int row = 0; row < 6; row++)
+                        TableRow(
+                          children: [
+                            TimetablePeriod(period: row + 1),
+                            for (int col = 0; col < 5; col++)
+                              halfTimetable[row][col]?.let((subject) =>
+                                      TimetableSubjectTile(subject: subject)) ??
+                                  const TimetableEmptyTile(),
+                          ],
+                        ),
+                    ],
+                  ),
                 ),
               ),
             )
