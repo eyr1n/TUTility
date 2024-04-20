@@ -1,8 +1,22 @@
+import 'dart:convert';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tutility/providers/shared_preferences.dart';
 
 part 'timetable.freezed.dart';
 part 'timetable.g.dart';
+
+enum Period {
+  spring('前期'),
+  fall('後期'),
+  ;
+
+  final String label;
+
+  const Period(this.label);
+}
 
 @freezed
 class Subject with _$Subject {
@@ -24,19 +38,6 @@ class Subject with _$Subject {
 }
 
 @freezed
-class Timetable with _$Timetable {
-  const factory Timetable({
-    required int period,
-    required int firstOrSecond,
-    required List<List<Subject?>> firstHalf,
-    required List<List<Subject?>> secondHalf,
-  }) = _Timetable;
-
-  factory Timetable.fromJson(Map<String, dynamic> json) =>
-      _$TimetableFromJson(json);
-}
-
-@freezed
 class TimetableFromJs with _$TimetableFromJs {
   const factory TimetableFromJs({
     required int year,
@@ -49,9 +50,36 @@ class TimetableFromJs with _$TimetableFromJs {
       _$TimetableFromJsFromJson(json);
 }
 
-final timetableProvider = sharedPreferencesProvider<Timetable?>(
-  key: '_timetable',
-  defaultValue: null,
-  fromJson: Timetable.fromJson,
-  toJson: (value) => value?.toJson(),
-);
+@freezed
+class Timetable with _$Timetable {
+  const factory Timetable({
+    required Period period,
+    required List<List<Subject?>> firstHalf,
+    required List<List<Subject?>> secondHalf,
+  }) = _Timetable;
+
+  factory Timetable.fromJson(Map<String, dynamic> json) =>
+      _$TimetableFromJson(json);
+}
+
+@riverpod
+class TimetableNotifier extends _$TimetableNotifier {
+  late SharedPreferences _sharedPreferences;
+
+  @override
+  Timetable? build() {
+    _sharedPreferences = ref.watch(sharedPreferencesProvider).requireValue;
+    try {
+      final str = _sharedPreferences.getString('timetable');
+      return str != null ? Timetable.fromJson(jsonDecode(str)) : null;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  Future<bool> set(Timetable? value) {
+    state = value;
+    return _sharedPreferences.setString(
+        'timetable', jsonEncode(value?.toJson()));
+  }
+}

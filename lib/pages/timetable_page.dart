@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tutility/providers/first_or_second.dart';
 import 'package:tutility/providers/timetable.dart';
 import 'package:tutility/router/app_router.dart';
 import 'package:tutility/widgets/timetable.dart';
@@ -12,11 +13,13 @@ class TimetablePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final timetable = ref.watch(timetableProvider);
+    final timetable = ref.watch(timetableNotifierProvider);
+    final firstOrSecond = ref.watch(firstOrSecondNotifierProvider);
 
-    final halfTimetable = timetable?.firstOrSecond == 0
-        ? timetable?.firstHalf
-        : timetable?.secondHalf;
+    final halfTimetable = switch (firstOrSecond) {
+      FirstOrSecond.first => timetable?.firstHalf,
+      FirstOrSecond.second => timetable?.secondHalf,
+    };
 
     return Scaffold(
       appBar: AppBar(
@@ -29,17 +32,18 @@ class TimetablePage extends ConsumerWidget {
                 segments: [
                   ButtonSegment(
                     value: 0,
-                    label: Text('${timetable.period == 0 ? "前期" : "後期"}1'),
+                    label: Text('${timetable.period.label}1'),
                   ),
                   ButtonSegment(
                     value: 1,
-                    label: Text('${timetable.period == 0 ? "前期" : "後期"}2'),
+                    label: Text('${timetable.period.label}2'),
                   ),
                 ],
-                selected: {timetable.firstOrSecond},
+                selected: {firstOrSecond.index},
                 onSelectionChanged: (newSelection) {
-                  ref.watch(timetableProvider.notifier).set(
-                      timetable.copyWith(firstOrSecond: newSelection.first));
+                  ref
+                      .watch(firstOrSecondNotifierProvider.notifier)
+                      .set(FirstOrSecond.values[newSelection.first]);
                 },
               )
             : null,

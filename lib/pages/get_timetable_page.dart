@@ -65,9 +65,8 @@ class GetTimetablePage extends ConsumerWidget {
           try {
             final timetableFromJs =
                 TimetableFromJs.fromJson(jsonDecode(message.message));
-            final timetable =
-                await _getHalfTimetable(timetableFromJs, '2024', 0);
-            await ref.watch(timetableProvider.notifier).set(timetable);
+            final timetable = await _getHalfTimetable(timetableFromJs);
+            await ref.watch(timetableNotifierProvider.notifier).set(timetable);
 
             if (context.mounted) {
               Navigator.of(context).pop();
@@ -93,10 +92,9 @@ class GetTimetablePage extends ConsumerWidget {
   }
 }
 
-Future<Timetable> _getHalfTimetable(
-    TimetableFromJs timetable, String year, int period) async {
-  final allSyllabusesJson = await http
-      .get(Uri.parse('https://syllabus.rinrin.me/ja/$year/all.min.json'));
+Future<Timetable> _getHalfTimetable(TimetableFromJs timetable) async {
+  final allSyllabusesJson = await http.get(Uri.parse(
+      'https://syllabus.rinrin.me/ja/${timetable.year}/all.min.json'));
   if (allSyllabusesJson.statusCode != 200) {
     throw Exception();
   }
@@ -107,17 +105,21 @@ Future<Timetable> _getHalfTimetable(
           ? Subject.fromJson(allSyllabuses[subject.id])
           : subject)));
 
+  final period = timetable.term == 'spring' ? Period.spring : Period.fall;
+
   return Timetable(
     period: period,
-    firstOrSecond: 0,
     firstHalf: replaced
         .map((row) => row
             .map((col) => col.where((subject) {
                   final term = subject.term;
                   return term != null
-                      ? (period == 0
-                          ? (!term.contains('前期2') || !term.contains('前2'))
-                          : (!term.contains('後期2') || !term.contains('後2')))
+                      ? switch (period) {
+                          Period.spring =>
+                            (!term.contains('前期2') || !term.contains('前2')),
+                          Period.fall =>
+                            (!term.contains('後期2') || !term.contains('後2')),
+                        }
                       : true;
                 }).firstOrNull)
             .toList()
@@ -129,9 +131,12 @@ Future<Timetable> _getHalfTimetable(
             .map((col) => col.where((subject) {
                   final term = subject.term;
                   return term != null
-                      ? (period == 0
-                          ? (!term.contains('前期1') || !term.contains('前1'))
-                          : (!term.contains('後期1') || !term.contains('後1')))
+                      ? switch (period) {
+                          Period.spring =>
+                            (!term.contains('前期1') || !term.contains('前1')),
+                          Period.fall =>
+                            (!term.contains('後期1') || !term.contains('後1')),
+                        }
                       : true;
                 }).firstOrNull)
             .toList()

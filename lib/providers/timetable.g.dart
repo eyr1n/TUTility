@@ -34,34 +34,6 @@ Map<String, dynamic> _$$SubjectImplToJson(_$SubjectImpl instance) =>
       'room': instance.room,
     };
 
-_$TimetableImpl _$$TimetableImplFromJson(Map<String, dynamic> json) =>
-    _$TimetableImpl(
-      period: json['period'] as int,
-      firstOrSecond: json['firstOrSecond'] as int,
-      firstHalf: (json['firstHalf'] as List<dynamic>)
-          .map((e) => (e as List<dynamic>)
-              .map((e) => e == null
-                  ? null
-                  : Subject.fromJson(e as Map<String, dynamic>))
-              .toList())
-          .toList(),
-      secondHalf: (json['secondHalf'] as List<dynamic>)
-          .map((e) => (e as List<dynamic>)
-              .map((e) => e == null
-                  ? null
-                  : Subject.fromJson(e as Map<String, dynamic>))
-              .toList())
-          .toList(),
-    );
-
-Map<String, dynamic> _$$TimetableImplToJson(_$TimetableImpl instance) =>
-    <String, dynamic>{
-      'period': instance.period,
-      'firstOrSecond': instance.firstOrSecond,
-      'firstHalf': instance.firstHalf,
-      'secondHalf': instance.secondHalf,
-    };
-
 _$TimetableFromJsImpl _$$TimetableFromJsImplFromJson(
         Map<String, dynamic> json) =>
     _$TimetableFromJsImpl(
@@ -91,3 +63,57 @@ Map<String, dynamic> _$$TimetableFromJsImplToJson(
       'normal': instance.normal,
       'intensive': instance.intensive,
     };
+
+_$TimetableImpl _$$TimetableImplFromJson(Map<String, dynamic> json) =>
+    _$TimetableImpl(
+      period: $enumDecode(_$PeriodEnumMap, json['period']),
+      firstHalf: (json['firstHalf'] as List<dynamic>)
+          .map((e) => (e as List<dynamic>)
+              .map((e) => e == null
+                  ? null
+                  : Subject.fromJson(e as Map<String, dynamic>))
+              .toList())
+          .toList(),
+      secondHalf: (json['secondHalf'] as List<dynamic>)
+          .map((e) => (e as List<dynamic>)
+              .map((e) => e == null
+                  ? null
+                  : Subject.fromJson(e as Map<String, dynamic>))
+              .toList())
+          .toList(),
+    );
+
+Map<String, dynamic> _$$TimetableImplToJson(_$TimetableImpl instance) =>
+    <String, dynamic>{
+      'period': _$PeriodEnumMap[instance.period]!,
+      'firstHalf': instance.firstHalf,
+      'secondHalf': instance.secondHalf,
+    };
+
+const _$PeriodEnumMap = {
+  Period.spring: 'spring',
+  Period.fall: 'fall',
+};
+
+// **************************************************************************
+// RiverpodGenerator
+// **************************************************************************
+
+String _$timetableNotifierHash() => r'915ec70ef886a2068fb98adcb7862fa601608e6e';
+
+/// See also [TimetableNotifier].
+@ProviderFor(TimetableNotifier)
+final timetableNotifierProvider =
+    AutoDisposeNotifierProvider<TimetableNotifier, Timetable?>.internal(
+  TimetableNotifier.new,
+  name: r'timetableNotifierProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$timetableNotifierHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$TimetableNotifier = AutoDisposeNotifier<Timetable?>;
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

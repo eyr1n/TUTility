@@ -23,9 +23,7 @@ class TimetableWidget extends StatelessWidget {
         maxWidth: maxTimetableWidth,
       ),
       child: Table(
-        columnWidths: const {
-          0: IntrinsicColumnWidth(),
-        },
+        columnWidths: const {0: IntrinsicColumnWidth()},
         defaultVerticalAlignment: TableCellVerticalAlignment.middle,
         children: [
           TableRow(

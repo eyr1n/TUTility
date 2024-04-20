@@ -25,7 +25,7 @@ class MiscPage extends ConsumerWidget {
                   context: context,
                   message: '時間割をリセットしますか?',
                   onOk: () {
-                    ref.watch(timetableProvider.notifier).set(null);
+                    ref.watch(timetableNotifierProvider.notifier).set(null);
                     showAlertDialog(
                       context: context,
                       message: '時間割のリセットが完了しました',
