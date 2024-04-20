@@ -5,7 +5,7 @@ import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:tutility/font_scaler.dart';
 import 'package:tutility/model/subject.dart';
-import 'package:tutility/widgets/timetable_base_tile.dart';
+import 'package:tutility/widget/timetable_base_tile.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 const List<MaterialColor> _palette = [

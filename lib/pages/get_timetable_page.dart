@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tutility/model/timetable.dart';
 import 'package:tutility/provider/timetable.dart';
-import 'package:tutility/widgets/alert_dialog.dart';
+import 'package:tutility/widget/alert_dialog.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 @RoutePage()

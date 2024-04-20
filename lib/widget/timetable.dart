@@ -2,10 +2,10 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:tutility/font_scaler.dart';
 import 'package:tutility/model/subject.dart';
-import 'package:tutility/widgets/timetable_empty_tile.dart';
-import 'package:tutility/widgets/timetable_period.dart';
-import 'package:tutility/widgets/timetable_subject_tile.dart';
-import 'package:tutility/widgets/timetable_weekday.dart';
+import 'package:tutility/widget/timetable_empty_tile.dart';
+import 'package:tutility/widget/timetable_period.dart';
+import 'package:tutility/widget/timetable_subject_tile.dart';
+import 'package:tutility/widget/timetable_weekday.dart';
 
 class TimetableWidget extends StatelessWidget {
   final List<List<Subject?>> timetable;

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:tutility/provider/timetable.dart';
-import 'package:tutility/widgets/alert_dialog.dart';
-import 'package:tutility/widgets/confirm_dialog.dart';
+import 'package:tutility/widget/alert_dialog.dart';
+import 'package:tutility/widget/confirm_dialog.dart';
 
 @RoutePage()
 @immutable

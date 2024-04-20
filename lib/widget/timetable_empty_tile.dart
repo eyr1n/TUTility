@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tutility/widgets/timetable_base_tile.dart';
+import 'package:tutility/widget/timetable_base_tile.dart';
 
 @immutable
 class TimetableEmptyTile extends StatelessWidget {

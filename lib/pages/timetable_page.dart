@@ -5,7 +5,7 @@ import 'package:tutility/model/term.dart';
 import 'package:tutility/provider/term.dart';
 import 'package:tutility/provider/timetable.dart';
 import 'package:tutility/router/app_router.dart';
-import 'package:tutility/widgets/timetable.dart';
+import 'package:tutility/widget/timetable.dart';
 
 @RoutePage()
 @immutable
