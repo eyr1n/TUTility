@@ -1,0 +1,4 @@
+enum Term {
+  firstHalf,
+  secondHalf,
+}

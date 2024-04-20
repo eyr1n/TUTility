@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:tutility/font_scaler.dart';
-import 'package:tutility/providers/timetable.dart';
+import 'package:tutility/model/subject.dart';
 import 'package:tutility/widgets/timetable_base_tile.dart';
 import 'package:url_launcher/url_launcher.dart';
 

@@ -2,6 +2,29 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:tutility/router/app_router.dart';
 
+List<_Destination> _destinations = [
+  const _Destination(
+    icon: Icon(Icons.calendar_month),
+    label: '時間割',
+    route: TimetableRoute(),
+  ),
+  _Destination(
+    icon: const Icon(Icons.restaurant),
+    label: '食堂',
+    route: CanteenRoute(),
+  ),
+  const _Destination(
+    icon: Icon(Icons.language),
+    label: 'リンク',
+    route: LinksRoute(),
+  ),
+  const _Destination(
+    icon: Icon(Icons.more_horiz),
+    label: 'その他',
+    route: MiscRoute(),
+  ),
+];
+
 @RoutePage()
 @immutable
 class HomePage extends StatelessWidget {
@@ -67,26 +90,3 @@ class _Destination {
     required this.route,
   });
 }
-
-List<_Destination> _destinations = [
-  const _Destination(
-    icon: Icon(Icons.calendar_month),
-    label: '時間割',
-    route: TimetableRoute(),
-  ),
-  _Destination(
-    icon: const Icon(Icons.restaurant),
-    label: '食堂',
-    route: CanteenRoute(),
-  ),
-  const _Destination(
-    icon: Icon(Icons.language),
-    label: 'リンク',
-    route: LinksRoute(),
-  ),
-  const _Destination(
-    icon: Icon(Icons.more_horiz),
-    label: 'その他',
-    route: MiscRoute(),
-  ),
-];

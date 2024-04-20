@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tutility/providers/shared_preferences.dart';
 import 'package:tutility/router/app_router.dart';
+import 'package:tutility/widgets/shared_preferences_scope.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(ProviderScope(
-    child: SharedPreferencesScope(
-      child: App(),
-    ),
+    child: SharedPreferencesScope(child: App()),
   ));
 }
 

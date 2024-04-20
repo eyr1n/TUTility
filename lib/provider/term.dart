@@ -1,13 +1,9 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tutility/providers/shared_preferences.dart';
+import 'package:tutility/model/term.dart';
+import 'package:tutility/provider/shared_preferences.dart';
 
 part 'term.g.dart';
-
-enum Term {
-  firstHalf,
-  secondHalf,
-}
 
 @riverpod
 class TermNotifier extends _$TermNotifier {

@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:tutility/font_scaler.dart';
-import 'package:tutility/providers/timetable.dart';
+import 'package:tutility/model/subject.dart';
 import 'package:tutility/widgets/timetable_empty_tile.dart';
 import 'package:tutility/widgets/timetable_period.dart';
 import 'package:tutility/widgets/timetable_subject_tile.dart';

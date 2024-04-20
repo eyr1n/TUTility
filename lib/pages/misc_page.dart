@@ -2,8 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:tutility/dialog.dart';
-import 'package:tutility/providers/timetable.dart';
+import 'package:tutility/provider/timetable.dart';
+import 'package:tutility/widgets/alert_dialog.dart';
+import 'package:tutility/widgets/confirm_dialog.dart';
 
 @RoutePage()
 @immutable

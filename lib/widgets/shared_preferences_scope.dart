@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tutility/provider/shared_preferences.dart';
 
-part 'shared_preferences.g.dart';
-
-@Riverpod(keepAlive: true)
-Future<SharedPreferences> sharedPreferences(SharedPreferencesRef ref) =>
-    SharedPreferences.getInstance();
-
+@immutable
 class SharedPreferencesScope extends ConsumerWidget {
   final Widget child;
 

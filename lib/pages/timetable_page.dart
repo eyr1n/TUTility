@@ -1,8 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tutility/providers/term.dart';
-import 'package:tutility/providers/timetable.dart';
+import 'package:tutility/model/term.dart';
+import 'package:tutility/provider/term.dart';
+import 'package:tutility/provider/timetable.dart';
 import 'package:tutility/router/app_router.dart';
 import 'package:tutility/widgets/timetable.dart';
 
