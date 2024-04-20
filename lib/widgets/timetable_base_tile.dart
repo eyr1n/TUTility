@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tutility/scope_functions.dart';
 
 @immutable
 class TimetableBaseTile extends StatelessWidget {
@@ -23,10 +22,12 @@ class TimetableBaseTile extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             color: backgroundColor,
-            border: borderColor?.let((color) => Border.all(
-                  color: color,
-                  width: 1,
-                )),
+            border: borderColor != null
+                ? Border.all(
+                    color: borderColor!,
+                    width: 1,
+                  )
+                : null,
             borderRadius: BorderRadius.circular(4),
           ),
           child: child,

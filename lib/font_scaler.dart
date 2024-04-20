@@ -1,7 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:tutility/constants.dart';
+
+const double baseScreenWidth = 360;
+const double maxTimetableWidth = 580;
+const double maxFontScale = 1.5;
 
 extension FontScaler on num {
   double scale(BuildContext context) {

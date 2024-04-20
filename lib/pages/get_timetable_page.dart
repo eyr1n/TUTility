@@ -5,9 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
+import 'package:tutility/dialog.dart';
 import 'package:tutility/providers/timetable.dart';
-import 'package:tutility/scope_functions.dart';
-import 'package:tutility/widgets/simple_alert_dialog.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 @RoutePage()
@@ -55,9 +54,7 @@ class GetTimetablePage extends ConsumerWidget {
                 return;
               }
             } catch (_) {
-              // 時間割取得時にエラー発生
-              Navigator.of(context).pop();
-              AutoRouter.of(context).popForced();
+              _errorHandler(context);
             }
           },
         ),
@@ -75,17 +72,14 @@ class GetTimetablePage extends ConsumerWidget {
             if (context.mounted) {
               Navigator.of(context).pop();
               AutoRouter.of(context).popForced();
-              showDialog(
+              showAlertDialog(
                 context: context,
-                builder: (context) =>
-                    const SimpleAlertDialog(message: '時間割の取得が完了しました'),
+                message: '時間割の取得が完了しました',
               );
             }
           } catch (_) {
-            // 時間割取得時にエラー発生
             if (context.mounted) {
-              Navigator.of(context).pop();
-              AutoRouter.of(context).popForced();
+              _errorHandler(context);
             }
           }
         },
@@ -118,25 +112,40 @@ Future<Timetable> _getHalfTimetable(
     firstOrSecond: 0,
     firstHalf: replaced
         .map((row) => row
-            .map((col) => col
-                .where((subject) =>
-                    subject.term?.let((term) => period == 0
-                        ? (!term.contains('前期2') || !term.contains('前2'))
-                        : (!term.contains('後期2') || !term.contains('後2'))) ??
-                    true)
-                .firstOrNull)
-            .toList())
-        .toList(),
+            .map((col) => col.where((subject) {
+                  final term = subject.term;
+                  return term != null
+                      ? (period == 0
+                          ? (!term.contains('前期2') || !term.contains('前2'))
+                          : (!term.contains('後期2') || !term.contains('後2')))
+                      : true;
+                }).firstOrNull)
+            .toList()
+            .sublist(0, 5))
+        .toList()
+        .sublist(0, 6),
     secondHalf: replaced
         .map((row) => row
-            .map((col) => col
-                .where((subject) =>
-                    subject.term?.let((term) => period == 0
-                        ? (!term.contains('前期1') || !term.contains('前1'))
-                        : (!term.contains('後期1') || !term.contains('後1'))) ??
-                    true)
-                .firstOrNull)
-            .toList())
-        .toList(),
+            .map((col) => col.where((subject) {
+                  final term = subject.term;
+                  return term != null
+                      ? (period == 0
+                          ? (!term.contains('前期1') || !term.contains('前1'))
+                          : (!term.contains('後期1') || !term.contains('後1')))
+                      : true;
+                }).firstOrNull)
+            .toList()
+            .sublist(0, 5))
+        .toList()
+        .sublist(0, 6),
+  );
+}
+
+void _errorHandler(BuildContext context) {
+  Navigator.of(context).pop();
+  AutoRouter.of(context).popForced();
+  showAlertDialog(
+    context: context,
+    message: '時間割の取得時にエラーが発生しました',
   );
 }

@@ -3,11 +3,29 @@ import 'dart:typed_data';
 
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
-import 'package:tutility/constants.dart';
 import 'package:tutility/font_scaler.dart';
 import 'package:tutility/providers/timetable.dart';
 import 'package:tutility/widgets/timetable_base_tile.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+const List<MaterialColor> _palette = [
+  Colors.pink,
+  Colors.red,
+  Colors.deepOrange,
+  Colors.orange,
+  Colors.amber,
+  Colors.yellow,
+  Colors.lime,
+  Colors.lightGreen,
+  Colors.green,
+  Colors.teal,
+  Colors.cyan,
+  Colors.lightBlue,
+  Colors.blue,
+  Colors.indigo,
+  Colors.purple,
+  Colors.deepPurple,
+];
 
 @immutable
 class TimetableSubjectTile extends StatelessWidget {
@@ -20,7 +38,7 @@ class TimetableSubjectTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = palette[_paletteIndexFromSubjectId(subject.id)];
+    final color = _palette[_paletteIndexFromSubjectId(subject.id)];
 
     return GestureDetector(
       child: TimetableBaseTile(
@@ -121,4 +139,4 @@ int _paletteIndexFromSubjectId(String id) =>
         .buffer
         .asByteData()
         .getUint32(0, Endian.little) %
-    palette.length;
+    _palette.length;

@@ -7,6 +7,7 @@ environment:
 
 dependencies:
   auto_route: ^8.0.3
+  collection: ^1.18.0
   crypto: ^3.0.3
   file: ^7.0.0
   flutter:

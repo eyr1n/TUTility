@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:tutility/dialog.dart';
 import 'package:tutility/providers/timetable.dart';
 
 @RoutePage()
@@ -12,9 +13,7 @@ class MiscPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('その他'),
-      ),
+      appBar: AppBar(title: const Text('その他')),
       body: ListView(
         children: ListTile.divideTiles(
           context: context,
@@ -22,42 +21,14 @@ class MiscPage extends ConsumerWidget {
             ListTile(
               title: const Text('時間割をリセット'),
               onTap: () {
-                showDialog(
+                showConfirmDialog(
                   context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      content: const Text('時間割をリセットしますか?'),
-                      actions: <TextButton>[
-                        TextButton(
-                          child: const Text('いいえ'),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                        TextButton(
-                          child: const Text('はい'),
-                          onPressed: () {
-                            ref.watch(timetableProvider.notifier).set(null);
-                            Navigator.of(context).pop();
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  content: const Text('時間割のリセットが完了しました'),
-                                  actions: <TextButton>[
-                                    TextButton(
-                                      child: const Text('閉じる'),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          },
-                        ),
-                      ],
+                  message: '時間割をリセットしますか?',
+                  onOk: () {
+                    ref.watch(timetableProvider.notifier).set(null);
+                    showAlertDialog(
+                      context: context,
+                      message: '時間割のリセットが完了しました',
                     );
                   },
                 );

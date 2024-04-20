@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tutility/constants.dart';
 import 'package:tutility/font_scaler.dart';
+
+const List<String> _weekdays = ['日', '月', '火', '水', '木', '金', '土'];
 
 @immutable
 class TimetableWeekday extends StatelessWidget {
@@ -30,7 +31,7 @@ class TimetableWeekday extends StatelessWidget {
               )
             : null,
         child: Text(
-          weekdays[weekday],
+          _weekdays[weekday],
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 13.scale(context),
