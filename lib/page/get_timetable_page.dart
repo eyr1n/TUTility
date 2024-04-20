@@ -68,7 +68,7 @@ class GetTimetablePage extends ConsumerWidget {
             final timetable = Timetable.fromJson(jsonDecode(message.message));
             final syllabusJson = await http.get(Uri.parse(
                 'https://syllabus.rinrin.me/ja/${timetable.year}/all.min.json'));
-            final Map<String, dynamic> syllabus = jsonDecode(syllabusJson.body);
+            final syllabus = jsonDecode(syllabusJson.body);
 
             List<List<Subject?>> replaceWithSubject(
                     List<List<Subject?>> timetable) =>
