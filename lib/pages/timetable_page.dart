@@ -60,20 +60,19 @@ class TimetablePage extends ConsumerWidget {
       ),
       body: firstOrSecond != null
           ? SingleChildScrollView(
-              child: Align(
+              child: Container(
+                margin: const EdgeInsets.all(8),
                 alignment: Alignment.topCenter,
                 child: TimetableView(timetable: firstOrSecond),
               ),
             )
-          : Align(
+          : Container(
+              margin: const EdgeInsets.all(8),
               alignment: Alignment.center,
-              child: Container(
-                margin: const EdgeInsets.all(8),
-                child: const Center(
-                  child: Text(
-                    '右上のボタンから時間割を取得できます',
-                    textAlign: TextAlign.center,
-                  ),
+              child: const Center(
+                child: Text(
+                  '右上のボタンから時間割を取得できます',
+                  textAlign: TextAlign.center,
                 ),
               ),
             ),

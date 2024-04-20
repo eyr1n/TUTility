@@ -14,6 +14,7 @@ class SharedPreferencesScope extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final sharedPreferences = ref.watch(sharedPreferencesProvider);
+
     return switch (sharedPreferences) {
       AsyncData _ => child,
       _ => const SizedBox.shrink(),

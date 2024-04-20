@@ -14,7 +14,7 @@ class TimetableWeekday extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final weekdayNow = DateTime.now().weekday;
+    final isToday = DateTime.now().weekday == weekday;
 
     return Align(
       alignment: Alignment.center,
@@ -24,7 +24,7 @@ class TimetableWeekday extends StatelessWidget {
           horizontal: 16.scale(context),
           vertical: 2.scale(context),
         ),
-        decoration: weekdayNow == weekday
+        decoration: isToday
             ? BoxDecoration(
                 color: Theme.of(context).colorScheme.primaryContainer,
                 borderRadius: BorderRadius.circular(50),
