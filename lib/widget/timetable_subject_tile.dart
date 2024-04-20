@@ -39,6 +39,7 @@ class TimetableSubjectTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = _palette[_paletteIndexFromSubjectId(subject.id)];
+    final room = subject.room;
 
     return GestureDetector(
       child: TimetableBaseTile(
@@ -62,14 +63,14 @@ class TimetableSubjectTile extends StatelessWidget {
                 ),
               ),
             ),
-            if (subject.room != null)
+            if (room != null)
               Container(
                 height: 22.scale(context),
                 padding: const EdgeInsets.all(2),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(color: color[200]),
                 child: Text(
-                  subject.room!,
+                  room,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(

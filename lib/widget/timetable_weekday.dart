@@ -16,10 +16,10 @@ class TimetableWeekday extends StatelessWidget {
   Widget build(BuildContext context) {
     final isToday = DateTime.now().weekday == weekday;
 
-    return Align(
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 2.scale(context)),
       alignment: Alignment.center,
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 2.scale(context)),
         padding: EdgeInsets.symmetric(
           horizontal: 16.scale(context),
           vertical: 2.scale(context),

@@ -61,13 +61,13 @@ class TimetablePage extends ConsumerWidget {
       body: firstOrSecond != null
           ? SingleChildScrollView(
               child: Container(
-                margin: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(8),
                 alignment: Alignment.topCenter,
                 child: TimetableView(timetable: firstOrSecond),
               ),
             )
           : Container(
-              margin: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               alignment: Alignment.center,
               child: const Center(
                 child: Text(
