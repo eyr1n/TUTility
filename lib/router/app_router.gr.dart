@@ -16,9 +16,11 @@ abstract class _$AppRouter extends RootStackRouter {
   @override
   final Map<String, PageFactory> pagesMap = {
     CanteenRoute.name: (routeData) {
+      final args = routeData.argsAs<CanteenRouteArgs>(
+          orElse: () => const CanteenRouteArgs());
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: CanteenPage(),
+        child: CanteenPage(key: args.key),
       );
     },
     GetTimetableRoute.name: (routeData) {
@@ -33,16 +35,6 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const HomePage(),
-      );
-    },
-    InAppBrowserRoute.name: (routeData) {
-      final args = routeData.argsAs<InAppBrowserRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: InAppBrowserPage(
-          key: args.key,
-          uri: args.uri,
-        ),
       );
     },
     LinksRoute.name: (routeData) {
@@ -68,16 +60,31 @@ abstract class _$AppRouter extends RootStackRouter {
 
 /// generated route for
 /// [CanteenPage]
-class CanteenRoute extends PageRouteInfo<void> {
-  const CanteenRoute({List<PageRouteInfo>? children})
-      : super(
+class CanteenRoute extends PageRouteInfo<CanteenRouteArgs> {
+  CanteenRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
           CanteenRoute.name,
+          args: CanteenRouteArgs(key: key),
           initialChildren: children,
         );
 
   static const String name = 'CanteenRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<CanteenRouteArgs> page =
+      PageInfo<CanteenRouteArgs>(name);
+}
+
+class CanteenRouteArgs {
+  const CanteenRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'CanteenRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for
@@ -121,44 +128,6 @@ class HomeRoute extends PageRouteInfo<void> {
   static const String name = 'HomeRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [InAppBrowserPage]
-class InAppBrowserRoute extends PageRouteInfo<InAppBrowserRouteArgs> {
-  InAppBrowserRoute({
-    Key? key,
-    required Uri uri,
-    List<PageRouteInfo>? children,
-  }) : super(
-          InAppBrowserRoute.name,
-          args: InAppBrowserRouteArgs(
-            key: key,
-            uri: uri,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'InAppBrowserRoute';
-
-  static const PageInfo<InAppBrowserRouteArgs> page =
-      PageInfo<InAppBrowserRouteArgs>(name);
-}
-
-class InAppBrowserRouteArgs {
-  const InAppBrowserRouteArgs({
-    this.key,
-    required this.uri,
-  });
-
-  final Key? key;
-
-  final Uri uri;
-
-  @override
-  String toString() {
-    return 'InAppBrowserRouteArgs{key: $key, uri: $uri}';
-  }
 }
 
 /// generated route for

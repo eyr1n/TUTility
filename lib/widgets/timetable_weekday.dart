@@ -6,7 +6,10 @@ import 'package:tutility/font_scaler.dart';
 class TimetableWeekday extends StatelessWidget {
   final int weekday;
 
-  const TimetableWeekday({super.key, required this.weekday});
+  const TimetableWeekday({
+    super.key,
+    required this.weekday,
+  });
 
   @override
   Widget build(BuildContext context) {

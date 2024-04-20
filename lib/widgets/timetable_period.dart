@@ -5,7 +5,10 @@ import 'package:tutility/font_scaler.dart';
 class TimetablePeriod extends StatelessWidget {
   final int period;
 
-  const TimetablePeriod({super.key, required this.period});
+  const TimetablePeriod({
+    super.key,
+    required this.period,
+  });
 
   @override
   Widget build(BuildContext context) {

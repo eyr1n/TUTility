@@ -7,8 +7,12 @@ class TimetableBaseTile extends StatelessWidget {
   final Color? borderColor;
   final Widget? child;
 
-  const TimetableBaseTile(
-      {super.key, required this.backgroundColor, this.borderColor, this.child});
+  const TimetableBaseTile({
+    super.key,
+    required this.backgroundColor,
+    this.borderColor,
+    this.child,
+  });
 
   @override
   Widget build(BuildContext context) {

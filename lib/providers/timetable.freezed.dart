@@ -332,12 +332,12 @@ abstract class _Subject implements Subject {
       throw _privateConstructorUsedError;
 }
 
-Timetable2 _$Timetable2FromJson(Map<String, dynamic> json) {
-  return _Timetable2.fromJson(json);
+Timetable _$TimetableFromJson(Map<String, dynamic> json) {
+  return _Timetable.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Timetable2 {
+mixin _$Timetable {
   int get period => throw _privateConstructorUsedError;
   int get firstOrSecond => throw _privateConstructorUsedError;
   List<List<Subject?>> get firstHalf => throw _privateConstructorUsedError;
@@ -345,15 +345,14 @@ mixin _$Timetable2 {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $Timetable2CopyWith<Timetable2> get copyWith =>
+  $TimetableCopyWith<Timetable> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $Timetable2CopyWith<$Res> {
-  factory $Timetable2CopyWith(
-          Timetable2 value, $Res Function(Timetable2) then) =
-      _$Timetable2CopyWithImpl<$Res, Timetable2>;
+abstract class $TimetableCopyWith<$Res> {
+  factory $TimetableCopyWith(Timetable value, $Res Function(Timetable) then) =
+      _$TimetableCopyWithImpl<$Res, Timetable>;
   @useResult
   $Res call(
       {int period,
@@ -363,9 +362,9 @@ abstract class $Timetable2CopyWith<$Res> {
 }
 
 /// @nodoc
-class _$Timetable2CopyWithImpl<$Res, $Val extends Timetable2>
-    implements $Timetable2CopyWith<$Res> {
-  _$Timetable2CopyWithImpl(this._value, this._then);
+class _$TimetableCopyWithImpl<$Res, $Val extends Timetable>
+    implements $TimetableCopyWith<$Res> {
+  _$TimetableCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -402,11 +401,11 @@ class _$Timetable2CopyWithImpl<$Res, $Val extends Timetable2>
 }
 
 /// @nodoc
-abstract class _$$Timetable2ImplCopyWith<$Res>
-    implements $Timetable2CopyWith<$Res> {
-  factory _$$Timetable2ImplCopyWith(
-          _$Timetable2Impl value, $Res Function(_$Timetable2Impl) then) =
-      __$$Timetable2ImplCopyWithImpl<$Res>;
+abstract class _$$TimetableImplCopyWith<$Res>
+    implements $TimetableCopyWith<$Res> {
+  factory _$$TimetableImplCopyWith(
+          _$TimetableImpl value, $Res Function(_$TimetableImpl) then) =
+      __$$TimetableImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -417,11 +416,11 @@ abstract class _$$Timetable2ImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$Timetable2ImplCopyWithImpl<$Res>
-    extends _$Timetable2CopyWithImpl<$Res, _$Timetable2Impl>
-    implements _$$Timetable2ImplCopyWith<$Res> {
-  __$$Timetable2ImplCopyWithImpl(
-      _$Timetable2Impl _value, $Res Function(_$Timetable2Impl) _then)
+class __$$TimetableImplCopyWithImpl<$Res>
+    extends _$TimetableCopyWithImpl<$Res, _$TimetableImpl>
+    implements _$$TimetableImplCopyWith<$Res> {
+  __$$TimetableImplCopyWithImpl(
+      _$TimetableImpl _value, $Res Function(_$TimetableImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -432,7 +431,7 @@ class __$$Timetable2ImplCopyWithImpl<$Res>
     Object? firstHalf = null,
     Object? secondHalf = null,
   }) {
-    return _then(_$Timetable2Impl(
+    return _then(_$TimetableImpl(
       period: null == period
           ? _value.period
           : period // ignore: cast_nullable_to_non_nullable
@@ -455,8 +454,8 @@ class __$$Timetable2ImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$Timetable2Impl implements _Timetable2 {
-  const _$Timetable2Impl(
+class _$TimetableImpl implements _Timetable {
+  const _$TimetableImpl(
       {required this.period,
       required this.firstOrSecond,
       required final List<List<Subject?>> firstHalf,
@@ -464,8 +463,8 @@ class _$Timetable2Impl implements _Timetable2 {
       : _firstHalf = firstHalf,
         _secondHalf = secondHalf;
 
-  factory _$Timetable2Impl.fromJson(Map<String, dynamic> json) =>
-      _$$Timetable2ImplFromJson(json);
+  factory _$TimetableImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TimetableImplFromJson(json);
 
   @override
   final int period;
@@ -489,14 +488,14 @@ class _$Timetable2Impl implements _Timetable2 {
 
   @override
   String toString() {
-    return 'Timetable2(period: $period, firstOrSecond: $firstOrSecond, firstHalf: $firstHalf, secondHalf: $secondHalf)';
+    return 'Timetable(period: $period, firstOrSecond: $firstOrSecond, firstHalf: $firstHalf, secondHalf: $secondHalf)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$Timetable2Impl &&
+            other is _$TimetableImpl &&
             (identical(other.period, period) || other.period == period) &&
             (identical(other.firstOrSecond, firstOrSecond) ||
                 other.firstOrSecond == firstOrSecond) &&
@@ -518,158 +517,6 @@ class _$Timetable2Impl implements _Timetable2 {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$Timetable2ImplCopyWith<_$Timetable2Impl> get copyWith =>
-      __$$Timetable2ImplCopyWithImpl<_$Timetable2Impl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$Timetable2ImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _Timetable2 implements Timetable2 {
-  const factory _Timetable2(
-      {required final int period,
-      required final int firstOrSecond,
-      required final List<List<Subject?>> firstHalf,
-      required final List<List<Subject?>> secondHalf}) = _$Timetable2Impl;
-
-  factory _Timetable2.fromJson(Map<String, dynamic> json) =
-      _$Timetable2Impl.fromJson;
-
-  @override
-  int get period;
-  @override
-  int get firstOrSecond;
-  @override
-  List<List<Subject?>> get firstHalf;
-  @override
-  List<List<Subject?>> get secondHalf;
-  @override
-  @JsonKey(ignore: true)
-  _$$Timetable2ImplCopyWith<_$Timetable2Impl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-Timetable _$TimetableFromJson(Map<String, dynamic> json) {
-  return _Timetable.fromJson(json);
-}
-
-/// @nodoc
-mixin _$Timetable {
-  List<List<List<Subject>>> get list => throw _privateConstructorUsedError;
-
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $TimetableCopyWith<Timetable> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $TimetableCopyWith<$Res> {
-  factory $TimetableCopyWith(Timetable value, $Res Function(Timetable) then) =
-      _$TimetableCopyWithImpl<$Res, Timetable>;
-  @useResult
-  $Res call({List<List<List<Subject>>> list});
-}
-
-/// @nodoc
-class _$TimetableCopyWithImpl<$Res, $Val extends Timetable>
-    implements $TimetableCopyWith<$Res> {
-  _$TimetableCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? list = null,
-  }) {
-    return _then(_value.copyWith(
-      list: null == list
-          ? _value.list
-          : list // ignore: cast_nullable_to_non_nullable
-              as List<List<List<Subject>>>,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$TimetableImplCopyWith<$Res>
-    implements $TimetableCopyWith<$Res> {
-  factory _$$TimetableImplCopyWith(
-          _$TimetableImpl value, $Res Function(_$TimetableImpl) then) =
-      __$$TimetableImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({List<List<List<Subject>>> list});
-}
-
-/// @nodoc
-class __$$TimetableImplCopyWithImpl<$Res>
-    extends _$TimetableCopyWithImpl<$Res, _$TimetableImpl>
-    implements _$$TimetableImplCopyWith<$Res> {
-  __$$TimetableImplCopyWithImpl(
-      _$TimetableImpl _value, $Res Function(_$TimetableImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? list = null,
-  }) {
-    return _then(_$TimetableImpl(
-      list: null == list
-          ? _value._list
-          : list // ignore: cast_nullable_to_non_nullable
-              as List<List<List<Subject>>>,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$TimetableImpl implements _Timetable {
-  const _$TimetableImpl({required final List<List<List<Subject>>> list})
-      : _list = list;
-
-  factory _$TimetableImpl.fromJson(Map<String, dynamic> json) =>
-      _$$TimetableImplFromJson(json);
-
-  final List<List<List<Subject>>> _list;
-  @override
-  List<List<List<Subject>>> get list {
-    if (_list is EqualUnmodifiableListView) return _list;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_list);
-  }
-
-  @override
-  String toString() {
-    return 'Timetable(list: $list)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$TimetableImpl &&
-            const DeepCollectionEquality().equals(other._list, _list));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_list));
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
   _$$TimetableImplCopyWith<_$TimetableImpl> get copyWith =>
       __$$TimetableImplCopyWithImpl<_$TimetableImpl>(this, _$identity);
 
@@ -682,16 +529,246 @@ class _$TimetableImpl implements _Timetable {
 }
 
 abstract class _Timetable implements Timetable {
-  const factory _Timetable({required final List<List<List<Subject>>> list}) =
-      _$TimetableImpl;
+  const factory _Timetable(
+      {required final int period,
+      required final int firstOrSecond,
+      required final List<List<Subject?>> firstHalf,
+      required final List<List<Subject?>> secondHalf}) = _$TimetableImpl;
 
   factory _Timetable.fromJson(Map<String, dynamic> json) =
       _$TimetableImpl.fromJson;
 
   @override
-  List<List<List<Subject>>> get list;
+  int get period;
+  @override
+  int get firstOrSecond;
+  @override
+  List<List<Subject?>> get firstHalf;
+  @override
+  List<List<Subject?>> get secondHalf;
   @override
   @JsonKey(ignore: true)
   _$$TimetableImplCopyWith<_$TimetableImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+TimetableFromJs _$TimetableFromJsFromJson(Map<String, dynamic> json) {
+  return _TimetableFromJs.fromJson(json);
+}
+
+/// @nodoc
+mixin _$TimetableFromJs {
+  int get year => throw _privateConstructorUsedError;
+  String get term => throw _privateConstructorUsedError;
+  List<List<List<Subject>>> get normal => throw _privateConstructorUsedError;
+  List<List<List<Subject>>> get intensive => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $TimetableFromJsCopyWith<TimetableFromJs> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $TimetableFromJsCopyWith<$Res> {
+  factory $TimetableFromJsCopyWith(
+          TimetableFromJs value, $Res Function(TimetableFromJs) then) =
+      _$TimetableFromJsCopyWithImpl<$Res, TimetableFromJs>;
+  @useResult
+  $Res call(
+      {int year,
+      String term,
+      List<List<List<Subject>>> normal,
+      List<List<List<Subject>>> intensive});
+}
+
+/// @nodoc
+class _$TimetableFromJsCopyWithImpl<$Res, $Val extends TimetableFromJs>
+    implements $TimetableFromJsCopyWith<$Res> {
+  _$TimetableFromJsCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? year = null,
+    Object? term = null,
+    Object? normal = null,
+    Object? intensive = null,
+  }) {
+    return _then(_value.copyWith(
+      year: null == year
+          ? _value.year
+          : year // ignore: cast_nullable_to_non_nullable
+              as int,
+      term: null == term
+          ? _value.term
+          : term // ignore: cast_nullable_to_non_nullable
+              as String,
+      normal: null == normal
+          ? _value.normal
+          : normal // ignore: cast_nullable_to_non_nullable
+              as List<List<List<Subject>>>,
+      intensive: null == intensive
+          ? _value.intensive
+          : intensive // ignore: cast_nullable_to_non_nullable
+              as List<List<List<Subject>>>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$TimetableFromJsImplCopyWith<$Res>
+    implements $TimetableFromJsCopyWith<$Res> {
+  factory _$$TimetableFromJsImplCopyWith(_$TimetableFromJsImpl value,
+          $Res Function(_$TimetableFromJsImpl) then) =
+      __$$TimetableFromJsImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {int year,
+      String term,
+      List<List<List<Subject>>> normal,
+      List<List<List<Subject>>> intensive});
+}
+
+/// @nodoc
+class __$$TimetableFromJsImplCopyWithImpl<$Res>
+    extends _$TimetableFromJsCopyWithImpl<$Res, _$TimetableFromJsImpl>
+    implements _$$TimetableFromJsImplCopyWith<$Res> {
+  __$$TimetableFromJsImplCopyWithImpl(
+      _$TimetableFromJsImpl _value, $Res Function(_$TimetableFromJsImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? year = null,
+    Object? term = null,
+    Object? normal = null,
+    Object? intensive = null,
+  }) {
+    return _then(_$TimetableFromJsImpl(
+      year: null == year
+          ? _value.year
+          : year // ignore: cast_nullable_to_non_nullable
+              as int,
+      term: null == term
+          ? _value.term
+          : term // ignore: cast_nullable_to_non_nullable
+              as String,
+      normal: null == normal
+          ? _value._normal
+          : normal // ignore: cast_nullable_to_non_nullable
+              as List<List<List<Subject>>>,
+      intensive: null == intensive
+          ? _value._intensive
+          : intensive // ignore: cast_nullable_to_non_nullable
+              as List<List<List<Subject>>>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$TimetableFromJsImpl implements _TimetableFromJs {
+  const _$TimetableFromJsImpl(
+      {required this.year,
+      required this.term,
+      required final List<List<List<Subject>>> normal,
+      required final List<List<List<Subject>>> intensive})
+      : _normal = normal,
+        _intensive = intensive;
+
+  factory _$TimetableFromJsImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TimetableFromJsImplFromJson(json);
+
+  @override
+  final int year;
+  @override
+  final String term;
+  final List<List<List<Subject>>> _normal;
+  @override
+  List<List<List<Subject>>> get normal {
+    if (_normal is EqualUnmodifiableListView) return _normal;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_normal);
+  }
+
+  final List<List<List<Subject>>> _intensive;
+  @override
+  List<List<List<Subject>>> get intensive {
+    if (_intensive is EqualUnmodifiableListView) return _intensive;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_intensive);
+  }
+
+  @override
+  String toString() {
+    return 'TimetableFromJs(year: $year, term: $term, normal: $normal, intensive: $intensive)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$TimetableFromJsImpl &&
+            (identical(other.year, year) || other.year == year) &&
+            (identical(other.term, term) || other.term == term) &&
+            const DeepCollectionEquality().equals(other._normal, _normal) &&
+            const DeepCollectionEquality()
+                .equals(other._intensive, _intensive));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      year,
+      term,
+      const DeepCollectionEquality().hash(_normal),
+      const DeepCollectionEquality().hash(_intensive));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$TimetableFromJsImplCopyWith<_$TimetableFromJsImpl> get copyWith =>
+      __$$TimetableFromJsImplCopyWithImpl<_$TimetableFromJsImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$TimetableFromJsImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _TimetableFromJs implements TimetableFromJs {
+  const factory _TimetableFromJs(
+          {required final int year,
+          required final String term,
+          required final List<List<List<Subject>>> normal,
+          required final List<List<List<Subject>>> intensive}) =
+      _$TimetableFromJsImpl;
+
+  factory _TimetableFromJs.fromJson(Map<String, dynamic> json) =
+      _$TimetableFromJsImpl.fromJson;
+
+  @override
+  int get year;
+  @override
+  String get term;
+  @override
+  List<List<List<Subject>>> get normal;
+  @override
+  List<List<List<Subject>>> get intensive;
+  @override
+  @JsonKey(ignore: true)
+  _$$TimetableFromJsImplCopyWith<_$TimetableFromJsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

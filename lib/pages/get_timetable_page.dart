@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:tutility/providers/timetable.dart';
 import 'package:tutility/scope_functions.dart';
+import 'package:tutility/widgets/simple_alert_dialog.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 @RoutePage()
@@ -56,6 +57,7 @@ class GetTimetablePage extends ConsumerWidget {
             } catch (_) {
               // 時間割取得時にエラー発生
               Navigator.of(context).pop();
+              AutoRouter.of(context).popForced();
             }
           },
         ),
@@ -64,23 +66,26 @@ class GetTimetablePage extends ConsumerWidget {
         'GetTimetable',
         onMessageReceived: (JavaScriptMessage message) async {
           try {
-            await AutoRouter.of(context).maybePop();
-            final decoded = jsonDecode(message.message);
-            final timetable = Timetable.fromJson({'list': decoded['normal']});
-            final timetable_ = await _getHalfTimetable(timetable, '2024', 0);
-            await ref.watch(timetableProvider.notifier).set(timetable_);
+            final timetableFromJs =
+                TimetableFromJs.fromJson(jsonDecode(message.message));
+            final timetable =
+                await _getHalfTimetable(timetableFromJs, '2024', 0);
+            await ref.watch(timetableProvider.notifier).set(timetable);
 
             if (context.mounted) {
               Navigator.of(context).pop();
+              AutoRouter.of(context).popForced();
               showDialog(
                 context: context,
-                builder: (context) => const CompletedDialog(),
+                builder: (context) =>
+                    const SimpleAlertDialog(message: '時間割の取得が完了しました'),
               );
             }
           } catch (_) {
             // 時間割取得時にエラー発生
             if (context.mounted) {
               Navigator.of(context).pop();
+              AutoRouter.of(context).popForced();
             }
           }
         },
@@ -94,26 +99,8 @@ class GetTimetablePage extends ConsumerWidget {
   }
 }
 
-@immutable
-class CompletedDialog extends StatelessWidget {
-  const CompletedDialog({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      content: const Text('時間割の取得が完了しました'),
-      actions: [
-        TextButton(
-          child: const Text('閉じる'),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-      ],
-    );
-  }
-}
-
-Future<Timetable2> _getHalfTimetable(
-    Timetable timetable, String year, int period) async {
+Future<Timetable> _getHalfTimetable(
+    TimetableFromJs timetable, String year, int period) async {
   final allSyllabusesJson = await http
       .get(Uri.parse('https://syllabus.rinrin.me/ja/$year/all.min.json'));
   if (allSyllabusesJson.statusCode != 200) {
@@ -121,12 +108,12 @@ Future<Timetable2> _getHalfTimetable(
   }
   final Map<String, dynamic> allSyllabuses = jsonDecode(allSyllabusesJson.body);
 
-  final replaced = timetable.list.map((row) => row.map((col) => col.map(
+  final replaced = timetable.normal.map((row) => row.map((col) => col.map(
       (subject) => allSyllabuses.containsKey(subject.id)
           ? Subject.fromJson(allSyllabuses[subject.id])
           : subject)));
 
-  return Timetable2(
+  return Timetable(
     period: period,
     firstOrSecond: 0,
     firstHalf: replaced

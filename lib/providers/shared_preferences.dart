@@ -14,7 +14,10 @@ Future<SharedPreferences> _sharedPreferences(_SharedPreferencesRef ref) =>
 class SharedPreferencesScope extends ConsumerWidget {
   final Widget child;
 
-  const SharedPreferencesScope({super.key, required this.child});
+  const SharedPreferencesScope({
+    super.key,
+    required this.child,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

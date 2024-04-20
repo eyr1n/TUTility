@@ -10,24 +10,20 @@ class LinksPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('リンク'),
-      ),
+      appBar: AppBar(title: const Text('リンク')),
       body: ListView(
         children: ListTile.divideTiles(
           context: context,
           tiles: _links
-              .map(
-                (item) => ListTile(
-                  title: Text(item.title),
-                  onTap: () {
-                    launchUrl(
-                      Uri.parse(item.url),
-                      mode: LaunchMode.inAppBrowserView,
-                    );
-                  },
-                ),
-              )
+              .map((item) => ListTile(
+                    title: Text(item.title),
+                    onTap: () {
+                      launchUrl(
+                        Uri.parse(item.url),
+                        mode: LaunchMode.inAppBrowserView,
+                      );
+                    },
+                  ))
               .toList(),
         ).toList(),
       ),
@@ -40,7 +36,10 @@ class _Link {
   final String title;
   final String url;
 
-  const _Link({required this.title, required this.url});
+  const _Link({
+    required this.title,
+    required this.url,
+  });
 }
 
 const List<_Link> _links = [

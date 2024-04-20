@@ -24,31 +24,34 @@ class Subject with _$Subject {
 }
 
 @freezed
-class Timetable2 with _$Timetable2 {
-  const factory Timetable2({
+class Timetable with _$Timetable {
+  const factory Timetable({
     required int period,
     required int firstOrSecond,
     required List<List<Subject?>> firstHalf,
     required List<List<Subject?>> secondHalf,
-  }) = _Timetable2;
-
-  factory Timetable2.fromJson(Map<String, dynamic> json) =>
-      _$Timetable2FromJson(json);
-}
-
-@freezed
-class Timetable with _$Timetable {
-  const factory Timetable({
-    required List<List<List<Subject>>> list,
   }) = _Timetable;
 
   factory Timetable.fromJson(Map<String, dynamic> json) =>
       _$TimetableFromJson(json);
 }
 
-final timetableProvider = sharedPreferencesProvider<Timetable2?>(
+@freezed
+class TimetableFromJs with _$TimetableFromJs {
+  const factory TimetableFromJs({
+    required int year,
+    required String term,
+    required List<List<List<Subject>>> normal,
+    required List<List<List<Subject>>> intensive,
+  }) = _TimetableFromJs;
+
+  factory TimetableFromJs.fromJson(Map<String, dynamic> json) =>
+      _$TimetableFromJsFromJson(json);
+}
+
+final timetableProvider = sharedPreferencesProvider<Timetable?>(
   key: '_timetable',
   defaultValue: null,
-  fromJson: Timetable2.fromJson,
+  fromJson: Timetable.fromJson,
   toJson: (value) => value?.toJson(),
 );

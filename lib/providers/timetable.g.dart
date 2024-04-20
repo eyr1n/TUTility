@@ -34,8 +34,8 @@ Map<String, dynamic> _$$SubjectImplToJson(_$SubjectImpl instance) =>
       'room': instance.room,
     };
 
-_$Timetable2Impl _$$Timetable2ImplFromJson(Map<String, dynamic> json) =>
-    _$Timetable2Impl(
+_$TimetableImpl _$$TimetableImplFromJson(Map<String, dynamic> json) =>
+    _$TimetableImpl(
       period: json['period'] as int,
       firstOrSecond: json['firstOrSecond'] as int,
       firstHalf: (json['firstHalf'] as List<dynamic>)
@@ -54,7 +54,7 @@ _$Timetable2Impl _$$Timetable2ImplFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$$Timetable2ImplToJson(_$Timetable2Impl instance) =>
+Map<String, dynamic> _$$TimetableImplToJson(_$TimetableImpl instance) =>
     <String, dynamic>{
       'period': instance.period,
       'firstOrSecond': instance.firstOrSecond,
@@ -62,9 +62,19 @@ Map<String, dynamic> _$$Timetable2ImplToJson(_$Timetable2Impl instance) =>
       'secondHalf': instance.secondHalf,
     };
 
-_$TimetableImpl _$$TimetableImplFromJson(Map<String, dynamic> json) =>
-    _$TimetableImpl(
-      list: (json['list'] as List<dynamic>)
+_$TimetableFromJsImpl _$$TimetableFromJsImplFromJson(
+        Map<String, dynamic> json) =>
+    _$TimetableFromJsImpl(
+      year: json['year'] as int,
+      term: json['term'] as String,
+      normal: (json['normal'] as List<dynamic>)
+          .map((e) => (e as List<dynamic>)
+              .map((e) => (e as List<dynamic>)
+                  .map((e) => Subject.fromJson(e as Map<String, dynamic>))
+                  .toList())
+              .toList())
+          .toList(),
+      intensive: (json['intensive'] as List<dynamic>)
           .map((e) => (e as List<dynamic>)
               .map((e) => (e as List<dynamic>)
                   .map((e) => Subject.fromJson(e as Map<String, dynamic>))
@@ -73,7 +83,11 @@ _$TimetableImpl _$$TimetableImplFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$$TimetableImplToJson(_$TimetableImpl instance) =>
+Map<String, dynamic> _$$TimetableFromJsImplToJson(
+        _$TimetableFromJsImpl instance) =>
     <String, dynamic>{
-      'list': instance.list,
+      'year': instance.year,
+      'term': instance.term,
+      'normal': instance.normal,
+      'intensive': instance.intensive,
     };

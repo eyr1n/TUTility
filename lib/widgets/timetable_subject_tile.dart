@@ -13,7 +13,10 @@ import 'package:url_launcher/url_launcher.dart';
 class TimetableSubjectTile extends StatelessWidget {
   final Subject subject;
 
-  const TimetableSubjectTile({super.key, required this.subject});
+  const TimetableSubjectTile({
+    super.key,
+    required this.subject,
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -37,12 +37,11 @@ class HomePage extends StatelessWidget {
                     elevation: 0,
                     children: [
                       const SizedBox(height: 12),
-                      ..._destinations.map(
-                        (destination) => NavigationDrawerDestination(
-                          icon: destination.icon,
-                          label: Text(destination.label),
-                        ),
-                      ),
+                      ..._destinations
+                          .map((destination) => NavigationDrawerDestination(
+                                icon: destination.icon,
+                                label: Text(destination.label),
+                              )),
                     ],
                   ),
                   const VerticalDivider(thickness: 1, width: 1),
@@ -69,23 +68,23 @@ class _Destination {
   });
 }
 
-const List<_Destination> _destinations = [
-  _Destination(
+List<_Destination> _destinations = [
+  const _Destination(
     icon: Icon(Icons.calendar_month),
     label: '時間割',
     route: TimetableRoute(),
   ),
   _Destination(
-    icon: Icon(Icons.restaurant),
+    icon: const Icon(Icons.restaurant),
     label: '食堂',
     route: CanteenRoute(),
   ),
-  _Destination(
+  const _Destination(
     icon: Icon(Icons.language),
     label: 'リンク',
     route: LinksRoute(),
   ),
-  _Destination(
+  const _Destination(
     icon: Icon(Icons.more_horiz),
     label: 'その他',
     route: MiscRoute(),
