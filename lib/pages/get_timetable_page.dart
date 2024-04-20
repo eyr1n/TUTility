@@ -4,7 +4,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http/http.dart' as http;
 import 'package:tutility/dialog.dart';
 import 'package:tutility/providers/timetable.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -63,10 +62,30 @@ class GetTimetablePage extends ConsumerWidget {
         'GetTimetable',
         onMessageReceived: (JavaScriptMessage message) async {
           try {
-            final timetableFromJs =
-                TimetableFromJs.fromJson(jsonDecode(message.message));
-            final timetable = await _getHalfTimetable(timetableFromJs);
-            await ref.watch(timetableNotifierProvider.notifier).set(timetable);
+            final timetable = Timetable.fromJson(jsonDecode(message.message));
+            /* final syllabusJson = await http.get(Uri.parse(
+                'https://syllabus.rinrin.me/ja/${timetable.year}/all.min.json'));
+            final Map<String, dynamic> syllabus = jsonDecode(syllabusJson.body);
+
+            List<List<Subject?>> replaceWithSubject(
+                    List<List<Subject?>> timetable) =>
+                timetable
+                    .map((row) => row
+                        .map((subject) => subject != null
+                            ? (syllabus.containsKey(subject.id)
+                                ? Subject.fromJson(syllabus[subject.id])
+                                : subject)
+                            : null)
+                        .toList())
+                    .toList();
+
+            final replaced = timetable.copyWith(
+              firstHalf: replaceWithSubject(timetable.firstHalf),
+              secondHalf: replaceWithSubject(timetable.secondHalf),
+              intensive: replaceWithSubject(timetable.firstHalf),
+            ); */
+            final replaced = timetable;
+            await ref.watch(timetableNotifierProvider.notifier).set(replaced);
 
             if (context.mounted) {
               Navigator.of(context).pop();
@@ -90,60 +109,6 @@ class GetTimetablePage extends ConsumerWidget {
       body: WebViewWidget(controller: _controller),
     );
   }
-}
-
-Future<Timetable> _getHalfTimetable(TimetableFromJs timetable) async {
-  final allSyllabusesJson = await http.get(Uri.parse(
-      'https://syllabus.rinrin.me/ja/${timetable.year}/all.min.json'));
-  if (allSyllabusesJson.statusCode != 200) {
-    throw Exception();
-  }
-  final Map<String, dynamic> allSyllabuses = jsonDecode(allSyllabusesJson.body);
-
-  final replaced = timetable.normal.map((row) => row.map((col) => col.map(
-      (subject) => allSyllabuses.containsKey(subject.id)
-          ? Subject.fromJson(allSyllabuses[subject.id])
-          : subject)));
-
-  final period = timetable.term == 'spring' ? Period.spring : Period.fall;
-
-  return Timetable(
-    period: period,
-    firstHalf: replaced
-        .map((row) => row
-            .map((col) => col.where((subject) {
-                  final term = subject.term;
-                  return term != null
-                      ? switch (period) {
-                          Period.spring =>
-                            (!term.contains('前期2') || !term.contains('前2')),
-                          Period.fall =>
-                            (!term.contains('後期2') || !term.contains('後2')),
-                        }
-                      : true;
-                }).firstOrNull)
-            .toList()
-            .sublist(0, 5))
-        .toList()
-        .sublist(0, 6),
-    secondHalf: replaced
-        .map((row) => row
-            .map((col) => col.where((subject) {
-                  final term = subject.term;
-                  return term != null
-                      ? switch (period) {
-                          Period.spring =>
-                            (!term.contains('前期1') || !term.contains('前1')),
-                          Period.fall =>
-                            (!term.contains('後期1') || !term.contains('後1')),
-                        }
-                      : true;
-                }).firstOrNull)
-            .toList()
-            .sublist(0, 5))
-        .toList()
-        .sublist(0, 6),
-  );
 }
 
 void _errorHandler(BuildContext context) {

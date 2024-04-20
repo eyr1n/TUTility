@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tutility/providers/first_or_second.dart';
+import 'package:tutility/providers/term.dart';
 import 'package:tutility/providers/timetable.dart';
 import 'package:tutility/router/app_router.dart';
 import 'package:tutility/widgets/timetable.dart';
@@ -14,11 +14,11 @@ class TimetablePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final timetable = ref.watch(timetableNotifierProvider);
-    final firstOrSecond = ref.watch(firstOrSecondNotifierProvider);
+    final term = ref.watch(termNotifierProvider);
 
-    final halfTimetable = switch (firstOrSecond) {
-      FirstOrSecond.first => timetable?.firstHalf,
-      FirstOrSecond.second => timetable?.secondHalf,
+    final firstOrSecond = switch (term) {
+      Term.firstHalf => timetable?.firstHalf,
+      Term.secondHalf => timetable?.secondHalf,
     };
 
     return Scaffold(
@@ -32,18 +32,18 @@ class TimetablePage extends ConsumerWidget {
                 segments: [
                   ButtonSegment(
                     value: 0,
-                    label: Text('${timetable.period.label}1'),
+                    label: Text('${timetable.semester.label}1'),
                   ),
                   ButtonSegment(
                     value: 1,
-                    label: Text('${timetable.period.label}2'),
+                    label: Text('${timetable.semester.label}2'),
                   ),
                 ],
-                selected: {firstOrSecond.index},
+                selected: {term.index},
                 onSelectionChanged: (newSelection) {
                   ref
-                      .watch(firstOrSecondNotifierProvider.notifier)
-                      .set(FirstOrSecond.values[newSelection.first]);
+                      .watch(termNotifierProvider.notifier)
+                      .set(Term.values[newSelection.first]);
                 },
               )
             : null,
@@ -57,11 +57,11 @@ class TimetablePage extends ConsumerWidget {
           ),
         ],
       ),
-      body: halfTimetable != null
+      body: firstOrSecond != null
           ? SingleChildScrollView(
               child: Align(
                 alignment: Alignment.topCenter,
-                child: TimetableWidget(timetable: halfTimetable),
+                child: TimetableWidget(timetable: firstOrSecond),
               ),
             )
           : Align(

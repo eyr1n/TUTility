@@ -24,9 +24,9 @@ mixin _$Subject {
   String get url => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get area => throw _privateConstructorUsedError;
-  String? get term => throw _privateConstructorUsedError;
   String? get required => throw _privateConstructorUsedError;
-  String? get units => throw _privateConstructorUsedError;
+  String? get term => throw _privateConstructorUsedError;
+  int? get units => throw _privateConstructorUsedError;
   String? get grade => throw _privateConstructorUsedError;
   String? get staff => throw _privateConstructorUsedError;
   String? get room => throw _privateConstructorUsedError;
@@ -46,9 +46,9 @@ abstract class $SubjectCopyWith<$Res> {
       String url,
       String name,
       String? area,
-      String? term,
       String? required,
-      String? units,
+      String? term,
+      int? units,
       String? grade,
       String? staff,
       String? room});
@@ -71,8 +71,8 @@ class _$SubjectCopyWithImpl<$Res, $Val extends Subject>
     Object? url = null,
     Object? name = null,
     Object? area = freezed,
-    Object? term = freezed,
     Object? required = freezed,
+    Object? term = freezed,
     Object? units = freezed,
     Object? grade = freezed,
     Object? staff = freezed,
@@ -95,18 +95,18 @@ class _$SubjectCopyWithImpl<$Res, $Val extends Subject>
           ? _value.area
           : area // ignore: cast_nullable_to_non_nullable
               as String?,
-      term: freezed == term
-          ? _value.term
-          : term // ignore: cast_nullable_to_non_nullable
-              as String?,
       required: freezed == required
           ? _value.required
           : required // ignore: cast_nullable_to_non_nullable
               as String?,
+      term: freezed == term
+          ? _value.term
+          : term // ignore: cast_nullable_to_non_nullable
+              as String?,
       units: freezed == units
           ? _value.units
           : units // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       grade: freezed == grade
           ? _value.grade
           : grade // ignore: cast_nullable_to_non_nullable
@@ -135,9 +135,9 @@ abstract class _$$SubjectImplCopyWith<$Res> implements $SubjectCopyWith<$Res> {
       String url,
       String name,
       String? area,
-      String? term,
       String? required,
-      String? units,
+      String? term,
+      int? units,
       String? grade,
       String? staff,
       String? room});
@@ -158,8 +158,8 @@ class __$$SubjectImplCopyWithImpl<$Res>
     Object? url = null,
     Object? name = null,
     Object? area = freezed,
-    Object? term = freezed,
     Object? required = freezed,
+    Object? term = freezed,
     Object? units = freezed,
     Object? grade = freezed,
     Object? staff = freezed,
@@ -182,18 +182,18 @@ class __$$SubjectImplCopyWithImpl<$Res>
           ? _value.area
           : area // ignore: cast_nullable_to_non_nullable
               as String?,
-      term: freezed == term
-          ? _value.term
-          : term // ignore: cast_nullable_to_non_nullable
-              as String?,
       required: freezed == required
           ? _value.required
           : required // ignore: cast_nullable_to_non_nullable
               as String?,
+      term: freezed == term
+          ? _value.term
+          : term // ignore: cast_nullable_to_non_nullable
+              as String?,
       units: freezed == units
           ? _value.units
           : units // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       grade: freezed == grade
           ? _value.grade
           : grade // ignore: cast_nullable_to_non_nullable
@@ -218,8 +218,8 @@ class _$SubjectImpl implements _Subject {
       required this.url,
       required this.name,
       this.area,
-      this.term,
       this.required,
+      this.term,
       this.units,
       this.grade,
       this.staff,
@@ -237,11 +237,11 @@ class _$SubjectImpl implements _Subject {
   @override
   final String? area;
   @override
-  final String? term;
-  @override
   final String? required;
   @override
-  final String? units;
+  final String? term;
+  @override
+  final int? units;
   @override
   final String? grade;
   @override
@@ -251,7 +251,7 @@ class _$SubjectImpl implements _Subject {
 
   @override
   String toString() {
-    return 'Subject(id: $id, url: $url, name: $name, area: $area, term: $term, required: $required, units: $units, grade: $grade, staff: $staff, room: $room)';
+    return 'Subject(id: $id, url: $url, name: $name, area: $area, required: $required, term: $term, units: $units, grade: $grade, staff: $staff, room: $room)';
   }
 
   @override
@@ -263,9 +263,9 @@ class _$SubjectImpl implements _Subject {
             (identical(other.url, url) || other.url == url) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.area, area) || other.area == area) &&
-            (identical(other.term, term) || other.term == term) &&
             (identical(other.required, required) ||
                 other.required == required) &&
+            (identical(other.term, term) || other.term == term) &&
             (identical(other.units, units) || other.units == units) &&
             (identical(other.grade, grade) || other.grade == grade) &&
             (identical(other.staff, staff) || other.staff == staff) &&
@@ -274,8 +274,8 @@ class _$SubjectImpl implements _Subject {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, url, name, area, term,
-      required, units, grade, staff, room);
+  int get hashCode => Object.hash(runtimeType, id, url, name, area, required,
+      term, units, grade, staff, room);
 
   @JsonKey(ignore: true)
   @override
@@ -297,9 +297,9 @@ abstract class _Subject implements Subject {
       required final String url,
       required final String name,
       final String? area,
-      final String? term,
       final String? required,
-      final String? units,
+      final String? term,
+      final int? units,
       final String? grade,
       final String? staff,
       final String? room}) = _$SubjectImpl;
@@ -315,11 +315,11 @@ abstract class _Subject implements Subject {
   @override
   String? get area;
   @override
-  String? get term;
-  @override
   String? get required;
   @override
-  String? get units;
+  String? get term;
+  @override
+  int? get units;
   @override
   String? get grade;
   @override
@@ -332,236 +332,18 @@ abstract class _Subject implements Subject {
       throw _privateConstructorUsedError;
 }
 
-TimetableFromJs _$TimetableFromJsFromJson(Map<String, dynamic> json) {
-  return _TimetableFromJs.fromJson(json);
-}
-
-/// @nodoc
-mixin _$TimetableFromJs {
-  int get year => throw _privateConstructorUsedError;
-  String get term => throw _privateConstructorUsedError;
-  List<List<List<Subject>>> get normal => throw _privateConstructorUsedError;
-  List<List<List<Subject>>> get intensive => throw _privateConstructorUsedError;
-
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $TimetableFromJsCopyWith<TimetableFromJs> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $TimetableFromJsCopyWith<$Res> {
-  factory $TimetableFromJsCopyWith(
-          TimetableFromJs value, $Res Function(TimetableFromJs) then) =
-      _$TimetableFromJsCopyWithImpl<$Res, TimetableFromJs>;
-  @useResult
-  $Res call(
-      {int year,
-      String term,
-      List<List<List<Subject>>> normal,
-      List<List<List<Subject>>> intensive});
-}
-
-/// @nodoc
-class _$TimetableFromJsCopyWithImpl<$Res, $Val extends TimetableFromJs>
-    implements $TimetableFromJsCopyWith<$Res> {
-  _$TimetableFromJsCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? year = null,
-    Object? term = null,
-    Object? normal = null,
-    Object? intensive = null,
-  }) {
-    return _then(_value.copyWith(
-      year: null == year
-          ? _value.year
-          : year // ignore: cast_nullable_to_non_nullable
-              as int,
-      term: null == term
-          ? _value.term
-          : term // ignore: cast_nullable_to_non_nullable
-              as String,
-      normal: null == normal
-          ? _value.normal
-          : normal // ignore: cast_nullable_to_non_nullable
-              as List<List<List<Subject>>>,
-      intensive: null == intensive
-          ? _value.intensive
-          : intensive // ignore: cast_nullable_to_non_nullable
-              as List<List<List<Subject>>>,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$TimetableFromJsImplCopyWith<$Res>
-    implements $TimetableFromJsCopyWith<$Res> {
-  factory _$$TimetableFromJsImplCopyWith(_$TimetableFromJsImpl value,
-          $Res Function(_$TimetableFromJsImpl) then) =
-      __$$TimetableFromJsImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {int year,
-      String term,
-      List<List<List<Subject>>> normal,
-      List<List<List<Subject>>> intensive});
-}
-
-/// @nodoc
-class __$$TimetableFromJsImplCopyWithImpl<$Res>
-    extends _$TimetableFromJsCopyWithImpl<$Res, _$TimetableFromJsImpl>
-    implements _$$TimetableFromJsImplCopyWith<$Res> {
-  __$$TimetableFromJsImplCopyWithImpl(
-      _$TimetableFromJsImpl _value, $Res Function(_$TimetableFromJsImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? year = null,
-    Object? term = null,
-    Object? normal = null,
-    Object? intensive = null,
-  }) {
-    return _then(_$TimetableFromJsImpl(
-      year: null == year
-          ? _value.year
-          : year // ignore: cast_nullable_to_non_nullable
-              as int,
-      term: null == term
-          ? _value.term
-          : term // ignore: cast_nullable_to_non_nullable
-              as String,
-      normal: null == normal
-          ? _value._normal
-          : normal // ignore: cast_nullable_to_non_nullable
-              as List<List<List<Subject>>>,
-      intensive: null == intensive
-          ? _value._intensive
-          : intensive // ignore: cast_nullable_to_non_nullable
-              as List<List<List<Subject>>>,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$TimetableFromJsImpl implements _TimetableFromJs {
-  const _$TimetableFromJsImpl(
-      {required this.year,
-      required this.term,
-      required final List<List<List<Subject>>> normal,
-      required final List<List<List<Subject>>> intensive})
-      : _normal = normal,
-        _intensive = intensive;
-
-  factory _$TimetableFromJsImpl.fromJson(Map<String, dynamic> json) =>
-      _$$TimetableFromJsImplFromJson(json);
-
-  @override
-  final int year;
-  @override
-  final String term;
-  final List<List<List<Subject>>> _normal;
-  @override
-  List<List<List<Subject>>> get normal {
-    if (_normal is EqualUnmodifiableListView) return _normal;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_normal);
-  }
-
-  final List<List<List<Subject>>> _intensive;
-  @override
-  List<List<List<Subject>>> get intensive {
-    if (_intensive is EqualUnmodifiableListView) return _intensive;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_intensive);
-  }
-
-  @override
-  String toString() {
-    return 'TimetableFromJs(year: $year, term: $term, normal: $normal, intensive: $intensive)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$TimetableFromJsImpl &&
-            (identical(other.year, year) || other.year == year) &&
-            (identical(other.term, term) || other.term == term) &&
-            const DeepCollectionEquality().equals(other._normal, _normal) &&
-            const DeepCollectionEquality()
-                .equals(other._intensive, _intensive));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      year,
-      term,
-      const DeepCollectionEquality().hash(_normal),
-      const DeepCollectionEquality().hash(_intensive));
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$TimetableFromJsImplCopyWith<_$TimetableFromJsImpl> get copyWith =>
-      __$$TimetableFromJsImplCopyWithImpl<_$TimetableFromJsImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$TimetableFromJsImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _TimetableFromJs implements TimetableFromJs {
-  const factory _TimetableFromJs(
-          {required final int year,
-          required final String term,
-          required final List<List<List<Subject>>> normal,
-          required final List<List<List<Subject>>> intensive}) =
-      _$TimetableFromJsImpl;
-
-  factory _TimetableFromJs.fromJson(Map<String, dynamic> json) =
-      _$TimetableFromJsImpl.fromJson;
-
-  @override
-  int get year;
-  @override
-  String get term;
-  @override
-  List<List<List<Subject>>> get normal;
-  @override
-  List<List<List<Subject>>> get intensive;
-  @override
-  @JsonKey(ignore: true)
-  _$$TimetableFromJsImplCopyWith<_$TimetableFromJsImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
 Timetable _$TimetableFromJson(Map<String, dynamic> json) {
   return _Timetable.fromJson(json);
 }
 
 /// @nodoc
 mixin _$Timetable {
-  Period get period => throw _privateConstructorUsedError;
+  int get year => throw _privateConstructorUsedError;
+  String get belong => throw _privateConstructorUsedError;
+  Semester get semester => throw _privateConstructorUsedError;
   List<List<Subject?>> get firstHalf => throw _privateConstructorUsedError;
   List<List<Subject?>> get secondHalf => throw _privateConstructorUsedError;
+  List<List<Subject?>> get intensive => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -575,9 +357,12 @@ abstract class $TimetableCopyWith<$Res> {
       _$TimetableCopyWithImpl<$Res, Timetable>;
   @useResult
   $Res call(
-      {Period period,
+      {int year,
+      String belong,
+      Semester semester,
       List<List<Subject?>> firstHalf,
-      List<List<Subject?>> secondHalf});
+      List<List<Subject?>> secondHalf,
+      List<List<Subject?>> intensive});
 }
 
 /// @nodoc
@@ -593,15 +378,26 @@ class _$TimetableCopyWithImpl<$Res, $Val extends Timetable>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? period = null,
+    Object? year = null,
+    Object? belong = null,
+    Object? semester = null,
     Object? firstHalf = null,
     Object? secondHalf = null,
+    Object? intensive = null,
   }) {
     return _then(_value.copyWith(
-      period: null == period
-          ? _value.period
-          : period // ignore: cast_nullable_to_non_nullable
-              as Period,
+      year: null == year
+          ? _value.year
+          : year // ignore: cast_nullable_to_non_nullable
+              as int,
+      belong: null == belong
+          ? _value.belong
+          : belong // ignore: cast_nullable_to_non_nullable
+              as String,
+      semester: null == semester
+          ? _value.semester
+          : semester // ignore: cast_nullable_to_non_nullable
+              as Semester,
       firstHalf: null == firstHalf
           ? _value.firstHalf
           : firstHalf // ignore: cast_nullable_to_non_nullable
@@ -609,6 +405,10 @@ class _$TimetableCopyWithImpl<$Res, $Val extends Timetable>
       secondHalf: null == secondHalf
           ? _value.secondHalf
           : secondHalf // ignore: cast_nullable_to_non_nullable
+              as List<List<Subject?>>,
+      intensive: null == intensive
+          ? _value.intensive
+          : intensive // ignore: cast_nullable_to_non_nullable
               as List<List<Subject?>>,
     ) as $Val);
   }
@@ -623,9 +423,12 @@ abstract class _$$TimetableImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {Period period,
+      {int year,
+      String belong,
+      Semester semester,
       List<List<Subject?>> firstHalf,
-      List<List<Subject?>> secondHalf});
+      List<List<Subject?>> secondHalf,
+      List<List<Subject?>> intensive});
 }
 
 /// @nodoc
@@ -639,15 +442,26 @@ class __$$TimetableImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? period = null,
+    Object? year = null,
+    Object? belong = null,
+    Object? semester = null,
     Object? firstHalf = null,
     Object? secondHalf = null,
+    Object? intensive = null,
   }) {
     return _then(_$TimetableImpl(
-      period: null == period
-          ? _value.period
-          : period // ignore: cast_nullable_to_non_nullable
-              as Period,
+      year: null == year
+          ? _value.year
+          : year // ignore: cast_nullable_to_non_nullable
+              as int,
+      belong: null == belong
+          ? _value.belong
+          : belong // ignore: cast_nullable_to_non_nullable
+              as String,
+      semester: null == semester
+          ? _value.semester
+          : semester // ignore: cast_nullable_to_non_nullable
+              as Semester,
       firstHalf: null == firstHalf
           ? _value._firstHalf
           : firstHalf // ignore: cast_nullable_to_non_nullable
@@ -655,6 +469,10 @@ class __$$TimetableImplCopyWithImpl<$Res>
       secondHalf: null == secondHalf
           ? _value._secondHalf
           : secondHalf // ignore: cast_nullable_to_non_nullable
+              as List<List<Subject?>>,
+      intensive: null == intensive
+          ? _value._intensive
+          : intensive // ignore: cast_nullable_to_non_nullable
               as List<List<Subject?>>,
     ));
   }
@@ -664,17 +482,25 @@ class __$$TimetableImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$TimetableImpl implements _Timetable {
   const _$TimetableImpl(
-      {required this.period,
+      {required this.year,
+      required this.belong,
+      required this.semester,
       required final List<List<Subject?>> firstHalf,
-      required final List<List<Subject?>> secondHalf})
+      required final List<List<Subject?>> secondHalf,
+      required final List<List<Subject?>> intensive})
       : _firstHalf = firstHalf,
-        _secondHalf = secondHalf;
+        _secondHalf = secondHalf,
+        _intensive = intensive;
 
   factory _$TimetableImpl.fromJson(Map<String, dynamic> json) =>
       _$$TimetableImplFromJson(json);
 
   @override
-  final Period period;
+  final int year;
+  @override
+  final String belong;
+  @override
+  final Semester semester;
   final List<List<Subject?>> _firstHalf;
   @override
   List<List<Subject?>> get firstHalf {
@@ -691,9 +517,17 @@ class _$TimetableImpl implements _Timetable {
     return EqualUnmodifiableListView(_secondHalf);
   }
 
+  final List<List<Subject?>> _intensive;
+  @override
+  List<List<Subject?>> get intensive {
+    if (_intensive is EqualUnmodifiableListView) return _intensive;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_intensive);
+  }
+
   @override
   String toString() {
-    return 'Timetable(period: $period, firstHalf: $firstHalf, secondHalf: $secondHalf)';
+    return 'Timetable(year: $year, belong: $belong, semester: $semester, firstHalf: $firstHalf, secondHalf: $secondHalf, intensive: $intensive)';
   }
 
   @override
@@ -701,20 +535,28 @@ class _$TimetableImpl implements _Timetable {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TimetableImpl &&
-            (identical(other.period, period) || other.period == period) &&
+            (identical(other.year, year) || other.year == year) &&
+            (identical(other.belong, belong) || other.belong == belong) &&
+            (identical(other.semester, semester) ||
+                other.semester == semester) &&
             const DeepCollectionEquality()
                 .equals(other._firstHalf, _firstHalf) &&
             const DeepCollectionEquality()
-                .equals(other._secondHalf, _secondHalf));
+                .equals(other._secondHalf, _secondHalf) &&
+            const DeepCollectionEquality()
+                .equals(other._intensive, _intensive));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      period,
+      year,
+      belong,
+      semester,
       const DeepCollectionEquality().hash(_firstHalf),
-      const DeepCollectionEquality().hash(_secondHalf));
+      const DeepCollectionEquality().hash(_secondHalf),
+      const DeepCollectionEquality().hash(_intensive));
 
   @JsonKey(ignore: true)
   @override
@@ -732,19 +574,28 @@ class _$TimetableImpl implements _Timetable {
 
 abstract class _Timetable implements Timetable {
   const factory _Timetable(
-      {required final Period period,
+      {required final int year,
+      required final String belong,
+      required final Semester semester,
       required final List<List<Subject?>> firstHalf,
-      required final List<List<Subject?>> secondHalf}) = _$TimetableImpl;
+      required final List<List<Subject?>> secondHalf,
+      required final List<List<Subject?>> intensive}) = _$TimetableImpl;
 
   factory _Timetable.fromJson(Map<String, dynamic> json) =
       _$TimetableImpl.fromJson;
 
   @override
-  Period get period;
+  int get year;
+  @override
+  String get belong;
+  @override
+  Semester get semester;
   @override
   List<List<Subject?>> get firstHalf;
   @override
   List<List<Subject?>> get secondHalf;
+  @override
+  List<List<Subject?>> get intensive;
   @override
   @JsonKey(ignore: true)
   _$$TimetableImplCopyWith<_$TimetableImpl> get copyWith =>

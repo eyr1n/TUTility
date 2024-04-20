@@ -8,14 +8,14 @@ import 'package:tutility/providers/shared_preferences.dart';
 part 'timetable.freezed.dart';
 part 'timetable.g.dart';
 
-enum Period {
+enum Semester {
   spring('前期'),
   fall('後期'),
   ;
 
   final String label;
 
-  const Period(this.label);
+  const Semester(this.label);
 }
 
 @freezed
@@ -25,9 +25,9 @@ class Subject with _$Subject {
     required String url,
     required String name,
     String? area,
-    String? term,
     String? required,
-    String? units,
+    String? term,
+    int? units,
     String? grade,
     String? staff,
     String? room,
@@ -38,24 +38,14 @@ class Subject with _$Subject {
 }
 
 @freezed
-class TimetableFromJs with _$TimetableFromJs {
-  const factory TimetableFromJs({
-    required int year,
-    required String term,
-    required List<List<List<Subject>>> normal,
-    required List<List<List<Subject>>> intensive,
-  }) = _TimetableFromJs;
-
-  factory TimetableFromJs.fromJson(Map<String, dynamic> json) =>
-      _$TimetableFromJsFromJson(json);
-}
-
-@freezed
 class Timetable with _$Timetable {
   const factory Timetable({
-    required Period period,
+    required int year,
+    required String belong,
+    required Semester semester,
     required List<List<Subject?>> firstHalf,
     required List<List<Subject?>> secondHalf,
+    required List<List<Subject?>> intensive,
   }) = _Timetable;
 
   factory Timetable.fromJson(Map<String, dynamic> json) =>

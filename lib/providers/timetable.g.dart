@@ -12,9 +12,9 @@ _$SubjectImpl _$$SubjectImplFromJson(Map<String, dynamic> json) =>
       url: json['url'] as String,
       name: json['name'] as String,
       area: json['area'] as String?,
-      term: json['term'] as String?,
       required: json['required'] as String?,
-      units: json['units'] as String?,
+      term: json['term'] as String?,
+      units: json['units'] as int?,
       grade: json['grade'] as String?,
       staff: json['staff'] as String?,
       room: json['room'] as String?,
@@ -26,47 +26,19 @@ Map<String, dynamic> _$$SubjectImplToJson(_$SubjectImpl instance) =>
       'url': instance.url,
       'name': instance.name,
       'area': instance.area,
-      'term': instance.term,
       'required': instance.required,
+      'term': instance.term,
       'units': instance.units,
       'grade': instance.grade,
       'staff': instance.staff,
       'room': instance.room,
     };
 
-_$TimetableFromJsImpl _$$TimetableFromJsImplFromJson(
-        Map<String, dynamic> json) =>
-    _$TimetableFromJsImpl(
-      year: json['year'] as int,
-      term: json['term'] as String,
-      normal: (json['normal'] as List<dynamic>)
-          .map((e) => (e as List<dynamic>)
-              .map((e) => (e as List<dynamic>)
-                  .map((e) => Subject.fromJson(e as Map<String, dynamic>))
-                  .toList())
-              .toList())
-          .toList(),
-      intensive: (json['intensive'] as List<dynamic>)
-          .map((e) => (e as List<dynamic>)
-              .map((e) => (e as List<dynamic>)
-                  .map((e) => Subject.fromJson(e as Map<String, dynamic>))
-                  .toList())
-              .toList())
-          .toList(),
-    );
-
-Map<String, dynamic> _$$TimetableFromJsImplToJson(
-        _$TimetableFromJsImpl instance) =>
-    <String, dynamic>{
-      'year': instance.year,
-      'term': instance.term,
-      'normal': instance.normal,
-      'intensive': instance.intensive,
-    };
-
 _$TimetableImpl _$$TimetableImplFromJson(Map<String, dynamic> json) =>
     _$TimetableImpl(
-      period: $enumDecode(_$PeriodEnumMap, json['period']),
+      year: json['year'] as int,
+      belong: json['belong'] as String,
+      semester: $enumDecode(_$SemesterEnumMap, json['semester']),
       firstHalf: (json['firstHalf'] as List<dynamic>)
           .map((e) => (e as List<dynamic>)
               .map((e) => e == null
@@ -81,18 +53,28 @@ _$TimetableImpl _$$TimetableImplFromJson(Map<String, dynamic> json) =>
                   : Subject.fromJson(e as Map<String, dynamic>))
               .toList())
           .toList(),
+      intensive: (json['intensive'] as List<dynamic>)
+          .map((e) => (e as List<dynamic>)
+              .map((e) => e == null
+                  ? null
+                  : Subject.fromJson(e as Map<String, dynamic>))
+              .toList())
+          .toList(),
     );
 
 Map<String, dynamic> _$$TimetableImplToJson(_$TimetableImpl instance) =>
     <String, dynamic>{
-      'period': _$PeriodEnumMap[instance.period]!,
+      'year': instance.year,
+      'belong': instance.belong,
+      'semester': _$SemesterEnumMap[instance.semester]!,
       'firstHalf': instance.firstHalf,
       'secondHalf': instance.secondHalf,
+      'intensive': instance.intensive,
     };
 
-const _$PeriodEnumMap = {
-  Period.spring: 'spring',
-  Period.fall: 'fall',
+const _$SemesterEnumMap = {
+  Semester.spring: 'spring',
+  Semester.fall: 'fall',
 };
 
 // **************************************************************************
