@@ -27,8 +27,8 @@ List<_Destination> _destinations = [
 
 @RoutePage()
 @immutable
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class NavigationPage extends StatelessWidget {
+  const NavigationPage({super.key});
 
   @override
   Widget build(BuildContext context) {

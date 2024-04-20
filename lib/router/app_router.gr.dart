@@ -31,12 +31,6 @@ abstract class _$AppRouter extends RootStackRouter {
         child: GetTimetablePage(key: args.key),
       );
     },
-    HomeRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const HomePage(),
-      );
-    },
     LinksRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -47,6 +41,12 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const MiscPage(),
+      );
+    },
+    NavigationRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const NavigationPage(),
       );
     },
     TimetableRoute.name: (routeData) {
@@ -117,20 +117,6 @@ class GetTimetableRouteArgs {
 }
 
 /// generated route for
-/// [HomePage]
-class HomeRoute extends PageRouteInfo<void> {
-  const HomeRoute({List<PageRouteInfo>? children})
-      : super(
-          HomeRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'HomeRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
 /// [LinksPage]
 class LinksRoute extends PageRouteInfo<void> {
   const LinksRoute({List<PageRouteInfo>? children})
@@ -154,6 +140,20 @@ class MiscRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'MiscRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [NavigationPage]
+class NavigationRoute extends PageRouteInfo<void> {
+  const NavigationRoute({List<PageRouteInfo>? children})
+      : super(
+          NavigationRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'NavigationRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
