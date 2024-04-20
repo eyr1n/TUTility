@@ -5,7 +5,7 @@ import 'package:tutility/model/term.dart';
 import 'package:tutility/provider/term.dart';
 import 'package:tutility/provider/timetable.dart';
 import 'package:tutility/router/app_router.dart';
-import 'package:tutility/widget/timetable.dart';
+import 'package:tutility/widget/timetable_view.dart';
 
 @RoutePage()
 @immutable
@@ -62,7 +62,7 @@ class TimetablePage extends ConsumerWidget {
           ? SingleChildScrollView(
               child: Align(
                 alignment: Alignment.topCenter,
-                child: TimetableWidget(timetable: firstOrSecond),
+                child: TimetableView(timetable: firstOrSecond),
               ),
             )
           : Align(

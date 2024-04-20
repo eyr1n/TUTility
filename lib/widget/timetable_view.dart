@@ -7,10 +7,10 @@ import 'package:tutility/widget/timetable_period.dart';
 import 'package:tutility/widget/timetable_subject_tile.dart';
 import 'package:tutility/widget/timetable_weekday.dart';
 
-class TimetableWidget extends StatelessWidget {
+class TimetableView extends StatelessWidget {
   final List<List<Subject?>> timetable;
 
-  const TimetableWidget({
+  const TimetableView({
     super.key,
     required this.timetable,
   });
