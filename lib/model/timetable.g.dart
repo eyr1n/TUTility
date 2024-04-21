@@ -8,7 +8,7 @@ part of 'timetable.dart';
 
 _$TimetableImpl _$$TimetableImplFromJson(Map<String, dynamic> json) =>
     _$TimetableImpl(
-      year: json['year'] as int,
+      year: json['year'] as String,
       belong: json['belong'] as String,
       semester: $enumDecode(_$SemesterEnumMap, json['semester']),
       firstHalf: (json['firstHalf'] as List<dynamic>)

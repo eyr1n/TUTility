@@ -8,7 +8,7 @@ part 'timetable.g.dart';
 @freezed
 class Timetable with _$Timetable {
   const factory Timetable({
-    required int year,
+    required String year,
     required String belong,
     required Semester semester,
     required List<List<Subject?>> firstHalf,

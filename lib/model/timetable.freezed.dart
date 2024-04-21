@@ -20,7 +20,7 @@ Timetable _$TimetableFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Timetable {
-  int get year => throw _privateConstructorUsedError;
+  String get year => throw _privateConstructorUsedError;
   String get belong => throw _privateConstructorUsedError;
   Semester get semester => throw _privateConstructorUsedError;
   List<List<Subject?>> get firstHalf => throw _privateConstructorUsedError;
@@ -39,7 +39,7 @@ abstract class $TimetableCopyWith<$Res> {
       _$TimetableCopyWithImpl<$Res, Timetable>;
   @useResult
   $Res call(
-      {int year,
+      {String year,
       String belong,
       Semester semester,
       List<List<Subject?>> firstHalf,
@@ -71,7 +71,7 @@ class _$TimetableCopyWithImpl<$Res, $Val extends Timetable>
       year: null == year
           ? _value.year
           : year // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       belong: null == belong
           ? _value.belong
           : belong // ignore: cast_nullable_to_non_nullable
@@ -105,7 +105,7 @@ abstract class _$$TimetableImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int year,
+      {String year,
       String belong,
       Semester semester,
       List<List<Subject?>> firstHalf,
@@ -135,7 +135,7 @@ class __$$TimetableImplCopyWithImpl<$Res>
       year: null == year
           ? _value.year
           : year // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       belong: null == belong
           ? _value.belong
           : belong // ignore: cast_nullable_to_non_nullable
@@ -178,7 +178,7 @@ class _$TimetableImpl implements _Timetable {
       _$$TimetableImplFromJson(json);
 
   @override
-  final int year;
+  final String year;
   @override
   final String belong;
   @override
@@ -256,7 +256,7 @@ class _$TimetableImpl implements _Timetable {
 
 abstract class _Timetable implements Timetable {
   const factory _Timetable(
-      {required final int year,
+      {required final String year,
       required final String belong,
       required final Semester semester,
       required final List<List<Subject?>> firstHalf,
@@ -267,7 +267,7 @@ abstract class _Timetable implements Timetable {
       _$TimetableImpl.fromJson;
 
   @override
-  int get year;
+  String get year;
   @override
   String get belong;
   @override
