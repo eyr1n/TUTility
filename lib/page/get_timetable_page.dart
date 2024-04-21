@@ -66,27 +66,7 @@ class GetTimetablePage extends ConsumerWidget {
         onMessageReceived: (JavaScriptMessage message) async {
           try {
             final timetable = Timetable.fromJson(jsonDecode(message.message));
-            final syllabusJson = await http.get(Uri.parse(
-                'https://syllabus.rinrin.me/ja/${timetable.year}/all.min.json'));
-            final syllabus = jsonDecode(syllabusJson.body);
-
-            List<List<Subject?>> replaceWithSubject(
-                    List<List<Subject?>> timetable) =>
-                timetable
-                    .map((row) => row
-                        .map((subject) => subject != null
-                            ? (syllabus.containsKey(subject.id)
-                                ? Subject.fromJson(syllabus[subject.id])
-                                : subject)
-                            : null)
-                        .toList())
-                    .toList();
-
-            final replaced = timetable.copyWith(
-              firstHalf: replaceWithSubject(timetable.firstHalf),
-              secondHalf: replaceWithSubject(timetable.secondHalf),
-              intensive: replaceWithSubject(timetable.firstHalf),
-            );
+            final replaced = await _replaceWithSyllabus(timetable);
             await ref.watch(timetableNotifierProvider.notifier).set(replaced);
 
             if (context.mounted) {
@@ -110,6 +90,32 @@ class GetTimetablePage extends ConsumerWidget {
       appBar: AppBar(title: const Text('時間割の取得')),
       body: WebViewWidget(controller: _controller),
     );
+  }
+}
+
+Future<Timetable> _replaceWithSyllabus(Timetable timetable) async {
+  try {
+    final syllabusJson = await http.get(Uri.parse(
+        'https://syllabus.rinrin.me/ja/${timetable.year}/all.min.json'));
+    final syllabus = jsonDecode(syllabusJson.body);
+
+    List<List<Subject?>> replace(List<List<Subject?>> timetable) => timetable
+        .map((row) => row
+            .map((subject) => subject != null
+                ? (syllabus.containsKey(subject.id)
+                    ? Subject.fromJson(syllabus[subject.id])
+                    : subject)
+                : null)
+            .toList())
+        .toList();
+
+    return timetable.copyWith(
+      firstHalf: replace(timetable.firstHalf),
+      secondHalf: replace(timetable.secondHalf),
+      intensive: replace(timetable.firstHalf),
+    );
+  } catch (_) {
+    return timetable;
   }
 }
 
