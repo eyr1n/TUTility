@@ -28,6 +28,7 @@ class App extends StatelessWidget {
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
       supportedLocales: const [Locale('ja')],
       routerConfig: _appRouter.config(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
