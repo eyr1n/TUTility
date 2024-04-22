@@ -25,7 +25,6 @@ class App extends StatelessWidget {
       title: 'TUTility',
       theme: _themeData(Brightness.light),
       darkTheme: _themeData(Brightness.dark),
-      locale: const Locale('ja'),
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
       supportedLocales: const [Locale('ja')],
       routerConfig: _appRouter.config(),
