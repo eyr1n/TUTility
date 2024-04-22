@@ -111,13 +111,13 @@ function getTimetable(): Timetable {
           switch (semester) {
             case "spring":
               return (
-                !subject.term?.includes("後期2") &&
-                !subject.term?.includes("後2")
+                !subject.term?.includes("前期２") &&
+                !subject.term?.includes("前２")
               );
             case "fall":
               return (
-                !subject.term?.includes("前期2") &&
-                !subject.term?.includes("前2")
+                !subject.term?.includes("後期２") &&
+                !subject.term?.includes("後２")
               );
             default:
               return true;
@@ -134,13 +134,13 @@ function getTimetable(): Timetable {
           switch (semester) {
             case "spring":
               return (
-                !subject.term?.includes("後期1") &&
-                !subject.term?.includes("後1")
+                !subject.term?.includes("前期１") &&
+                !subject.term?.includes("前１")
               );
             case "fall":
               return (
-                !subject.term?.includes("前期1") &&
-                !subject.term?.includes("前1")
+                !subject.term?.includes("後期１") &&
+                !subject.term?.includes("後１")
               );
             default:
               return true;
