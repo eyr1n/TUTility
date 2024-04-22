@@ -69,9 +69,9 @@ function getTimetable() {
         col.filter((subject) => {
           switch (semester) {
             case "spring":
-              return !subject.term?.includes("\u5F8C\u671F2") && !subject.term?.includes("\u5F8C2");
+              return !subject.term?.includes("\u524D\u671F\uFF12") && !subject.term?.includes("\u524D\uFF12");
             case "fall":
-              return !subject.term?.includes("\u524D\u671F2") && !subject.term?.includes("\u524D2");
+              return !subject.term?.includes("\u5F8C\u671F\uFF12") && !subject.term?.includes("\u5F8C\uFF12");
             default:
               return true;
           }
@@ -85,9 +85,9 @@ function getTimetable() {
         col.filter((subject) => {
           switch (semester) {
             case "spring":
-              return !subject.term?.includes("\u5F8C\u671F1") && !subject.term?.includes("\u5F8C1");
+              return !subject.term?.includes("\u524D\u671F\uFF11") && !subject.term?.includes("\u524D\uFF11");
             case "fall":
-              return !subject.term?.includes("\u524D\u671F1") && !subject.term?.includes("\u524D1");
+              return !subject.term?.includes("\u5F8C\u671F\uFF11") && !subject.term?.includes("\u5F8C\uFF11");
             default:
               return true;
           }
