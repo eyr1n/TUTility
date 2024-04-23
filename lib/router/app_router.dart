@@ -2,9 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:tutility/page/canteen_page.dart';
 import 'package:tutility/page/get_timetable_page.dart';
-import 'package:tutility/page/home_page.dart';
 import 'package:tutility/page/links_page.dart';
 import 'package:tutility/page/misc_page.dart';
+import 'package:tutility/page/navigation_page.dart';
 import 'package:tutility/page/timetable_page.dart';
 
 part 'app_router.gr.dart';
