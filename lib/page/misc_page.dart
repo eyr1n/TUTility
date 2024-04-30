@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:tutility/provider/research_visibility.dart';
 import 'package:tutility/provider/timetable.dart';
 import 'package:tutility/widget/alert_dialog.dart';
 import 'package:tutility/widget/confirm_dialog.dart';
@@ -13,12 +14,23 @@ class MiscPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final researchVisibility = ref.watch(researchVisibilityNotifierProvider);
+
     return Scaffold(
       appBar: AppBar(title: const Text('その他')),
       body: ListView(
         children: ListTile.divideTiles(
           context: context,
           tiles: [
+            SwitchListTile(
+              title: const Text('卒業研究を非表示'),
+              value: !researchVisibility,
+              onChanged: (value) {
+                ref
+                    .watch(researchVisibilityNotifierProvider.notifier)
+                    .set(!value);
+              },
+            ),
             ListTile(
               title: const Text('時間割をリセット'),
               onTap: () {

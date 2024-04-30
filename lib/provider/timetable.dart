@@ -15,8 +15,8 @@ class TimetableNotifier extends _$TimetableNotifier {
   Timetable? build() {
     _sharedPreferences = ref.watch(sharedPreferencesProvider).requireValue;
     try {
-      final str = _sharedPreferences.getString('timetable');
-      return str != null ? Timetable.fromJson(jsonDecode(str)) : null;
+      final value = _sharedPreferences.getString('timetable');
+      return value != null ? Timetable.fromJson(jsonDecode(value)) : null;
     } catch (_) {
       return null;
     }
