@@ -1,27 +1,26 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tutility/model/term.dart';
 import 'package:tutility/provider/shared_preferences.dart';
 
-part 'term.g.dart';
+part 'research_visibility.g.dart';
 
 @riverpod
-class TermNotifier extends _$TermNotifier {
+class ResearchVisibilityNotifier extends _$ResearchVisibilityNotifier {
   late SharedPreferences _sharedPreferences;
 
   @override
-  Term build() {
+  bool build() {
     _sharedPreferences = ref.watch(sharedPreferencesProvider).requireValue;
     try {
-      final value = _sharedPreferences.getString('term');
-      return value != null ? Term.values.byName(value) : Term.firstHalf;
+      final value = _sharedPreferences.getBool('research_visibility');
+      return value ?? true;
     } catch (_) {
-      return Term.firstHalf;
+      return true;
     }
   }
 
-  Future<bool> set(Term value) {
+  Future<bool> set(bool value) {
     state = value;
-    return _sharedPreferences.setString('term', value.name);
+    return _sharedPreferences.setBool('research_visibility', value);
   }
 }

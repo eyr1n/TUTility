@@ -1,13 +1,15 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tutility/font_scaler.dart';
 import 'package:tutility/model/subject.dart';
+import 'package:tutility/provider/research_visibility.dart';
 import 'package:tutility/widget/timetable_empty_tile.dart';
 import 'package:tutility/widget/timetable_period.dart';
 import 'package:tutility/widget/timetable_subject_tile.dart';
 import 'package:tutility/widget/timetable_weekday.dart';
 
-class TimetableView extends StatelessWidget {
+class TimetableView extends ConsumerWidget {
   final List<List<Subject?>> timetable;
 
   const TimetableView({
@@ -16,7 +18,9 @@ class TimetableView extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final researchVisibility = ref.watch(researchVisibilityNotifierProvider);
+
     return ConstrainedBox(
       constraints: const BoxConstraints(
         maxWidth: maxTimetableWidth,
@@ -31,14 +35,17 @@ class TimetableView extends StatelessWidget {
               for (int i = 0; i < 5; i++) TimetableWeekday(weekday: i + 1),
             ],
           ),
-          ...timetable.mapIndexed((i, row) => TableRow(
-                children: [
-                  TimetablePeriod(period: i + 1),
-                  ...row.map((subject) => subject != null
-                      ? TimetableSubjectTile(subject: subject)
-                      : const TimetableEmptyTile()),
-                ],
-              )),
+          ...timetable.mapIndexed(
+            (i, row) => TableRow(
+              children: [
+                TimetablePeriod(period: i + 1),
+                ...row.map((subject) => (subject != null) &&
+                        (researchVisibility || !subject.name.contains('卒業研究'))
+                    ? TimetableSubjectTile(subject: subject)
+                    : const TimetableEmptyTile()),
+              ],
+            ),
+          ),
         ],
       ),
     );
