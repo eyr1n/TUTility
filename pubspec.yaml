@@ -1,9 +1,9 @@
 name: tutility
-publish_to: "none"
-version: 2.0.3+19
+publish_to: 'none'
+version: 2.0.4+20
 
 environment:
-  sdk: ">=3.3.2 <4.0.0"
+  sdk: '>=3.3.2 <4.0.0'
 
 dependencies:
   auto_route: ^8.0.3
@@ -45,6 +45,6 @@ flutter:
 flutter_icons:
   ios: true
   android: true
-  image_path: "assets/icon.png"
-  adaptive_icon_background: "#FFFFFF"
-  adaptive_icon_foreground: "assets/icon_adaptive.png"
+  image_path: 'assets/icon.png'
+  adaptive_icon_background: '#FFFFFF'
+  adaptive_icon_foreground: 'assets/icon_adaptive.png'
