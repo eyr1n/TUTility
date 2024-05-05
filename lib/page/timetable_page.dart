@@ -26,25 +26,25 @@ class TimetablePage extends ConsumerWidget {
       appBar: AppBar(
         centerTitle: true,
         title: timetable != null
-            ? SegmentedButton<int>(
+            ? SegmentedButton<Term>(
                 multiSelectionEnabled: false,
                 emptySelectionAllowed: false,
                 showSelectedIcon: false,
                 segments: [
                   ButtonSegment(
-                    value: 0,
+                    value: Term.firstHalf,
                     label: Text('${timetable.semester.label}1'),
                   ),
                   ButtonSegment(
-                    value: 1,
+                    value: Term.secondHalf,
                     label: Text('${timetable.semester.label}2'),
                   ),
                 ],
-                selected: {term.index},
+                selected: {term},
                 onSelectionChanged: (newSelection) {
                   ref
                       .watch(termNotifierProvider.notifier)
-                      .set(Term.values[newSelection.first]);
+                      .set(newSelection.first);
                 },
               )
             : null,
