@@ -36,14 +36,14 @@ class GetTimetablePage extends ConsumerWidget {
                       const Center(child: CircularProgressIndicator()),
                 );
                 await _controller.runJavaScript(
-                    'document.querySelector("#ctl00_bhHeader_ctl16_lnk").click();');
+                    '(document.querySelector("#ctl00_bhHeader_ctl350_lnk") ?? document.querySelector("#ctl00_bhHeader_ctl33_lnk")).click();');
                 return;
               }
 
               if (url ==
                   'https://kyomu.office.tut.ac.jp/portal/StudentApp/Blank.aspx#regist_results') {
                 await _controller.runJavaScript(
-                    'document.querySelector("#ctl00_bhHeader_ctl30_lnk").click();');
+                    'document.querySelector("#ctl00_bhHeader_ctl47_lnk").click();');
                 return;
               }
 
