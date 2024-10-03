@@ -2,7 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:tutility/provider/research_visibility.dart';
+import 'package:tutility/provider/hide_internship.dart';
+import 'package:tutility/provider/hide_research.dart';
 import 'package:tutility/provider/timetable.dart';
 import 'package:tutility/widget/alert_dialog.dart';
 import 'package:tutility/widget/confirm_dialog.dart';
@@ -14,7 +15,8 @@ class MiscPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final researchVisibility = ref.watch(researchVisibilityNotifierProvider);
+    final hideResearch = ref.watch(hideResearchNotifierProvider);
+    final hideInternship = ref.watch(hideInternshipNotifierProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text('その他')),
@@ -24,11 +26,16 @@ class MiscPage extends ConsumerWidget {
           tiles: [
             SwitchListTile(
               title: const Text('卒業研究を非表示'),
-              value: !researchVisibility,
+              value: hideResearch,
               onChanged: (value) {
-                ref
-                    .watch(researchVisibilityNotifierProvider.notifier)
-                    .set(!value);
+                ref.watch(hideResearchNotifierProvider.notifier).set(value);
+              },
+            ),
+            SwitchListTile(
+              title: const Text('実務訓練を非表示'),
+              value: hideInternship,
+              onChanged: (value) {
+                ref.watch(hideInternshipNotifierProvider.notifier).set(value);
               },
             ),
             ListTile(

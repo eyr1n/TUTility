@@ -39,7 +39,22 @@ function getTimetable(): Timetable {
     const cancel = getTextOrNull(
       elm.querySelector('span[id$="_lblCancelName"]')
     );
-    // TODO: 当選科目以外を除外
+
+    // 抽選中科目を置換, 当選科目以外を除外
+    const duringLot = getTextOrNull(
+      elm.querySelector('span[id$="_lblAdjustName"]')
+    );
+    if (duringLot === "抽選対象") {
+      return {
+        id: "during_lot",
+        url: "",
+        name: "抽選中",
+        required: null,
+        term: null,
+        units: null,
+        staff: null,
+      };
+    }
     const lotResult = getTextOrNull(
       elm.querySelector('span[id$="_lblLotResultName"]')
     );

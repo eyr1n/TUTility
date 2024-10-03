@@ -31,8 +31,12 @@ mixin _$Subject {
   String? get staff => throw _privateConstructorUsedError;
   String? get room => throw _privateConstructorUsedError;
 
+  /// Serializes this Subject to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Subject
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $SubjectCopyWith<Subject> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -64,6 +68,8 @@ class _$SubjectCopyWithImpl<$Res, $Val extends Subject>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Subject
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -151,6 +157,8 @@ class __$$SubjectImplCopyWithImpl<$Res>
       _$SubjectImpl _value, $Res Function(_$SubjectImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Subject
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -272,12 +280,14 @@ class _$SubjectImpl implements _Subject {
             (identical(other.room, room) || other.room == room));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, url, name, area, required,
       term, units, grade, staff, room);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Subject
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SubjectImplCopyWith<_$SubjectImpl> get copyWith =>
@@ -326,8 +336,11 @@ abstract class _Subject implements Subject {
   String? get staff;
   @override
   String? get room;
+
+  /// Create a copy of Subject
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SubjectImplCopyWith<_$SubjectImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

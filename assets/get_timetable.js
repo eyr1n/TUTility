@@ -15,6 +15,20 @@ function getTimetable() {
     const cancel = getTextOrNull(
       elm.querySelector('span[id$="_lblCancelName"]')
     );
+    const duringLot = getTextOrNull(
+      elm.querySelector('span[id$="_lblAdjustName"]')
+    );
+    if (duringLot === "\u62BD\u9078\u5BFE\u8C61") {
+      return {
+        id: "during_lot",
+        url: "",
+        name: "\u62BD\u9078\u4E2D",
+        required: null,
+        term: null,
+        units: null,
+        staff: null
+      };
+    }
     const lotResult = getTextOrNull(
       elm.querySelector('span[id$="_lblLotResultName"]')
     );
