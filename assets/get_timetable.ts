@@ -17,7 +17,7 @@ interface Timetable {
   intensive: (Subject | null)[][];
 }
 
-function getTimetable(): Timetable {
+function getTimetable(): Timetable | null {
   let year: string | null = null;
 
   const getFirstOrNull = <T>(arr: T[]) => (arr.length > 0 ? arr[0] : null);
@@ -91,105 +91,109 @@ function getTimetable(): Timetable {
     };
   };
 
-  const belong = getTextOrNull(
-    document.querySelector<HTMLSpanElement>("#ctl00_bhHeader_lblBelong")
-  );
-
-  const semester =
-    document.querySelector<HTMLSelectElement>("#ctl00_phContents_ddlTerm")
-      ?.value === "1"
-      ? "spring"
-      : "fall";
-
-  const normal = [
-    ...document.querySelectorAll<HTMLTableRowElement>(
-      "#tblLecture > tbody > tr"
-    ),
-  ]
-    .slice(2, 8)
-    .map((row) =>
-      [...row.querySelectorAll<HTMLTableCellElement>(":scope > td")]
-        .slice(1, 6)
-        .map((col) =>
-          [
-            ...col.querySelectorAll<HTMLDivElement>(
-              ':scope > div > div[id$="_divDetail"]'
-            ),
-          ].flatMap((elm) => getSubject(elm) ?? [])
-        )
+  try {
+    const belong = getTextOrNull(
+      document.querySelector<HTMLSpanElement>("#ctl00_bhHeader_lblBelong")
     );
 
-  const firstHalf = normal.map((row) =>
-    row.map((col) =>
-      getFirstOrNull(
-        col.filter((subject) => {
-          switch (semester) {
-            case "spring":
-              return (
-                !subject.term?.includes("前期２") &&
-                !subject.term?.includes("前２")
-              );
-            case "fall":
-              return (
-                !subject.term?.includes("後期２") &&
-                !subject.term?.includes("後２")
-              );
-            default:
-              return true;
-          }
-        })
+    const semester =
+      document.querySelector<HTMLSelectElement>("#ctl00_phContents_ddlTerm")
+        ?.value === "1"
+        ? "spring"
+        : "fall";
+
+    const normal = [
+      ...document.querySelectorAll<HTMLTableRowElement>(
+        "#tblLecture > tbody > tr"
+      ),
+    ]
+      .slice(2, 8)
+      .map((row) =>
+        [...row.querySelectorAll<HTMLTableCellElement>(":scope > td")]
+          .slice(1, 6)
+          .map((col) =>
+            [
+              ...col.querySelectorAll<HTMLDivElement>(
+                ':scope > div > div[id$="_divDetail"]'
+              ),
+            ].flatMap((elm) => getSubject(elm) ?? [])
+          )
+      );
+
+    const firstHalf = normal.map((row) =>
+      row.map((col) =>
+        getFirstOrNull(
+          col.filter((subject) => {
+            switch (semester) {
+              case "spring":
+                return (
+                  !subject.term?.includes("前期２") &&
+                  !subject.term?.includes("前２")
+                );
+              case "fall":
+                return (
+                  !subject.term?.includes("後期２") &&
+                  !subject.term?.includes("後２")
+                );
+              default:
+                return true;
+            }
+          })
+        )
       )
-    )
-  );
+    );
 
-  const secondHalf = normal.map((row) =>
-    row.map((col) =>
-      getFirstOrNull(
-        col.filter((subject) => {
-          switch (semester) {
-            case "spring":
-              return (
-                !subject.term?.includes("前期１") &&
-                !subject.term?.includes("前１")
-              );
-            case "fall":
-              return (
-                !subject.term?.includes("後期１") &&
-                !subject.term?.includes("後１")
-              );
-            default:
-              return true;
-          }
-        })
+    const secondHalf = normal.map((row) =>
+      row.map((col) =>
+        getFirstOrNull(
+          col.filter((subject) => {
+            switch (semester) {
+              case "spring":
+                return (
+                  !subject.term?.includes("前期１") &&
+                  !subject.term?.includes("前１")
+                );
+              case "fall":
+                return (
+                  !subject.term?.includes("後期１") &&
+                  !subject.term?.includes("後１")
+                );
+              default:
+                return true;
+            }
+          })
+        )
       )
-    )
-  );
+    );
 
-  const intensive = [
-    ...document.querySelectorAll<HTMLTableRowElement>(
-      "#tblOhters > tbody > tr"
-    ),
-  ].map((row) =>
-    [...row.querySelectorAll<HTMLTableCellElement>(":scope > td")]
-      .slice(1)
-      .map((col) => {
-        const elm = col.querySelector<HTMLDivElement>(
-          ':scope > div > div[id$="_divDetail"]'
-        );
-        return elm ? getSubject(elm) : null;
-      })
-  );
+    const intensive = [
+      ...document.querySelectorAll<HTMLTableRowElement>(
+        "#tblOhters > tbody > tr"
+      ),
+    ].map((row) =>
+      [...row.querySelectorAll<HTMLTableCellElement>(":scope > td")]
+        .slice(1)
+        .map((col) => {
+          const elm = col.querySelector<HTMLDivElement>(
+            ':scope > div > div[id$="_divDetail"]'
+          );
+          return elm ? getSubject(elm) : null;
+        })
+    );
 
-  if (!year || !belong) {
-    throw new Error("failed");
+    if (!year || !belong) {
+      throw new Error("failed");
+    }
+
+    return {
+      year,
+      belong,
+      semester,
+      firstHalf,
+      secondHalf,
+      intensive,
+    };
+  } catch {
+    return null;
   }
-
-  return {
-    year,
-    belong,
-    semester,
-    firstHalf,
-    secondHalf,
-    intensive,
-  };
 }
