@@ -8,7 +8,7 @@ class CanteenPage extends StatelessWidget {
   final WebViewController _controller = WebViewController()
     ..setJavaScriptMode(JavaScriptMode.unrestricted)
     ..setBackgroundColor(Colors.transparent)
-    ..loadRequest(Uri.parse('https://tut-canteen-menu.rinrin.me/inapp'));
+    ..loadRequest(Uri.parse('https://canteen.opentut.gr.jp/inapp'));
 
   CanteenPage({super.key});
 

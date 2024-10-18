@@ -96,7 +96,7 @@ class GetTimetablePage extends ConsumerWidget {
 Future<Timetable> _replaceWithSyllabus(Timetable timetable) async {
   try {
     final syllabusJson = await http.get(Uri.parse(
-        'https://syllabus.rinrin.me/ja/${timetable.year}/all.min.json'));
+        'https://syllabus.opentut.gr.jp/ja/${timetable.year}/all.min.json'));
     final syllabus = jsonDecode(syllabusJson.body);
 
     List<List<Subject?>> replace(List<List<Subject?>> timetable) => timetable
