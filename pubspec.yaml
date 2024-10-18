@@ -1,6 +1,6 @@
 name: tutility
 publish_to: 'none'
-version: 2.0.7+23
+version: 2.0.8+24
 
 environment:
   sdk: '>=3.3.2 <4.0.0'
