@@ -2,21 +2,23 @@
   "expo": {
     "name": "TUTility",
     "slug": "TUTility",
-    "version": "1.0.0",
+    "version": "2.0.9",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "tutility",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "me.rinrin.tutility"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "me.rinrin.tutility"
     },
     "locales": {
       "ja": "./languages/japanese.json"
@@ -27,6 +29,12 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "997efd75-4b04-4be7-a856-cd8e4aff6530"
+      }
     }
   }
 }
