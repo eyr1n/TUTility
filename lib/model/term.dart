@@ -1,4 +1,0 @@
-enum Term {
-  firstHalf,
-  secondHalf,
-}
