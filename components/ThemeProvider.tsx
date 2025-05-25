@@ -27,12 +27,12 @@ export function ThemeProvider({
 
   const materialLight = {
     ...MD3LightTheme,
-    ...(lightColors ? { colors: lightColors } : {}),
+    ...(lightColors != null && { colors: lightColors }),
   };
 
   const materialDark = {
     ...MD3DarkTheme,
-    ...(darkColors ? { colors: darkColors } : {}),
+    ...(darkColors != null && { colors: darkColors }),
   };
 
   const { LightTheme, DarkTheme } = adaptNavigationTheme({

@@ -30,12 +30,10 @@ export function TimetableWeekday({ weekday }: TimetableWeekdayProps) {
         style={{
           paddingHorizontal: 16 * scale,
           paddingVertical: 2 * scale,
-          ...(weekday.value === new Date().getDay()
-            ? {
-                borderRadius: 100,
-                backgroundColor: theme.colors.primaryContainer,
-              }
-            : {}),
+          ...(weekday.value === new Date().getDay() && {
+            borderRadius: 100,
+            backgroundColor: theme.colors.primaryContainer,
+          }),
         }}
       >
         <Text style={{ fontSize: 13 * scale, fontWeight: 'bold' }}>
