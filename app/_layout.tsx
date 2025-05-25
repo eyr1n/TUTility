@@ -10,7 +10,6 @@ export default function RootLayout() {
     ...MD3LightTheme,
     colors: LightColors,
   };
-
   const materialDark = {
     ...MD3DarkTheme,
     colors: DarkColors,
