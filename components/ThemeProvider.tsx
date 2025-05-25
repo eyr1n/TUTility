@@ -7,33 +7,21 @@ import { PropsWithChildren } from 'react';
 import { useColorScheme } from 'react-native';
 import {
   adaptNavigationTheme,
-  MD3DarkTheme,
-  MD3LightTheme,
+  MD3Theme,
   PaperProvider,
 } from 'react-native-paper';
-import { MD3Colors } from 'react-native-paper/lib/typescript/types';
 
 interface ThemeProviderProps {
-  lightColors?: MD3Colors;
-  darkColors?: MD3Colors;
+  materialLight?: MD3Theme;
+  materialDark?: MD3Theme;
 }
 
 export function ThemeProvider({
-  lightColors,
-  darkColors,
+  materialLight,
+  materialDark,
   children,
 }: PropsWithChildren<ThemeProviderProps>) {
   const colorScheme = useColorScheme();
-
-  const materialLight = {
-    ...MD3LightTheme,
-    ...(lightColors != null && { colors: lightColors }),
-  };
-
-  const materialDark = {
-    ...MD3DarkTheme,
-    ...(darkColors != null && { colors: darkColors }),
-  };
 
   const { LightTheme, DarkTheme } = adaptNavigationTheme({
     reactNavigationLight: NavigationDefaultTheme,

@@ -3,13 +3,26 @@ import { DarkColors, LightColors } from '@/constants/Colors';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { StrictMode, Suspense } from 'react';
-import { Appbar } from 'react-native-paper';
+import { Appbar, MD3DarkTheme, MD3LightTheme } from 'react-native-paper';
 
 export default function RootLayout() {
+  const materialLight = {
+    ...MD3LightTheme,
+    colors: LightColors,
+  };
+
+  const materialDark = {
+    ...MD3DarkTheme,
+    colors: DarkColors,
+  };
+
   return (
     <StrictMode>
       <Suspense>
-        <ThemeProvider lightColors={LightColors} darkColors={DarkColors}>
+        <ThemeProvider
+          materialLight={materialLight}
+          materialDark={materialDark}
+        >
           <Stack
             screenOptions={{
               header: ({ navigation, route, options, back }) => (
