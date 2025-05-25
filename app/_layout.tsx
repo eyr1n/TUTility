@@ -14,9 +14,9 @@ export default function RootLayout() {
             screenOptions={{
               header: ({ navigation, route, options, back }) => (
                 <Appbar.Header elevated>
-                  {back ? (
+                  {back != null && (
                     <Appbar.BackAction onPress={() => navigation.goBack()} />
-                  ) : null}
+                  )}
                   <Appbar.Content title={options.title || route.name} />
                 </Appbar.Header>
               ),

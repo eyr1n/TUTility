@@ -22,7 +22,9 @@ export default function MiscScreen() {
   const [hideInternship, setHideInternship] = useAtom(hideInternshipAtom);
   const resetTimetable = useResetAtom(timetableAtom);
 
-  const [resetState, setResetState] = useState<'confirm' | 'done' | null>(null);
+  const [resetState, setResetState] = useState<'idle' | 'confirm' | 'done'>(
+    'idle',
+  );
 
   return (
     <>
@@ -62,7 +64,7 @@ export default function MiscScreen() {
         <Dialog
           visible={resetState === 'confirm'}
           onDismiss={() => {
-            setResetState(null);
+            setResetState('idle');
           }}
         >
           <Dialog.Content>
@@ -71,7 +73,7 @@ export default function MiscScreen() {
           <Dialog.Actions>
             <Button
               onPress={() => {
-                setResetState(null);
+                setResetState('idle');
               }}
             >
               キャンセル
@@ -90,7 +92,7 @@ export default function MiscScreen() {
         <Dialog
           visible={resetState === 'done'}
           onDismiss={() => {
-            setResetState(null);
+            setResetState('idle');
           }}
         >
           <Dialog.Content>
@@ -99,7 +101,7 @@ export default function MiscScreen() {
           <Dialog.Actions>
             <Button
               onPress={() => {
-                setResetState(null);
+                setResetState('idle');
               }}
             >
               閉じる

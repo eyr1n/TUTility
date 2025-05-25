@@ -23,7 +23,7 @@ export default function TimetableScreen() {
             <Appbar.Header mode="center-aligned">
               <Appbar.Content
                 title={
-                  timetable ? (
+                  timetable != null && (
                     <SegmentedButtons
                       value={term}
                       onValueChange={setTerm}
@@ -40,7 +40,7 @@ export default function TimetableScreen() {
                         },
                       ]}
                     />
-                  ) : null
+                  )
                 }
               />
               <Appbar.Action

@@ -27,12 +27,10 @@ export default function LicensesScreen() {
             >
               <Card.Title title={item[0]} subtitle={item[1].licenses} />
               <Card.Content>
-                {'publisher' in item[1] ? (
-                  <Text>{item[1].publisher}</Text>
-                ) : null}
-                {'copyright' in item[1] && item[1].copyright !== null ? (
+                {'publisher' in item[1] && <Text>{item[1].publisher}</Text>}
+                {'copyright' in item[1] && item[1].copyright != null && (
                   <Text>{item[1].copyright}</Text>
-                ) : null}
+                )}
               </Card.Content>
             </Card>
           )}

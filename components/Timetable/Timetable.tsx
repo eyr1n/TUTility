@@ -18,61 +18,63 @@ export function Timetable({ timetable }: TimetableProps) {
   const hideResearch = useAtomValue(hideResearchAtom);
   const hideInternship = useAtomValue(hideInternshipAtom);
 
-  const [headerHeight, setHeaderHeight] = useState(0);
+  const [headerHeight, setHeaderHeight] = useState<number>();
 
   return (
-    <View
-      style={{
-        flex: 1,
-        flexDirection: 'row',
-        gap: 4,
-        maxWidth: MaxTimetableWidth,
-      }}
-    >
-      <View style={{ gap: 2 }}>
-        <View style={{ height: headerHeight }}></View>
-        <View style={{ flex: 1 }}>
-          <TimetablePeriod period={1} begin="8:50" end="10:20" />
-          <TimetablePeriod period={2} begin="10:30" end="12:00" />
-          <TimetablePeriod period={3} begin="13:00" end="14:30" />
-          <TimetablePeriod period={4} begin="14:40" end="16:10" />
-          <TimetablePeriod period={5} begin="16:20" end="17:50" />
-          <TimetablePeriod period={6} begin="18:00" end="19:30" />
-        </View>
-      </View>
-
-      <View style={{ flex: 1, gap: 2 }}>
-        <View
-          onLayout={(e) => {
-            setHeaderHeight(e.nativeEvent.layout.height);
-          }}
-          style={{ flex: 1, flexDirection: 'row' }}
-        >
-          <TimetableWeekday weekday={Weekday.Monday} />
-          <TimetableWeekday weekday={Weekday.Tuesday} />
-          <TimetableWeekday weekday={Weekday.Wednesday} />
-          <TimetableWeekday weekday={Weekday.Thursday} />
-          <TimetableWeekday weekday={Weekday.Friday} />
+    headerHeight != null && (
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'row',
+          gap: 4,
+          maxWidth: MaxTimetableWidth,
+        }}
+      >
+        <View style={{ gap: 2 }}>
+          <View style={{ height: headerHeight }}></View>
+          <View style={{ flex: 1 }}>
+            <TimetablePeriod period={1} begin="8:50" end="10:20" />
+            <TimetablePeriod period={2} begin="10:30" end="12:00" />
+            <TimetablePeriod period={3} begin="13:00" end="14:30" />
+            <TimetablePeriod period={4} begin="14:40" end="16:10" />
+            <TimetablePeriod period={5} begin="16:20" end="17:50" />
+            <TimetablePeriod period={6} begin="18:00" end="19:30" />
+          </View>
         </View>
 
-        <View style={{ flex: 1 }}>
-          {timetable.map((row, i) => (
-            <View key={i} style={{ flex: 1, flexDirection: 'row' }}>
-              {row.map((subject, j) =>
-                !subject ||
-                (hideResearch && subject.name.includes('卒業研究')) ||
-                (hideInternship && subject.name.includes('実務訓練')) ? (
-                  <SubjectTileEmpty key={`${i},${j}`} />
-                ) : subject.id === 'during_lot' ? (
-                  <SubjectTileDuringLot key={`${i},${j}`} />
-                ) : (
-                  <SubjectTile key={`${i},${j}`} subject={subject} />
-                ),
-              )}
-            </View>
-          ))}
+        <View style={{ flex: 1, gap: 2 }}>
+          <View
+            onLayout={(e) => {
+              setHeaderHeight(e.nativeEvent.layout.height);
+            }}
+            style={{ flex: 1, flexDirection: 'row' }}
+          >
+            <TimetableWeekday weekday={Weekday.Monday} />
+            <TimetableWeekday weekday={Weekday.Tuesday} />
+            <TimetableWeekday weekday={Weekday.Wednesday} />
+            <TimetableWeekday weekday={Weekday.Thursday} />
+            <TimetableWeekday weekday={Weekday.Friday} />
+          </View>
+
+          <View style={{ flex: 1 }}>
+            {timetable.map((row, i) => (
+              <View key={i} style={{ flex: 1, flexDirection: 'row' }}>
+                {row.map((subject, j) =>
+                  !subject ||
+                  (hideResearch && subject.name.includes('卒業研究')) ||
+                  (hideInternship && subject.name.includes('実務訓練')) ? (
+                    <SubjectTileEmpty key={`${i},${j}`} />
+                  ) : subject.id === 'during_lot' ? (
+                    <SubjectTileDuringLot key={`${i},${j}`} />
+                  ) : (
+                    <SubjectTile key={`${i},${j}`} subject={subject} />
+                  ),
+                )}
+              </View>
+            ))}
+          </View>
         </View>
       </View>
-    </View>
+    )
   );
 }

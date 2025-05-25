@@ -22,8 +22,8 @@ export default function TimetableScraperScreen() {
   const setTimetable = useSetAtom(timetableAtom);
 
   const [scraperState, setScraperState] = useState<
-    'loading' | 'successful' | 'failed' | null
-  >(null);
+    'idle' | 'loading' | 'successful' | 'failed'
+  >('idle');
 
   return (
     <>
