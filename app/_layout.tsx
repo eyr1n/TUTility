@@ -2,29 +2,31 @@ import { ThemeProvider } from '@/components/ThemeProvider';
 import { DarkColors, LightColors } from '@/constants/Colors';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { Suspense } from 'react';
+import { StrictMode, Suspense } from 'react';
 import { Appbar } from 'react-native-paper';
 
 export default function RootLayout() {
   return (
-    <Suspense>
-      <ThemeProvider lightColors={LightColors} darkColors={DarkColors}>
-        <Stack
-          screenOptions={{
-            header: ({ navigation, route, options, back }) => (
-              <Appbar.Header elevated>
-                {back ? (
-                  <Appbar.BackAction onPress={() => navigation.goBack()} />
-                ) : null}
-                <Appbar.Content title={options.title || route.name} />
-              </Appbar.Header>
-            ),
-          }}
-        >
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        </Stack>
-        <StatusBar style="auto" />
-      </ThemeProvider>
-    </Suspense>
+    <StrictMode>
+      <Suspense>
+        <ThemeProvider lightColors={LightColors} darkColors={DarkColors}>
+          <Stack
+            screenOptions={{
+              header: ({ navigation, route, options, back }) => (
+                <Appbar.Header elevated>
+                  {back ? (
+                    <Appbar.BackAction onPress={() => navigation.goBack()} />
+                  ) : null}
+                  <Appbar.Content title={options.title || route.name} />
+                </Appbar.Header>
+              ),
+            }}
+          >
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          </Stack>
+          <StatusBar style="auto" />
+        </ThemeProvider>
+      </Suspense>
+    </StrictMode>
   );
 }
