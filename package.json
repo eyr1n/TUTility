@@ -7,7 +7,9 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "lint": "expo lint",
-    "license": "license-checker-rseidelsohn --production --depth 0 --excludePrivatePackages --customPath licenseFormat.json --json --out assets/licenses.json"
+    "license": "license-checker-rseidelsohn --customPath licenseFormat.json --depth 0 --excludePrivatePackages --production --json --out assets/licenses.json",
+    "prestart": "npm run license",
+    "eas-build-post-install": "npm run license"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.1.0",
@@ -33,7 +35,7 @@
     "react-native-safe-area-context": "5.4.0",
     "react-native-screens": "~4.10.0",
     "react-native-webview": "13.13.5",
-    "timetable-scraper": "https://github.com/OpenTUT/timetable-scraper/releases/download/v0.0.4/timetable-scraper-0.0.4.tgz",
+    "timetable-scraper": "https://github.com/OpenTUT/timetable-scraper/releases/download/v0.0.5/timetable-scraper-0.0.5.tgz",
     "zod": "^3.25.27"
   },
   "devDependencies": {
