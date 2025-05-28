@@ -8,6 +8,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "lint": "expo lint",
+    "typecheck": "tsc",
     "license": "license-checker-rseidelsohn --customPath licenseFormat.json --depth 0 --excludePrivatePackages --production --json --out assets/licenses.json",
     "prestart": "npm run license",
     "eas-build-post-install": "npm run license"
