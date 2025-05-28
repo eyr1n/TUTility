@@ -11,7 +11,7 @@ export default function TimetableScreen() {
   const timetable = useAtomValue(timetableAtom);
   const [term, setTerm] = useAtom(termAtom);
 
-  const semesterLabel = timetable?.semester === 'spring' ? '前期' : '後期';
+  const termLabel = timetable?.term === 'spring' ? '前期' : '後期';
   const firstOrSecond =
     term === 'firstHalf' ? timetable?.firstHalf : timetable?.secondHalf;
 
@@ -30,12 +30,12 @@ export default function TimetableScreen() {
                       buttons={[
                         {
                           value: 'firstHalf',
-                          label: `${semesterLabel}1`,
+                          label: `${termLabel}1`,
                           style: { flex: 0 },
                         },
                         {
                           value: 'secondHalf',
-                          label: `${semesterLabel}2`,
+                          label: `${termLabel}2`,
                           style: { flex: 0 },
                         },
                       ]}

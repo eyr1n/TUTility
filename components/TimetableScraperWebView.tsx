@@ -30,7 +30,7 @@ export function TimetableScraperWebView({
         case 'loading':
           onLoad();
           break;
-        case 'timetable':
+        case 'successful':
           const dreamCampusTimetable = await DreamCampusTimetable.parseAsync(
             message.data,
           );
