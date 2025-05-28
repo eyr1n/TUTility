@@ -1,5 +1,5 @@
 import { MaxTimetableWidth } from '@/constants/TimetableWidth';
-import { useWindowDimensions } from './useWindowDimensions';
+import { useWindowDimensions } from 'react-native';
 
 const BaseScreenWidth = 360;
 const MaxFontScale = 1.5;

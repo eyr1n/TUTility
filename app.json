@@ -2,14 +2,14 @@
   "expo": {
     "name": "TUTility",
     "slug": "TUTility",
-    "version": "3.0.5",
+    "version": "3.0.6",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "tutility",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "me.rinrin.tutility",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
