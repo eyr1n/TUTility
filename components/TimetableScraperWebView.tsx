@@ -1,6 +1,11 @@
 import WebView, { WebViewMessageEvent } from 'react-native-webview';
-import { Timetable, WebViewMessage } from 'timetable-scraper';
-import scraperCode from 'timetable-scraper/browser';
+import {
+  DreamCampusTimetable,
+  getTimetable,
+  Timetable,
+  WebViewMessage,
+} from 'timetable-scraper';
+import scraperJs from 'timetable-scraper/browser';
 
 interface TimetableScraperWebViewProps {
   onLoad: () => void;
@@ -23,10 +28,16 @@ export function TimetableScraperWebView({
           onLoad();
           break;
         case 'timetable':
-          onSuccess(await Timetable.parseAsync(message.data));
+          const dreamCampusTimetable = await DreamCampusTimetable.parseAsync(
+            message.data,
+          );
+          const timetable = await Timetable.parseAsync(
+            getTimetable(dreamCampusTimetable),
+          );
+          onSuccess(timetable);
           break;
         default:
-          throw new Error('error');
+          throw new Error('failed to get timetable');
       }
     } catch (error) {
       onFail(error);
@@ -58,7 +69,7 @@ export function TimetableScraperWebView({
     location.href ===
     'https://kyomu.office.tut.ac.jp/portal/StudentApp/Regist/RegistList.aspx'
   ) {
-    ${scraperCode}
+    ${scraperJs}
     return;
   }
 })();

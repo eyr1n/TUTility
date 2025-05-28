@@ -35,7 +35,7 @@
     "react-native-safe-area-context": "5.4.0",
     "react-native-screens": "~4.10.0",
     "react-native-webview": "13.13.5",
-    "timetable-scraper": "https://github.com/OpenTUT/timetable-scraper/releases/download/v0.0.5/timetable-scraper-0.0.5.tgz",
+    "timetable-scraper": "https://github.com/OpenTUT/timetable-scraper/releases/download/v0.0.7/timetable-scraper-0.0.7.tgz",
     "zod": "^3.25.27"
   },
   "devDependencies": {
