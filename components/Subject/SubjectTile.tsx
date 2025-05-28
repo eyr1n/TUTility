@@ -1,6 +1,6 @@
 import { Palette } from '@/constants/Palette';
 import { useScale } from '@/hooks/useScale';
-import { Subject } from '@/schemas/Subject';
+import { Subject } from '@/schemas/subject';
 import { openBrowserAsync } from 'expo-web-browser';
 import { useState } from 'react';
 import { View } from 'react-native';

@@ -1,4 +1,4 @@
-import { Timetable } from '@/schemas/Timetable';
+import { Timetable } from '@/schemas/timetable';
 import { atomWithAsyncStorage } from './atomWithAsyncStorage';
 
 export const timetableAtom = atomWithAsyncStorage<Timetable | null>(

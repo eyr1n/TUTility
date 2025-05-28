@@ -1,5 +1,5 @@
-import { Subject } from '@/schemas/Subject';
-import { Timetable } from '@/schemas/Timetable';
+import { Subject } from '@/schemas/subject';
+import { Timetable } from '@/schemas/timetable';
 import WebView, { WebViewMessageEvent } from 'react-native-webview';
 import {
   DreamCampusTimetable,

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { Subject } from './Subject';
+import { Subject } from './subject';
 
 export const Timetable = z.object({
   year: z.string(),

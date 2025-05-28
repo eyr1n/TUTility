@@ -1,6 +1,6 @@
 import { hideInternshipAtom, hideResearchAtom } from '@/atoms';
 import { MaxTimetableWidth } from '@/constants/TimetableWidth';
-import { Subject } from '@/schemas/Subject';
+import { Subject } from '@/schemas/subject';
 import { useAtomValue } from 'jotai';
 import { useState } from 'react';
 import { View } from 'react-native';
