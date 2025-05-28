@@ -1,11 +1,14 @@
+import { Subject } from '@/schemas/Subject';
+import { Timetable } from '@/schemas/Timetable';
 import WebView, { WebViewMessageEvent } from 'react-native-webview';
 import {
   DreamCampusTimetable,
   getTimetable,
-  Timetable,
+  Timetable as ScraperTimetable,
   WebViewMessage,
 } from 'timetable-scraper';
 import scraperJs from 'timetable-scraper/browser';
+import { z } from 'zod';
 
 interface TimetableScraperWebViewProps {
   onLoad: () => void;
@@ -31,10 +34,13 @@ export function TimetableScraperWebView({
           const dreamCampusTimetable = await DreamCampusTimetable.parseAsync(
             message.data,
           );
-          const timetable = await Timetable.parseAsync(
+          const timetable = await ScraperTimetable.parseAsync(
             getTimetable(dreamCampusTimetable),
           );
-          onSuccess(timetable);
+          const replacedTimetable = await convertScraperTimetable(
+            timetable,
+          ).catch(() => timetable);
+          onSuccess(replacedTimetable);
           break;
         default:
           throw new Error('failed to get timetable');
@@ -83,4 +89,33 @@ true;`;
       injectedJavaScript={injectedJavaScript}
     />
   );
+}
+
+async function convertScraperTimetable(
+  scraperTimetable: ScraperTimetable,
+): Promise<Timetable> {
+  const syllabusJson = await fetch(
+    `https://syllabus.opentut.gr.jp/ja/${scraperTimetable.year}/all.min.json`,
+  );
+  const syllabus = await z
+    .record(Subject)
+    .parseAsync(await syllabusJson.json());
+
+  const replace = (timetable: (Subject | null)[][]) =>
+    timetable.map((row) =>
+      row.map((subject) =>
+        subject != null
+          ? subject.id in syllabus
+            ? syllabus[subject.id]
+            : subject
+          : null,
+      ),
+    );
+
+  return {
+    ...scraperTimetable,
+    firstHalf: replace(scraperTimetable.firstHalf),
+    secondHalf: replace(scraperTimetable.secondHalf),
+    intensive: replace(scraperTimetable.intensive),
+  };
 }

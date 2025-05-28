@@ -1,7 +1,5 @@
 import { timetableAtom } from '@/atoms';
 import { TimetableScraperWebView } from '@/components/TimetableScraperWebView';
-import { Subject } from '@/schemas/Subject';
-import { Timetable } from '@/schemas/Timetable';
 import { Stack, useRouter } from 'expo-router';
 import { useSetAtom } from 'jotai';
 import { useState } from 'react';
@@ -13,8 +11,6 @@ import {
   Portal,
   Text,
 } from 'react-native-paper';
-import { Timetable as ScraperTimetable } from 'timetable-scraper';
-import { z } from 'zod';
 
 export default function TimetableScraperScreen() {
   const router = useRouter();
@@ -33,9 +29,11 @@ export default function TimetableScraperScreen() {
           onLoad={() => {
             setScraperState('loading');
           }}
-          onSuccess={async (timetable) => {
-            setTimetable(await replaceWithSyllabus(timetable));
-            setScraperState('successful');
+          onSuccess={(timetable) => {
+            if (scraperState !== 'failed') {
+              setScraperState('successful');
+              setTimetable(timetable);
+            }
           }}
           onFail={() => {
             setScraperState('failed');
@@ -45,8 +43,15 @@ export default function TimetableScraperScreen() {
 
       <Portal>
         <Dialog visible={scraperState === 'loading'}>
-          <Dialog.Content>
+          <Dialog.Content style={{ gap: 8 }}>
             <ActivityIndicator size="large" />
+            <Button
+              onPress={() => {
+                setScraperState('failed');
+              }}
+            >
+              キャンセル
+            </Button>
           </Dialog.Content>
         </Dialog>
 
@@ -92,37 +97,4 @@ export default function TimetableScraperScreen() {
       </Portal>
     </>
   );
-}
-
-async function replaceWithSyllabus(
-  timetable: ScraperTimetable,
-): Promise<Timetable> {
-  try {
-    const syllabusJson = await fetch(
-      `https://syllabus.opentut.gr.jp/ja/${timetable.year}/all.min.json`,
-    );
-    const syllabus = await z
-      .record(Subject)
-      .parseAsync(await syllabusJson.json());
-
-    const replace = (timetable: (Subject | null)[][]) =>
-      timetable.map((row) =>
-        row.map((subject) =>
-          subject != null
-            ? subject.id in syllabus
-              ? syllabus[subject.id]
-              : subject
-            : null,
-        ),
-      );
-
-    return {
-      ...timetable,
-      firstHalf: replace(timetable.firstHalf),
-      secondHalf: replace(timetable.secondHalf),
-      intensive: replace(timetable.intensive),
-    };
-  } catch {
-    return timetable;
-  }
 }
