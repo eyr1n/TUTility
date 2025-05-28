@@ -1,9 +1,9 @@
 import { hideInternshipAtom, hideResearchAtom } from '@/atoms';
 import { MaxTimetableWidth } from '@/constants/TimetableWidth';
-import { Subject } from '@/schemas/subject';
 import { useAtomValue } from 'jotai';
 import { useState } from 'react';
 import { View } from 'react-native';
+import { Subject } from 'timetable-scraper';
 import { SubjectTile } from '../Subject/SubjectTile';
 import { SubjectTileDuringLot } from '../Subject/SubjectTileDuringLot';
 import { SubjectTileEmpty } from '../Subject/SubjectTileEmpty';
@@ -60,11 +60,12 @@ export function Timetable({ timetable }: TimetableProps) {
           {timetable.map((row, i) => (
             <View key={i} style={{ flex: 1, flexDirection: 'row' }}>
               {row.map((subject, j) =>
-                !subject ||
+                subject == null ||
+                subject.status === 'canceled' ||
                 (hideResearch && subject.name.includes('卒業研究')) ||
                 (hideInternship && subject.name.includes('実務訓練')) ? (
                   <SubjectTileEmpty key={`${i},${j}`} />
-                ) : subject.id === 'during_lot' ? (
+                ) : subject.status === 'lot_pending' ? (
                   <SubjectTileDuringLot key={`${i},${j}`} />
                 ) : (
                   <SubjectTile key={`${i},${j}`} subject={subject} />

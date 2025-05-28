@@ -1,6 +1,5 @@
 import { Palette } from '@/constants/Palette';
 import { useScale } from '@/hooks/useScale';
-import { Subject } from '@/schemas/subject';
 import { openBrowserAsync } from 'expo-web-browser';
 import { useState } from 'react';
 import { View } from 'react-native';
@@ -11,6 +10,7 @@ import {
   Portal,
   Text,
 } from 'react-native-paper';
+import { Subject } from 'timetable-scraper';
 import { SubjectTileBase } from './SubjectTileBase';
 
 interface SubjectTileProps {

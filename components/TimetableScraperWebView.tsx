@@ -1,10 +1,9 @@
-import { Subject } from '@/schemas/subject';
-import { Timetable } from '@/schemas/timetable';
 import WebView, { WebViewMessageEvent } from 'react-native-webview';
 import {
   DreamCampusTimetable,
   getTimetable,
-  Timetable as ScraperTimetable,
+  Subject,
+  Timetable,
   WebViewMessage,
 } from 'timetable-scraper';
 import scraperJs from 'timetable-scraper/browser';
@@ -34,12 +33,12 @@ export function TimetableScraperWebView({
           const dreamCampusTimetable = await DreamCampusTimetable.parseAsync(
             message.data,
           );
-          const timetable = await ScraperTimetable.parseAsync(
+          const timetable = await Timetable.parseAsync(
             getTimetable(dreamCampusTimetable),
           );
-          const replacedTimetable = await convertScraperTimetable(
-            timetable,
-          ).catch(() => timetable);
+          const replacedTimetable = await mergeTimetable(timetable).catch(
+            () => timetable,
+          );
           onSuccess(replacedTimetable);
           break;
         default:
@@ -91,31 +90,29 @@ true;`;
   );
 }
 
-async function convertScraperTimetable(
-  scraperTimetable: ScraperTimetable,
-): Promise<Timetable> {
+async function mergeTimetable(timetable: Timetable): Promise<Timetable> {
   const syllabusJson = await fetch(
-    `https://syllabus.opentut.gr.jp/ja/${scraperTimetable.year}/all.min.json`,
+    `https://syllabus.opentut.gr.jp/ja/${timetable.year}/all.min.json`,
   );
   const syllabus = await z
-    .record(Subject)
+    .record(Subject.partial())
     .parseAsync(await syllabusJson.json());
 
-  const replace = (timetable: (Subject | null)[][]) =>
+  const merge = (timetable: (Subject | null)[][]) =>
     timetable.map((row) =>
       row.map((subject) =>
         subject != null
           ? subject.id in syllabus
-            ? syllabus[subject.id]
+            ? { ...subject, ...syllabus[subject.id] }
             : subject
           : null,
       ),
     );
 
   return {
-    ...scraperTimetable,
-    firstHalf: replace(scraperTimetable.firstHalf),
-    secondHalf: replace(scraperTimetable.secondHalf),
-    intensive: replace(scraperTimetable.intensive),
+    ...timetable,
+    firstHalf: merge(timetable.firstHalf),
+    secondHalf: merge(timetable.secondHalf),
+    intensive: merge(timetable.intensive),
   };
 }
