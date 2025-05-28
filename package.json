@@ -1,7 +1,8 @@
 {
   "name": "tutility",
-  "main": "expo-router/entry",
+  "private": true,
   "version": "1.0.0",
+  "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -49,5 +50,14 @@
     "prettier": "^3.5.3",
     "typescript": "~5.8.3"
   },
-  "private": true
+  "expo": {
+    "doctor": {
+      "reactNativeDirectoryCheck": {
+        "exclude": [
+          "eslint-plugin-react-compiler",
+          "timetable-scraper"
+        ]
+      }
+    }
+  }
 }
