@@ -15,7 +15,7 @@ export function SubjectTileBase({
   children,
 }: PropsWithChildren<SubjectBaseProps>) {
   return (
-    <View style={{ flex: 1, aspectRatio: '3/4' }}>
+    <View style={{ flex: 1, aspectRatio: 3 / 4 }}>
       <TouchableRipple
         style={{
           flex: 1,
