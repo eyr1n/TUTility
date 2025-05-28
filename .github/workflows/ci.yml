@@ -23,7 +23,7 @@ jobs:
         run: npm ci
 
       - name: Generate licenses.json
-        run: npm run licenses
+        run: npm run license
 
       - name: Expo Doctor
         run: npx expo-doctor
