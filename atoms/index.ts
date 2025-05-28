@@ -3,25 +3,25 @@ import { z } from 'zod';
 import { atomWithAsyncStorage } from './atomWithAsyncStorage';
 
 export const timetableAtom = atomWithAsyncStorage(
-  Timetable.nullable(),
   'timetable',
   null,
+  Timetable.nullable(),
 );
 
 export const termAtom = atomWithAsyncStorage(
-  z.enum(['firstHalf', 'secondHalf']),
   'term',
   'firstHalf',
+  z.enum(['firstHalf', 'secondHalf']),
 );
 
 export const hideResearchAtom = atomWithAsyncStorage(
-  z.boolean(),
   'hide_research',
   false,
+  z.boolean(),
 );
 
 export const hideInternshipAtom = atomWithAsyncStorage(
-  z.boolean(),
   'hide_internship',
   false,
+  z.boolean(),
 );

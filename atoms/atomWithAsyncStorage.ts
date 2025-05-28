@@ -7,9 +7,9 @@ import {
 import { z, ZodTypeAny } from 'zod';
 
 export function atomWithAsyncStorage<Schema extends ZodTypeAny>(
-  schema: Schema,
   key: string,
   initialValue: z.infer<Schema>,
+  schema: Schema,
 ) {
   const storage = withStorageValidator<z.infer<Schema>>(
     (value): value is z.infer<Schema> => schema.safeParse(value).success,
