@@ -9,7 +9,7 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": false,
+      "supportsTablet": true,
       "bundleIdentifier": "me.rinrin.tutility",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
