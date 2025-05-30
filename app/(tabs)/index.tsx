@@ -1,8 +1,7 @@
-import { onboardingAtom } from '@/atoms/onboarding';
 import { termAtom, timetableAtom } from '@/atoms/timetable';
 import { RedirectToNews } from '@/components/RedirectToNews';
 import { Timetable } from '@/components/Timetable/Timetable';
-import { Redirect, Stack, useRouter } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import { useAtom, useAtomValue } from 'jotai';
 import { Suspense } from 'react';
 import { ScrollView, View } from 'react-native';
@@ -10,9 +9,14 @@ import { Appbar, SegmentedButtons, Text } from 'react-native-paper';
 
 export default function TimetableScreen() {
   return (
-    <Suspense>
-      <TimetableScreenImpl />
-    </Suspense>
+    <>
+      <Suspense>
+        <TimetableScreenImpl />
+      </Suspense>
+      <Suspense>
+        <RedirectToNews />
+      </Suspense>
+    </>
   );
 }
 
@@ -25,12 +29,6 @@ function TimetableScreenImpl() {
   const termLabel = timetable?.term === 'spring' ? '前期' : '後期';
   const firstOrSecond =
     term === 'firstHalf' ? timetable?.firstHalf : timetable?.secondHalf;
-
-  const onboading = useAtomValue(onboardingAtom);
-
-  if (!onboading) {
-    return <Redirect href="/onboarding" />;
-  }
 
   return (
     <>
@@ -91,7 +89,6 @@ function TimetableScreenImpl() {
           </Text>
         </View>
       )}
-      <RedirectToNews />
     </>
   );
 }

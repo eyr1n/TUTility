@@ -2,12 +2,7 @@ import { openBrowserAsync } from 'expo-web-browser';
 import { FlatList, View } from 'react-native';
 import { Divider, List } from 'react-native-paper';
 
-interface Link {
-  title: string;
-  url: string;
-}
-
-const links: Link[] = [
+const Links = [
   { title: '大学ホームページ', url: 'https://www.tut.ac.jp/' },
   { title: '教務情報システム', url: 'https://kyomu.office.tut.ac.jp/portal/' },
   {
@@ -31,13 +26,13 @@ const links: Link[] = [
     title: 'キャンパスコンパス（ぱすぱす）',
     url: 'https://pus-pass.com/?utm_source=app&utm_medium=link-text&utm_campaign=tutility+&utm_id=111',
   },
-];
+] as const;
 
 export default function LinksScreen() {
   return (
     <View style={{ flex: 1 }}>
       <FlatList
-        data={links}
+        data={Links}
         renderItem={({ item }) => (
           <List.Item
             title={item.title}

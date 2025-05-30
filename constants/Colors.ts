@@ -1,3 +1,5 @@
+import type { MD3Colors } from 'react-native-paper/lib/typescript/types';
+
 export const LightColors = {
   primary: 'rgb(186, 26, 32)',
   onPrimary: 'rgb(255, 255, 255)',
@@ -39,7 +41,7 @@ export const LightColors = {
   surfaceDisabled: 'rgba(32, 26, 25, 0.12)',
   onSurfaceDisabled: 'rgba(32, 26, 25, 0.38)',
   backdrop: 'rgba(59, 45, 44, 0.4)',
-};
+} as const satisfies MD3Colors;
 
 export const DarkColors = {
   primary: 'rgb(255, 179, 172)',
@@ -82,4 +84,4 @@ export const DarkColors = {
   surfaceDisabled: 'rgba(237, 224, 222, 0.12)',
   onSurfaceDisabled: 'rgba(237, 224, 222, 0.38)',
   backdrop: 'rgba(59, 45, 44, 0.4)',
-};
+} as const satisfies MD3Colors;
