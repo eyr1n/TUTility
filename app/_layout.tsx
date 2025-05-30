@@ -1,12 +1,15 @@
-import { RedirectToNews } from '@/components/RedirectToNews';
+import { onboadingAtom } from '@/atoms/onboading';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { DarkColors, LightColors } from '@/constants/Colors';
-import { Stack } from 'expo-router';
+import { Redirect, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { useAtomValue } from 'jotai';
 import { StrictMode, Suspense } from 'react';
 import { Appbar, MD3DarkTheme, MD3LightTheme } from 'react-native-paper';
 
 export default function RootLayout() {
+  const onboading = useAtomValue(onboadingAtom);
+
   const materialLight = {
     ...MD3LightTheme,
     colors: LightColors,
@@ -40,7 +43,8 @@ export default function RootLayout() {
           <StatusBar style="auto" />
         </ThemeProvider>
       </Suspense>
-      <RedirectToNews />
+      {!onboading && <Redirect href="/onboading" />}
+      {/* <RedirectToNews /> */}
     </StrictMode>
   );
 }
