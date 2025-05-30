@@ -15,13 +15,13 @@ export const termAtom = atomWithAsyncStorage(
 );
 
 export const hideResearchAtom = atomWithAsyncStorage(
-  'hide_research',
+  'hideResearch',
   false,
   z.boolean(),
 );
 
 export const hideInternshipAtom = atomWithAsyncStorage(
-  'hide_internship',
+  'hideInternship',
   false,
   z.boolean(),
 );

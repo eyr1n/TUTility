@@ -3,7 +3,7 @@ import { atom } from 'jotai';
 import { atomWithAsyncStorage } from './atomWithAsyncStorage';
 
 const lastNewsMetadataAtom = atomWithAsyncStorage(
-  'recentNewsMetadata',
+  'lastNewsMetadata',
   {},
   NewsMetadata,
 );
