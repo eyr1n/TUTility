@@ -1,12 +1,12 @@
 import { NewsMetadata } from '@/schemas/newsMetadata';
 import { atom } from 'jotai';
-import { atomWithAsyncStorage } from './atomWithAsyncStorage';
 
-const lastNewsMetadataAtom = atomWithAsyncStorage(
+/* const lastNewsMetadataAtom = atomWithAsyncStorage(
   'lastNewsMetadata',
   {},
   NewsMetadata,
-);
+); */
+const lastNewsMetadataAtom = atom<NewsMetadata>({});
 
 const newsMetadataAtom = atom((get) =>
   fetch('https://opentut.gr.jp/news/metadata.json')

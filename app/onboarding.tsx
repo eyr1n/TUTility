@@ -1,11 +1,11 @@
-import { onboadingAtom } from '@/atoms/onboading';
+import { onboardingAtom } from '@/atoms/onboarding';
 import { Stack, useRouter } from 'expo-router';
 import { useSetAtom } from 'jotai';
 import { Suspense } from 'react';
 import { Button } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-export default function OnboadingScreen() {
+export default function OnboardingScreen() {
   return (
     <Suspense>
       <OnboardingScreenImpl />
@@ -16,7 +16,7 @@ export default function OnboadingScreen() {
 function OnboardingScreenImpl() {
   const router = useRouter();
 
-  const setOnboading = useSetAtom(onboadingAtom);
+  const setOnboading = useSetAtom(onboardingAtom);
 
   return (
     <>

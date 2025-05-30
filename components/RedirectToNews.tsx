@@ -1,6 +1,6 @@
 import { hasReadNewsAtom } from '@/atoms/news';
 import { useFocusEffect, useRouter } from 'expo-router';
-import { useAtom } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { Suspense, useCallback } from 'react';
 
 export function RedirectToNews() {
@@ -12,17 +12,19 @@ export function RedirectToNews() {
 }
 
 function RedirectToNewsImpl() {
-  const router = useRouter();
+  const hasRead = useAtomValue(hasReadNewsAtom);
+  return !hasRead && <RedirectToNewsImplImpl />;
+}
 
-  const [hasRead, setRead] = useAtom(hasReadNewsAtom);
+function RedirectToNewsImplImpl() {
+  const router = useRouter();
+  const setRead = useSetAtom(hasReadNewsAtom);
 
   useFocusEffect(
     useCallback(() => {
-      if (!hasRead) {
-        setRead();
-        router.push('/news');
-      }
-    }, [hasRead, router, setRead]),
+      setRead();
+      router.push('/news');
+    }, [router, setRead]),
   );
 
   return null;
