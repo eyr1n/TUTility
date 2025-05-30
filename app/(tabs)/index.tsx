@@ -1,4 +1,4 @@
-import { termAtom, timetableAtom } from '@/atoms';
+import { termAtom, timetableAtom } from '@/atoms/timetable';
 import { Timetable } from '@/components/Timetable/Timetable';
 import { Stack, useRouter } from 'expo-router';
 import { useAtom, useAtomValue } from 'jotai';

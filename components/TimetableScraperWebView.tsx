@@ -22,20 +22,14 @@ export function TimetableScraperWebView({
 }: TimetableScraperWebViewProps) {
   const onMessage = async (event: WebViewMessageEvent) => {
     try {
-      const message = await WebViewMessage.parseAsync(
-        JSON.parse(event.nativeEvent.data),
-      );
+      const message = WebViewMessage.parse(JSON.parse(event.nativeEvent.data));
       switch (message.type) {
         case 'loading':
           onLoad();
           break;
         case 'successful':
-          const dreamCampusTimetable = await DreamCampusTimetable.parseAsync(
-            message.data,
-          );
-          const timetable = await Timetable.parseAsync(
-            getTimetable(dreamCampusTimetable),
-          );
+          const dreamCampusTimetable = DreamCampusTimetable.parse(message.data);
+          const timetable = Timetable.parse(getTimetable(dreamCampusTimetable));
           const replacedTimetable = await mergeTimetable(timetable).catch(
             () => timetable,
           );
@@ -96,7 +90,7 @@ async function mergeTimetable(timetable: Timetable): Promise<Timetable> {
   );
   const syllabus = await z
     .record(Subject.partial())
-    .parseAsync(await syllabusJson.json());
+    .parse(await syllabusJson.json());
 
   const merge = (timetable: (Subject | null)[][]) =>
     timetable.map((row) =>

@@ -1,4 +1,4 @@
-import { hideInternshipAtom, hideResearchAtom } from '@/atoms';
+import { hideInternshipAtom, hideResearchAtom } from '@/atoms/timetable';
 import { MaxTimetableWidth } from '@/constants/TimetableWidth';
 import { useAtomValue } from 'jotai';
 import { useState } from 'react';

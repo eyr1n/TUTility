@@ -1,4 +1,4 @@
-import { timetableAtom } from '@/atoms';
+import { timetableAtom } from '@/atoms/timetable';
 import { TimetableScraperWebView } from '@/components/TimetableScraperWebView';
 import { Stack, useRouter } from 'expo-router';
 import { useSetAtom } from 'jotai';

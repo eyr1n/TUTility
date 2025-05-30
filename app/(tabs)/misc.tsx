@@ -1,4 +1,8 @@
-import { hideInternshipAtom, hideResearchAtom, timetableAtom } from '@/atoms';
+import {
+  hideInternshipAtom,
+  hideResearchAtom,
+  timetableAtom,
+} from '@/atoms/timetable';
 import { nativeApplicationVersion } from 'expo-application';
 import { useRouter } from 'expo-router';
 import { useAtom } from 'jotai';

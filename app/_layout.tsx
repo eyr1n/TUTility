@@ -1,3 +1,4 @@
+import { RedirectToNews } from '@/components/RedirectToNews';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { DarkColors, LightColors } from '@/constants/Colors';
 import { Stack } from 'expo-router';
@@ -39,6 +40,7 @@ export default function RootLayout() {
           <StatusBar style="auto" />
         </ThemeProvider>
       </Suspense>
+      <RedirectToNews />
     </StrictMode>
   );
 }
