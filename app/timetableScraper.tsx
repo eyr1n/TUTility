@@ -2,7 +2,7 @@ import { timetableAtom } from '@/atoms/timetable';
 import { TimetableScraperWebView } from '@/components/TimetableScraperWebView';
 import { Stack, useRouter } from 'expo-router';
 import { useSetAtom } from 'jotai';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { View } from 'react-native';
 import {
   ActivityIndicator,
@@ -13,6 +13,14 @@ import {
 } from 'react-native-paper';
 
 export default function TimetableScraperScreen() {
+  return (
+    <Suspense>
+      <TimetableScraperScreenImpl />
+    </Suspense>
+  );
+}
+
+function TimetableScraperScreenImpl() {
   const router = useRouter();
 
   const setTimetable = useSetAtom(timetableAtom);
