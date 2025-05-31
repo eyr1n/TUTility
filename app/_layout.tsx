@@ -4,7 +4,7 @@ import { ThemeProvider } from '@/components/ThemeProvider';
 import { DarkColors, LightColors } from '@/constants/Colors';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { StrictMode } from 'react';
+import { StrictMode, Suspense } from 'react';
 import { Appbar, MD3DarkTheme, MD3LightTheme } from 'react-native-paper';
 
 export default function RootLayout() {
@@ -33,6 +33,7 @@ export default function RootLayout() {
                   </Appbar.Header>
                 ),
               }}
+              screenLayout={({ children }) => <Suspense>{children}</Suspense>}
             >
               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             </Stack>

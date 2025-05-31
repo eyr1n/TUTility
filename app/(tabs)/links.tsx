@@ -23,7 +23,7 @@ const Links = [
     url: 'https://www.toyotetsu.jp/station/1/P2/',
   },
   {
-    title: 'キャンパスコンパス（ぱすぱす）',
+    title: 'キャンパスコンパス (ぱすぱす)',
     url: 'https://pus-pass.com/?utm_source=app&utm_medium=link-text&utm_campaign=tutility+&utm_id=111',
   },
 ] as const;

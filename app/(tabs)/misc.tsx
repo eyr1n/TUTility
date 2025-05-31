@@ -9,19 +9,10 @@ import { nativeApplicationVersion } from 'expo-application';
 import { useRouter } from 'expo-router';
 import { useAtom } from 'jotai';
 import { useResetAtom } from 'jotai/utils';
-import { Suspense } from 'react';
 import { ScrollView } from 'react-native';
 import { Divider, List, Switch } from 'react-native-paper';
 
 export default function MiscScreen() {
-  return (
-    <Suspense>
-      <MiscScreenImpl />
-    </Suspense>
-  );
-}
-
-function MiscScreenImpl() {
   const router = useRouter();
   const alert = useAlertDialog();
   const confirm = useConfirmDialog();

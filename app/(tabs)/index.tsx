@@ -1,26 +1,11 @@
 import { termAtom, timetableAtom } from '@/atoms/timetable';
-import { RedirectToNews } from '@/components/RedirectToNews';
 import { Timetable } from '@/components/Timetable/Timetable';
 import { Stack, useRouter } from 'expo-router';
 import { useAtom, useAtomValue } from 'jotai';
-import { Suspense } from 'react';
 import { ScrollView, View } from 'react-native';
 import { Appbar, SegmentedButtons, Text } from 'react-native-paper';
 
 export default function TimetableScreen() {
-  return (
-    <>
-      <Suspense>
-        <TimetableScreenImpl />
-      </Suspense>
-      <Suspense>
-        <RedirectToNews />
-      </Suspense>
-    </>
-  );
-}
-
-function TimetableScreenImpl() {
   const router = useRouter();
 
   const timetable = useAtomValue(timetableAtom);
