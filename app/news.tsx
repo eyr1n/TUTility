@@ -1,6 +1,6 @@
 import { doNotShowNewsAtom } from '@/atoms/news';
-import { useAlertDialog } from '@/components/AlertDialogProvider';
-import { useConfirmDialog } from '@/components/ConfirmDialogProvider';
+import { useAlertDialog } from '@/hooks/useAlertDialog';
+import { useConfirmDialog } from '@/hooks/useConfirmDialog';
 import { Stack } from 'expo-router';
 import { useSetAtom } from 'jotai';
 import { View } from 'react-native';

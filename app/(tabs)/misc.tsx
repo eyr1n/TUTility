@@ -4,8 +4,8 @@ import {
   hideResearchAtom,
   timetableAtom,
 } from '@/atoms/timetable';
-import { useAlertDialog } from '@/components/AlertDialogProvider';
-import { useConfirmDialog } from '@/components/ConfirmDialogProvider';
+import { useAlertDialog } from '@/hooks/useAlertDialog';
+import { useConfirmDialog } from '@/hooks/useConfirmDialog';
 import { nativeApplicationVersion } from 'expo-application';
 import { useRouter } from 'expo-router';
 import { useAtom } from 'jotai';

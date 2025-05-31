@@ -1,5 +1,5 @@
-import { AlertDialogProvider } from '@/components/AlertDialogProvider';
-import { ConfirmDialogProvider } from '@/components/ConfirmDialogProvider';
+import { AlertDialog } from '@/components/AlertDialog';
+import { ConfirmDialog } from '@/components/ConfirmDialog';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { DarkColors, LightColors } from '@/constants/Colors';
 import { Stack } from 'expo-router';
@@ -19,26 +19,24 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider materialLight={materialLight} materialDark={materialDark}>
-      <AlertDialogProvider>
-        <ConfirmDialogProvider>
-          <Stack
-            screenOptions={{
-              header: ({ navigation, route, options, back }) => (
-                <Appbar.Header elevated>
-                  {back != null && (
-                    <Appbar.BackAction onPress={() => navigation.goBack()} />
-                  )}
-                  <Appbar.Content title={options.title || route.name} />
-                </Appbar.Header>
-              ),
-            }}
-            screenLayout={({ children }) => <Suspense>{children}</Suspense>}
-          >
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          </Stack>
-          <StatusBar style="auto" />
-        </ConfirmDialogProvider>
-      </AlertDialogProvider>
+      <Stack
+        screenOptions={{
+          header: ({ navigation, route, options, back }) => (
+            <Appbar.Header elevated>
+              {back != null && (
+                <Appbar.BackAction onPress={() => navigation.goBack()} />
+              )}
+              <Appbar.Content title={options.title || route.name} />
+            </Appbar.Header>
+          ),
+        }}
+        screenLayout={({ children }) => <Suspense>{children}</Suspense>}
+      >
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      </Stack>
+      <StatusBar style="auto" />
+      <AlertDialog />
+      <ConfirmDialog />
     </ThemeProvider>
   );
 }

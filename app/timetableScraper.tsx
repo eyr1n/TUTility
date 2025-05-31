@@ -1,6 +1,6 @@
 import { timetableAtom } from '@/atoms/timetable';
-import { useAlertDialog } from '@/components/AlertDialogProvider';
 import { TimetableScraperWebView } from '@/components/TimetableScraperWebView';
+import { useAlertDialog } from '@/hooks/useAlertDialog';
 import { Stack, useRouter } from 'expo-router';
 import { useSetAtom } from 'jotai';
 import { Suspense, useState } from 'react';
