@@ -1,16 +1,11 @@
 import { timetableAtom } from '@/atoms/timetable';
+import { useAlertDialog } from '@/components/AlertDialogProvider';
 import { TimetableScraperWebView } from '@/components/TimetableScraperWebView';
 import { Stack, useRouter } from 'expo-router';
 import { useSetAtom } from 'jotai';
 import { Suspense, useState } from 'react';
 import { View } from 'react-native';
-import {
-  ActivityIndicator,
-  Button,
-  Dialog,
-  Portal,
-  Text,
-} from 'react-native-paper';
+import { ActivityIndicator, Button, Dialog, Portal } from 'react-native-paper';
 
 export default function TimetableScraperScreen() {
   return (
@@ -22,12 +17,11 @@ export default function TimetableScraperScreen() {
 
 function TimetableScraperScreenImpl() {
   const router = useRouter();
+  const alert = useAlertDialog();
 
   const setTimetable = useSetAtom(timetableAtom);
 
-  const [scraperState, setScraperState] = useState<
-    'idle' | 'loading' | 'successful' | 'failed'
-  >('idle');
+  const [loading, setLoading] = useState(false);
 
   return (
     <>
@@ -35,72 +29,39 @@ function TimetableScraperScreenImpl() {
       <View style={{ flex: 1 }}>
         <TimetableScraperWebView
           onLoad={() => {
-            setScraperState('loading');
+            setLoading(true);
           }}
-          onSuccess={(timetable) => {
-            if (scraperState !== 'failed') {
-              setScraperState('successful');
+          onSuccess={async (timetable) => {
+            if (loading) {
+              setLoading(false);
               setTimetable(timetable);
+              await alert('時間割の取得が完了しました');
+              router.dismiss();
             }
           }}
-          onFail={() => {
-            setScraperState('failed');
+          onFail={async () => {
+            if (loading) {
+              setLoading(false);
+              await alert('時間割の取得時にエラーが発生しました');
+              router.dismiss();
+            }
           }}
         />
       </View>
 
       <Portal>
-        <Dialog visible={scraperState === 'loading'}>
+        <Dialog visible={loading}>
           <Dialog.Content style={{ gap: 8 }}>
             <ActivityIndicator size="large" />
             <Button
               onPress={() => {
-                setScraperState('failed');
+                setLoading(false);
+                router.dismiss();
               }}
             >
               キャンセル
             </Button>
           </Dialog.Content>
-        </Dialog>
-
-        <Dialog
-          visible={scraperState === 'successful'}
-          onDismiss={() => {
-            router.dismiss();
-          }}
-        >
-          <Dialog.Content>
-            <Text>時間割の取得が完了しました</Text>
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button
-              onPress={() => {
-                router.dismiss();
-              }}
-            >
-              閉じる
-            </Button>
-          </Dialog.Actions>
-        </Dialog>
-
-        <Dialog
-          visible={scraperState === 'failed'}
-          onDismiss={() => {
-            router.dismiss();
-          }}
-        >
-          <Dialog.Content>
-            <Text>時間割の取得時にエラーが発生しました</Text>
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button
-              onPress={() => {
-                router.dismiss();
-              }}
-            >
-              閉じる
-            </Button>
-          </Dialog.Actions>
         </Dialog>
       </Portal>
     </>

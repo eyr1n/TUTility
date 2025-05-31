@@ -3,21 +3,15 @@ import {
   hideResearchAtom,
   timetableAtom,
 } from '@/atoms/timetable';
+import { useAlertDialog } from '@/components/AlertDialogProvider';
+import { useConfirmDialog } from '@/components/ConfirmDialogProvider';
 import { nativeApplicationVersion } from 'expo-application';
 import { useRouter } from 'expo-router';
 import { useAtom } from 'jotai';
 import { useResetAtom } from 'jotai/utils';
-import { Suspense, useState } from 'react';
+import { Suspense } from 'react';
 import { ScrollView } from 'react-native';
-import {
-  Button,
-  Dialog,
-  Divider,
-  List,
-  Portal,
-  Switch,
-  Text,
-} from 'react-native-paper';
+import { Divider, List, Switch } from 'react-native-paper';
 
 export default function MiscScreen() {
   return (
@@ -29,14 +23,12 @@ export default function MiscScreen() {
 
 function MiscScreenImpl() {
   const router = useRouter();
+  const alert = useAlertDialog();
+  const confirm = useConfirmDialog();
 
   const [hideResearch, setHideResearch] = useAtom(hideResearchAtom);
   const [hideInternship, setHideInternship] = useAtom(hideInternshipAtom);
   const resetTimetable = useResetAtom(timetableAtom);
-
-  const [resetState, setResetState] = useState<'idle' | 'confirm' | 'done'>(
-    'idle',
-  );
 
   return (
     <>
@@ -57,8 +49,11 @@ function MiscScreenImpl() {
         <Divider />
         <List.Item
           title="時間割をリセット"
-          onPress={() => {
-            setResetState('confirm');
+          onPress={async () => {
+            if (await confirm('時間割をリセットしますか?')) {
+              await resetTimetable();
+              await alert('時間割のリセットが完了しました');
+            }
           }}
         />
         <Divider />
@@ -71,56 +66,6 @@ function MiscScreenImpl() {
         <Divider />
         <List.Item title={`TUTility v${nativeApplicationVersion}`} />
       </ScrollView>
-
-      <Portal>
-        <Dialog
-          visible={resetState === 'confirm'}
-          onDismiss={() => {
-            setResetState('idle');
-          }}
-        >
-          <Dialog.Content>
-            <Text>時間割をリセットしますか?</Text>
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button
-              onPress={() => {
-                setResetState('idle');
-              }}
-            >
-              キャンセル
-            </Button>
-            <Button
-              onPress={async () => {
-                await resetTimetable();
-                setResetState('done');
-              }}
-            >
-              OK
-            </Button>
-          </Dialog.Actions>
-        </Dialog>
-
-        <Dialog
-          visible={resetState === 'done'}
-          onDismiss={() => {
-            setResetState('idle');
-          }}
-        >
-          <Dialog.Content>
-            <Text>時間割のリセットが完了しました</Text>
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button
-              onPress={() => {
-                setResetState('idle');
-              }}
-            >
-              閉じる
-            </Button>
-          </Dialog.Actions>
-        </Dialog>
-      </Portal>
     </>
   );
 }

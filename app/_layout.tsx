@@ -1,3 +1,5 @@
+import { AlertDialogProvider } from '@/components/AlertDialogProvider';
+import { ConfirmDialogProvider } from '@/components/ConfirmDialogProvider';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { DarkColors, LightColors } from '@/constants/Colors';
 import { Stack } from 'expo-router';
@@ -18,21 +20,25 @@ export default function RootLayout() {
   return (
     <StrictMode>
       <ThemeProvider materialLight={materialLight} materialDark={materialDark}>
-        <Stack
-          screenOptions={{
-            header: ({ navigation, route, options, back }) => (
-              <Appbar.Header elevated>
-                {back != null && (
-                  <Appbar.BackAction onPress={() => navigation.goBack()} />
-                )}
-                <Appbar.Content title={options.title || route.name} />
-              </Appbar.Header>
-            ),
-          }}
-        >
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        </Stack>
-        <StatusBar style="auto" />
+        <AlertDialogProvider>
+          <ConfirmDialogProvider>
+            <Stack
+              screenOptions={{
+                header: ({ navigation, route, options, back }) => (
+                  <Appbar.Header elevated>
+                    {back != null && (
+                      <Appbar.BackAction onPress={() => navigation.goBack()} />
+                    )}
+                    <Appbar.Content title={options.title || route.name} />
+                  </Appbar.Header>
+                ),
+              }}
+            >
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            </Stack>
+            <StatusBar style="auto" />
+          </ConfirmDialogProvider>
+        </AlertDialogProvider>
       </ThemeProvider>
     </StrictMode>
   );

@@ -21,3 +21,10 @@ export const hasReadNewsAtom = atom(
     (await get(lastNewsMetadataAtom)).lastUpdated,
   async (get, set) => set(lastNewsMetadataAtom, await get(newsMetadataAtom)),
 );
+
+/* export const doNotShowAgainNewsAtom = atomWithAsyncStorage(
+  'doNotShowAgainNews',
+  false,
+  z.boolean(),
+); */
+export const doNotShowAgainNewsAtom = atom(false);
