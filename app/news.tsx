@@ -17,7 +17,6 @@ export default function NewsScreen() {
     <>
       <Stack.Screen
         options={{
-          presentation: 'modal',
           header: ({ navigation, back }) => (
             <Appbar.Header elevated>
               {back != null && (

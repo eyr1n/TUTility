@@ -3,7 +3,7 @@ import { useFocusEffect, useRouter } from 'expo-router';
 import { useAtom, useAtomValue } from 'jotai';
 import { useCallback } from 'react';
 
-export function OpenNewsModal() {
+export function OpenNewsScreen() {
   const router = useRouter();
 
   const doNotShowNews = useAtomValue(doNotShowNewsAtom);

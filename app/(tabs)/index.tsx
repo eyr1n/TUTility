@@ -1,5 +1,5 @@
 import { termAtom, timetableAtom } from '@/atoms/timetable';
-import { OpenNewsModal } from '@/components/OpenNewsModal';
+import { OpenNewsScreen } from '@/components/OpenNewsScreen';
 import { Timetable } from '@/components/Timetable/Timetable';
 import { Stack, useRouter } from 'expo-router';
 import { useAtom, useAtomValue } from 'jotai';
@@ -77,7 +77,7 @@ export default function TimetableScreen() {
         </View>
       )}
       <Suspense>
-        <OpenNewsModal />
+        <OpenNewsScreen />
       </Suspense>
     </>
   );
