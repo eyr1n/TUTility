@@ -4,7 +4,7 @@ import { ThemeProvider } from '@/components/ThemeProvider';
 import { DarkColors, LightColors } from '@/constants/Colors';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { StrictMode, Suspense } from 'react';
+import { Suspense } from 'react';
 import { Appbar, MD3DarkTheme, MD3LightTheme } from 'react-native-paper';
 
 export default function RootLayout() {
@@ -18,29 +18,27 @@ export default function RootLayout() {
   };
 
   return (
-    <StrictMode>
-      <ThemeProvider materialLight={materialLight} materialDark={materialDark}>
-        <AlertDialogProvider>
-          <ConfirmDialogProvider>
-            <Stack
-              screenOptions={{
-                header: ({ navigation, route, options, back }) => (
-                  <Appbar.Header elevated>
-                    {back != null && (
-                      <Appbar.BackAction onPress={() => navigation.goBack()} />
-                    )}
-                    <Appbar.Content title={options.title || route.name} />
-                  </Appbar.Header>
-                ),
-              }}
-              screenLayout={({ children }) => <Suspense>{children}</Suspense>}
-            >
-              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            </Stack>
-            <StatusBar style="auto" />
-          </ConfirmDialogProvider>
-        </AlertDialogProvider>
-      </ThemeProvider>
-    </StrictMode>
+    <ThemeProvider materialLight={materialLight} materialDark={materialDark}>
+      <AlertDialogProvider>
+        <ConfirmDialogProvider>
+          <Stack
+            screenOptions={{
+              header: ({ navigation, route, options, back }) => (
+                <Appbar.Header elevated>
+                  {back != null && (
+                    <Appbar.BackAction onPress={() => navigation.goBack()} />
+                  )}
+                  <Appbar.Content title={options.title || route.name} />
+                </Appbar.Header>
+              ),
+            }}
+            screenLayout={({ children }) => <Suspense>{children}</Suspense>}
+          >
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          </Stack>
+          <StatusBar style="auto" />
+        </ConfirmDialogProvider>
+      </AlertDialogProvider>
+    </ThemeProvider>
   );
 }

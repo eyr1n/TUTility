@@ -1,3 +1,4 @@
+import { doNotShowNewsAtom } from '@/atoms/news';
 import {
   hideInternshipAtom,
   hideResearchAtom,
@@ -19,6 +20,7 @@ export default function MiscScreen() {
 
   const [hideResearch, setHideResearch] = useAtom(hideResearchAtom);
   const [hideInternship, setHideInternship] = useAtom(hideInternshipAtom);
+  const [doNotShowNews, setDoNotShowNews] = useAtom(doNotShowNewsAtom);
   const resetTimetable = useResetAtom(timetableAtom);
 
   return (
@@ -35,6 +37,13 @@ export default function MiscScreen() {
           title="実務訓練を非表示"
           right={() => (
             <Switch value={hideInternship} onValueChange={setHideInternship} />
+          )}
+        />
+        <Divider />
+        <List.Item
+          title="お知らせを非表示"
+          right={() => (
+            <Switch value={doNotShowNews} onValueChange={setDoNotShowNews} />
           )}
         />
         <Divider />

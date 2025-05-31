@@ -1,7 +1,9 @@
 import { termAtom, timetableAtom } from '@/atoms/timetable';
+import { OpenNewsModal } from '@/components/OpenNewsModal';
 import { Timetable } from '@/components/Timetable/Timetable';
 import { Stack, useRouter } from 'expo-router';
 import { useAtom, useAtomValue } from 'jotai';
+import { Suspense } from 'react';
 import { ScrollView, View } from 'react-native';
 import { Appbar, SegmentedButtons, Text } from 'react-native-paper';
 
@@ -74,6 +76,9 @@ export default function TimetableScreen() {
           </Text>
         </View>
       )}
+      <Suspense>
+        <OpenNewsModal />
+      </Suspense>
     </>
   );
 }

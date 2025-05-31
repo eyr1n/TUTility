@@ -1,33 +1,24 @@
-import { doNotShowAgainNewsAtom } from '@/atoms/news';
+import { doNotShowNewsAtom } from '@/atoms/news';
 import { useAlertDialog } from '@/components/AlertDialogProvider';
 import { useConfirmDialog } from '@/components/ConfirmDialogProvider';
 import { Stack } from 'expo-router';
 import { useSetAtom } from 'jotai';
-import { Suspense } from 'react';
 import { View } from 'react-native';
 import { Appbar, Button } from 'react-native-paper';
 import { WebView } from 'react-native-webview';
 
 export default function NewsScreen() {
-  return (
-    <Suspense>
-      <NewsScreenImpl />
-    </Suspense>
-  );
-}
-
-function NewsScreenImpl() {
   const alert = useAlertDialog();
   const confirm = useConfirmDialog();
 
-  const setDoNotShowAgainNews = useSetAtom(doNotShowAgainNewsAtom);
+  const setDoNotShowNews = useSetAtom(doNotShowNewsAtom);
 
   return (
     <>
       <Stack.Screen
         options={{
           presentation: 'modal',
-          header: ({ navigation, route, options, back }) => (
+          header: ({ navigation, back }) => (
             <Appbar.Header elevated>
               {back != null && (
                 <Appbar.BackAction onPress={() => navigation.goBack()} />
@@ -38,7 +29,7 @@ function NewsScreenImpl() {
                   if (
                     await confirm('起動時にお知らせを表示しないようにしますか?')
                   ) {
-                    setDoNotShowAgainNews(true);
+                    setDoNotShowNews(true);
                     await alert('今後、起動時にお知らせを表示しません');
                   }
                 }}

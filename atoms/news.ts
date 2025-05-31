@@ -1,30 +1,30 @@
-import { NewsMetadata } from '@/schemas/newsMetadata';
+import { NewsMetadataSchema } from '@/schemas/newsMetadata';
 import { atom } from 'jotai';
+import { z } from 'zod';
+import { atomWithAsyncStorage } from './atomWithAsyncStorage';
 
-/* const lastNewsMetadataAtom = atomWithAsyncStorage(
+const lastNewsMetadataAtom = atomWithAsyncStorage(
   'lastNewsMetadata',
   {},
-  NewsMetadata,
-); */
-const lastNewsMetadataAtom = atom<NewsMetadata>({});
+  NewsMetadataSchema,
+);
 
 const newsMetadataAtom = atom((get) =>
   fetch('https://opentut.gr.jp/news/metadata.json')
     .then((res) => res.json())
-    .then((json) => NewsMetadata.parse(json))
+    .then((json) => NewsMetadataSchema.parse(json))
     .catch(() => get(lastNewsMetadataAtom)),
 );
 
-export const hasReadNewsAtom = atom(
+export const hasNewsAtom = atom(
   async (get) =>
-    (await get(newsMetadataAtom)).lastUpdated ===
+    (await get(newsMetadataAtom)).lastUpdated !==
     (await get(lastNewsMetadataAtom)).lastUpdated,
   async (get, set) => set(lastNewsMetadataAtom, await get(newsMetadataAtom)),
 );
 
-/* export const doNotShowAgainNewsAtom = atomWithAsyncStorage(
-  'doNotShowAgainNews',
+export const doNotShowNewsAtom = atomWithAsyncStorage(
+  'doNotShowNews',
   false,
   z.boolean(),
-); */
-export const doNotShowAgainNewsAtom = atom(false);
+);

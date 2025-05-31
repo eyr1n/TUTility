@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
-export const NewsMetadata = z.object({
+export const NewsMetadataSchema = z.object({
   lastUpdated: z.string().optional(),
 });
 
-export type NewsMetadata = z.infer<typeof NewsMetadata>;
+export type NewsMetadata = z.infer<typeof NewsMetadataSchema>;
