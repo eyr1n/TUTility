@@ -1,0 +1,11 @@
+edition = "2023";
+
+message Payload {
+  repeated Parameters parameters = 1;
+}
+
+message Parameters {
+  bytes secret = 1;
+  string name = 2;
+  string issuer = 3;
+}

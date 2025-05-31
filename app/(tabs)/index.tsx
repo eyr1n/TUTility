@@ -1,6 +1,10 @@
 import { termAtom, timetableAtom } from '@/atoms/timetable';
 import { OpenNewsModal } from '@/components/OpenNewsModal';
 import { Timetable } from '@/components/Timetable/Timetable';
+import { PayloadSchema } from '@/proto/gen/migration_pb';
+import { base32 } from '@/totp/base32';
+import { fromBinary } from '@bufbuild/protobuf';
+import { base64Decode } from '@bufbuild/protobuf/wire';
 import { Stack, useRouter } from 'expo-router';
 import { useAtom, useAtomValue } from 'jotai';
 import { Suspense } from 'react';
@@ -81,4 +85,17 @@ export default function TimetableScreen() {
       </Suspense>
     </>
   );
+}
+
+const otpauthMigrationUrl = new URL('otpauth-migration://offline?data=');
+const dataBase64 = otpauthMigrationUrl.searchParams.get('data');
+if (dataBase64) {
+  const data = base64Decode(decodeURIComponent(dataBase64));
+  const payload = fromBinary(PayloadSchema, data);
+  console.log(payload);
+  const secret = payload.parameters[0].secret;
+  console.log(secret);
+
+  const secret_exact = base32('');
+  console.log(secret_exact);
 }
