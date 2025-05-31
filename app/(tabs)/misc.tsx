@@ -11,7 +11,7 @@ import { useRouter } from 'expo-router';
 import { useAtom } from 'jotai';
 import { useResetAtom } from 'jotai/utils';
 import { ScrollView } from 'react-native';
-import { Divider, List, Switch } from 'react-native-paper';
+import { List, Switch } from 'react-native-paper';
 
 export default function MiscScreen() {
   const router = useRouter();
@@ -32,21 +32,18 @@ export default function MiscScreen() {
             <Switch value={hideResearch} onValueChange={setHideResearch} />
           )}
         />
-        <Divider />
         <List.Item
           title="実務訓練を非表示"
           right={() => (
             <Switch value={hideInternship} onValueChange={setHideInternship} />
           )}
         />
-        <Divider />
         <List.Item
           title="お知らせを非表示"
           right={() => (
             <Switch value={doNotShowNews} onValueChange={setDoNotShowNews} />
           )}
         />
-        <Divider />
         <List.Item
           title="時間割をリセット"
           onPress={async () => {
@@ -56,14 +53,12 @@ export default function MiscScreen() {
             }
           }}
         />
-        <Divider />
         <List.Item
           title="ライセンス"
           onPress={() => {
             router.push('/licenses');
           }}
         />
-        <Divider />
         <List.Item title={`TUTility v${nativeApplicationVersion}`} />
       </ScrollView>
     </>

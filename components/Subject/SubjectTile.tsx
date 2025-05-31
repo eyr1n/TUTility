@@ -110,5 +110,5 @@ export function SubjectTile({ subject }: SubjectTileProps) {
 
 function paletteIndexFromSubjectId(id: string) {
   const data = new TextEncoder().encode(id);
-  return data.reduce((prev, current) => prev + current) % Palette.length;
+  return data.reduce((acc, cur) => acc + cur) % Palette.length;
 }
