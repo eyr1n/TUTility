@@ -6,6 +6,6 @@ export function totp(
   step: number,
   digit: number,
 ): Promise<number> {
-  const t = Math.floor(seconds / step);
-  return hotp(key, BigInt(t), digit);
+  const count = Math.floor(seconds / step);
+  return hotp(key, BigInt(count), digit);
 }
