@@ -1,7 +1,7 @@
 import { termAtom, timetableAtom } from '@/atoms/timetable';
 import { OpenNewsScreen } from '@/components/OpenNewsScreen';
 import { Timetable } from '@/components/Timetable/Timetable';
-import { base32 } from '@/totp/base32';
+import { base32Decode } from '@/totp/base32';
 import { PayloadSchema } from '@/totp/migration_pb';
 import { fromBinary } from '@bufbuild/protobuf';
 import { base64Decode } from '@bufbuild/protobuf/wire';
@@ -96,6 +96,6 @@ if (dataBase64) {
   const secret = payload.parameters[0].secret;
   console.log(secret);
 
-  const secret_exact = base32('');
+  const secret_exact = base32Decode('');
   console.log(secret_exact);
 }
