@@ -1,8 +1,8 @@
 import { termAtom, timetableAtom } from '@/atoms/timetable';
 import { OpenNewsScreen } from '@/components/OpenNewsScreen';
 import { Timetable } from '@/components/Timetable/Timetable';
-import { PayloadSchema } from '@/proto/gen/migration_pb';
 import { base32 } from '@/totp/base32';
+import { PayloadSchema } from '@/totp/migration_pb';
 import { fromBinary } from '@bufbuild/protobuf';
 import { base64Decode } from '@bufbuild/protobuf/wire';
 import { Stack, useRouter } from 'expo-router';
