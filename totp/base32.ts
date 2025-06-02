@@ -4,57 +4,59 @@ const AlphabetToNumber = Object.fromEntries(
   NumberToAlphabet.split('').map((c, i) => [c, i]),
 );
 
-export function base32Encode(input: Uint8Array): string {
-  const packed = pack8to5(input);
-  const base32 = packed.map((n) => NumberToAlphabet[n]).join('');
-  return base32 + '='.repeat((8 - (packed.length % 8)) % 8);
+export function base32Encode(data: Uint8Array): string {
+  const packed = pack(data);
+  return (
+    packed.map((e) => NumberToAlphabet[e]).join('') +
+    '='.repeat((8 - (packed.length % 8)) % 8)
+  );
 }
 
-export function base32Decode(input: string): Uint8Array {
-  const packed = [...input.toUpperCase().replace(/=+$/, '')].map((c) => {
-    const n = AlphabetToNumber[c];
+export function base32Decode(str: string): Uint8Array {
+  const packed = [...str.toUpperCase().replace(/=+$/, '')].map((e) => {
+    const n = AlphabetToNumber[e];
     if (n == null) {
       throw new Error('invalid input');
     }
     return n;
   });
-  return unpack5to8(packed);
+  return unpack(packed);
 }
 
-function pack8to5(input: Uint8Array): number[] {
-  const output: number[] = [];
+function pack(unpacked: Uint8Array): number[] {
+  const packed: number[] = [];
   let buf = 0;
   let bits = 0;
 
-  for (const b of input) {
-    buf = (buf << 8) | b;
+  for (const e of unpacked) {
+    buf = (buf << 8) | e;
     bits += 8;
     while (bits >= 5) {
       bits -= 5;
-      output.push((buf >> bits) & 0x1f);
+      packed.push((buf >> bits) & 0x1f);
     }
   }
 
   if (bits > 0) {
-    output.push((buf << (5 - bits)) & 0x1f);
+    packed.push((buf << (5 - bits)) & 0x1f);
   }
 
-  return output;
+  return packed;
 }
 
-function unpack5to8(input: number[]): Uint8Array {
-  const output: number[] = [];
+function unpack(packed: number[]): Uint8Array {
+  const unpacked: number[] = [];
   let buf = 0;
   let bits = 0;
 
-  for (const n of input) {
-    buf = (buf << 5) | n;
+  for (const e of packed) {
+    buf = (buf << 5) | e;
     bits += 5;
     if (bits >= 8) {
       bits -= 8;
-      output.push((buf >> bits) & 0xff);
+      unpacked.push((buf >> bits) & 0xff);
     }
   }
 
-  return new Uint8Array(output);
+  return new Uint8Array(unpacked);
 }
