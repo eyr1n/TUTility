@@ -1,5 +1,5 @@
 import { termAtom, timetableAtom } from '@/atoms/timetable';
-import { OpenNewsModal } from '@/components/OpenNewsModal';
+import { OpenNewsScreen } from '@/components/OpenNewsScreen';
 import { Timetable } from '@/components/Timetable/Timetable';
 import { PayloadSchema } from '@/proto/gen/migration_pb';
 import { base32 } from '@/totp/base32';
@@ -81,7 +81,7 @@ export default function TimetableScreen() {
         </View>
       )}
       <Suspense>
-        <OpenNewsModal />
+        <OpenNewsScreen />
       </Suspense>
     </>
   );

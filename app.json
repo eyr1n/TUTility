@@ -2,7 +2,7 @@
   "expo": {
     "name": "TUTility",
     "slug": "TUTility",
-    "version": "3.0.6",
+    "version": "3.1.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "tutility",

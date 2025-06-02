@@ -62,6 +62,7 @@ export function Timetable({ timetable }: TimetableProps) {
               {row.map((subject, j) =>
                 subject == null ||
                 subject.status === 'canceled' ||
+                subject.status === 'lot_rejected' ||
                 (hideResearch && subject.name.includes('卒業研究')) ||
                 (hideInternship && subject.name.includes('実務訓練')) ? (
                   <SubjectTileEmpty key={`${i},${j}`} />
