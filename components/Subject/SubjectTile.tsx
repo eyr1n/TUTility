@@ -1,5 +1,6 @@
 import { Palette } from '@/constants/Palette';
 import { useScale } from '@/hooks/useScale';
+import { router } from 'expo-router';
 import { openBrowserAsync } from 'expo-web-browser';
 import { useState } from 'react';
 import { View } from 'react-native';
@@ -14,16 +15,33 @@ import { Subject } from 'timetable-scraper';
 import { SubjectTileBase } from './SubjectTileBase';
 
 interface SubjectTileProps {
+  period: number;
   subject: Subject;
 }
 
-export function SubjectTile({ subject }: SubjectTileProps) {
+function buildAttendanceUrl(
+  year: number,
+  period: number,
+  subject: Subject
+): string {
+  const base = 'https://kyomu.office.tut.ac.jp/portal/StudentApp/Attendance/AttendanceEntry.aspx';
+  const params = new URLSearchParams({
+    lct_year: String(year),
+    lct_cd: subject.id,
+    period: String(period),
+  });
+  return `${base}?${params.toString()}`;
+}
+
+export function SubjectTile({ period, subject }: SubjectTileProps) {
   const scale = useScale();
 
   const [showDetail, setShowDetail] = useState(false);
 
   const { backgroundColor, borderColor } =
     Palette[paletteIndexFromSubjectId(subject.id)];
+
+  const attendanceUrl = buildAttendanceUrl(2025, period + 1, subject);
 
   return (
     <>
@@ -93,6 +111,14 @@ export function SubjectTile({ subject }: SubjectTileProps) {
               }}
             >
               シラバス
+            </Button>
+            <Button
+              onPress={() => {
+                router.push(`/attendance?url=${encodeURIComponent(attendanceUrl)}`);
+                setShowDetail(false);
+              }}
+            >
+              出席登録
             </Button>
             <Button
               onPress={() => {
