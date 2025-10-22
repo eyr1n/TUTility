@@ -10,14 +10,11 @@ import { TimetableView } from '@/components/Timetable/TimetableView';
 import { useThemeColors } from '@/constants/Colors';
 import { useAlertDialog } from '@/hooks/useAlertDialog';
 import { useConfirmDialog } from '@/hooks/useConfirmDialog';
-import { Button, ContextMenu, Host, Switch } from '@expo/ui/swift-ui';
-import { HeaderButton } from '@react-navigation/elements';
 import { Stack, useRouter } from 'expo-router';
-import { SymbolView } from 'expo-symbols';
 import { useAtom, useAtomValue } from 'jotai';
 import { useResetAtom } from 'jotai/utils';
 import React, { Suspense } from 'react';
-import { Platform, View } from 'react-native';
+import { Platform } from 'react-native';
 
 export default function TimetableScreen() {
   const router = useRouter();
@@ -53,7 +50,7 @@ export default function TimetableScreen() {
           headerLargeTitle: true,
           headerTransparent: true,
           contentStyle: { backgroundColor: theme.background },
-          headerRight: () => (
+          /* headerRight: () => (
             <>
               <HeaderButton
                 onPress={() => {
@@ -127,7 +124,7 @@ export default function TimetableScreen() {
                 </ContextMenu>
               </Host>
             </>
-          ),
+          ), */
         }}
       />
       <TimetableView />

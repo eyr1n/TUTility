@@ -1,6 +1,3 @@
-import { LinkListItem } from '@/components/LinkList/LinkListItem';
-import { LinkListSection } from '@/components/LinkList/LinkListSection';
-import { Host, List } from '@expo/ui/swift-ui';
 import { Stack } from 'expo-router';
 
 export default function LinksScreen() {
@@ -13,7 +10,7 @@ export default function LinksScreen() {
           headerTransparent: true,
         }}
       />
-      <Host style={{ flex: 1 }}>
+      {/* <Host style={{ flex: 1 }}>
         <List>
           <LinkListSection title="大学公式">
             <LinkListItem
@@ -58,7 +55,7 @@ export default function LinksScreen() {
             />
           </LinkListSection>
         </List>
-      </Host>
+      </Host> */}
     </>
   );
 }
