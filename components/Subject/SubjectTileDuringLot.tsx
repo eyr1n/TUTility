@@ -1,22 +1,22 @@
+import { useThemeColors } from '@/constants/Colors';
 import { useScale } from '@/hooks/useScale';
-import { View } from 'react-native';
-import { MD3LightTheme, Text, useTheme } from 'react-native-paper';
+import { Text, View } from 'react-native';
 import { SubjectTileBase } from './SubjectTileBase';
 
 export function SubjectTileDuringLot() {
-  const theme = useTheme();
   const scale = useScale();
+  const theme = useThemeColors();
 
   return (
-    <SubjectTileBase backgroundColor={theme.colors.inverseOnSurface}>
+    <SubjectTileBase backgroundColor={theme.secondaryBackground}>
       <View style={{ flex: 1, padding: 2 }}>
         <Text
           style={{
             fontSize: 12 * scale,
             lineHeight: 1.2 * 12 * scale,
             textAlign: 'center',
-            color: MD3LightTheme.colors.onSurface,
           }}
+          allowFontScaling={false}
         >
           抽選中
         </Text>

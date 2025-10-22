@@ -1,6 +1,7 @@
+import { useThemeColors } from '@/constants/Colors';
 import { useScale } from '@/hooks/useScale';
 import { View } from 'react-native';
-import { Text, useTheme } from 'react-native-paper';
+import { ThemedText } from '../ThemedText';
 
 export const Weekday = {
   Monday: { value: 1, label: '月' },
@@ -15,7 +16,7 @@ interface TimetableWeekdayProps {
 }
 
 export function TimetableWeekday({ weekday }: TimetableWeekdayProps) {
-  const theme = useTheme();
+  const theme = useThemeColors();
   const scale = useScale();
 
   return (
@@ -32,13 +33,19 @@ export function TimetableWeekday({ weekday }: TimetableWeekdayProps) {
           paddingVertical: 2 * scale,
           ...(weekday.value === new Date().getDay() && {
             borderRadius: 100,
-            backgroundColor: theme.colors.primaryContainer,
+            backgroundColor: theme.primaryContainer,
           }),
         }}
       >
-        <Text style={{ fontSize: 13 * scale, fontWeight: 'bold' }}>
+        <ThemedText
+          style={{
+            fontSize: 13 * scale,
+            fontWeight: 'bold',
+          }}
+          allowFontScaling={false}
+        >
           {weekday.label}
-        </Text>
+        </ThemedText>
       </View>
     </View>
   );

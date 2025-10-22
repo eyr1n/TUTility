@@ -1,5 +1,5 @@
+import { Button } from '@expo/ui/swift-ui';
 import { openBrowserAsync } from 'expo-web-browser';
-import { List } from 'react-native-paper';
 
 interface LinkListItemProps {
   title: string;
@@ -8,11 +8,13 @@ interface LinkListItemProps {
 
 export function LinkListItem({ title, url }: LinkListItemProps) {
   return (
-    <List.Item
-      title={title}
+    <Button
       onPress={async () => {
         await openBrowserAsync(url);
       }}
-    />
+      color="primary"
+    >
+      {title}
+    </Button>
   );
 }

@@ -1,42 +1,29 @@
-import { AlertDialog } from '@/components/AlertDialog';
-import { ConfirmDialog } from '@/components/ConfirmDialog';
-import { ThemeProvider } from '@/components/ThemeProvider';
-import { DarkColors, LightColors } from '@/constants/Colors';
+import {
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider,
+} from '@react-navigation/native';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { Suspense } from 'react';
-import { Appbar, MD3DarkTheme, MD3LightTheme } from 'react-native-paper';
+import { useColorScheme } from 'react-native';
 
 export default function RootLayout() {
-  const materialLight = {
-    ...MD3LightTheme,
-    colors: LightColors,
-  };
-  const materialDark = {
-    ...MD3DarkTheme,
-    colors: DarkColors,
-  };
+  const colorScheme = useColorScheme();
 
   return (
-    <ThemeProvider materialLight={materialLight} materialDark={materialDark}>
+    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack
-        screenOptions={{
-          header: ({ navigation, route, options, back }) => (
-            <Appbar.Header elevated>
-              {back != null && (
-                <Appbar.BackAction onPress={() => navigation.goBack()} />
-              )}
-              <Appbar.Content title={options.title || route.name} />
-            </Appbar.Header>
-          ),
-        }}
         screenLayout={({ children }) => <Suspense>{children}</Suspense>}
+        screenOptions={{ headerBackButtonDisplayMode: 'minimal' }}
       >
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="timetableScraper"
+          options={{ title: '時間割の取得', presentation: 'modal' }}
+        />
       </Stack>
       <StatusBar style="auto" />
-      <AlertDialog />
-      <ConfirmDialog />
     </ThemeProvider>
   );
 }

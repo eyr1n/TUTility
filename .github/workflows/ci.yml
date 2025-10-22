@@ -22,9 +22,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Generate licenses.json
-        run: npm run license
-
       - name: Expo Doctor
         run: npx expo-doctor
 

@@ -1,6 +1,5 @@
 import { PropsWithChildren } from 'react';
-import { ColorValue, View } from 'react-native';
-import { TouchableRipple } from 'react-native-paper';
+import { ColorValue, TouchableOpacity, View } from 'react-native';
 
 interface SubjectBaseProps {
   backgroundColor: ColorValue;
@@ -16,7 +15,7 @@ export function SubjectTileBase({
 }: PropsWithChildren<SubjectBaseProps>) {
   return (
     <View style={{ flex: 1, aspectRatio: 3 / 4 }}>
-      <TouchableRipple
+      <TouchableOpacity
         style={{
           flex: 1,
           margin: 2,
@@ -27,9 +26,10 @@ export function SubjectTileBase({
           borderWidth: borderColor ? 1 : undefined,
         }}
         onPress={onPress}
+        disabled={onPress == null}
       >
         <View style={{ flex: 1 }}>{children}</View>
-      </TouchableRipple>
+      </TouchableOpacity>
     </View>
   );
 }

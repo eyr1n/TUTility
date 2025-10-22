@@ -1,6 +1,4 @@
-import { hideInternshipAtom, hideResearchAtom } from '@/atoms/timetable';
 import { MaxTimetableWidth } from '@/constants/TimetableWidth';
-import { useAtomValue } from 'jotai';
 import { useState } from 'react';
 import { View } from 'react-native';
 import { Subject } from 'timetable-scraper';
@@ -12,12 +10,15 @@ import { TimetableWeekday, Weekday } from './TimetableWeekday';
 
 interface TimetableProps {
   timetable: (Subject | null)[][];
+  hideResearch: boolean;
+  hideInternship: boolean;
 }
 
-export function Timetable({ timetable }: TimetableProps) {
-  const hideResearch = useAtomValue(hideResearchAtom);
-  const hideInternship = useAtomValue(hideInternshipAtom);
-
+export function Timetable({
+  timetable,
+  hideResearch,
+  hideInternship,
+}: TimetableProps) {
   const [headerHeight, setHeaderHeight] = useState<number>();
 
   return (

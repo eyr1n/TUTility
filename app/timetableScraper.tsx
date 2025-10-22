@@ -1,11 +1,11 @@
 import { timetableAtom } from '@/atoms/timetable';
 import { TimetableScraperWebView } from '@/components/TimetableScraperWebView';
 import { useAlertDialog } from '@/hooks/useAlertDialog';
-import { Stack, useRouter } from 'expo-router';
+import { Button, CircularProgress, Host, VStack } from '@expo/ui/swift-ui';
+import { useRouter } from 'expo-router';
 import { useSetAtom } from 'jotai';
 import { Suspense, useState } from 'react';
 import { View } from 'react-native';
-import { ActivityIndicator, Button, Dialog, Portal } from 'react-native-paper';
 
 export default function TimetableScraperScreen() {
   return (
@@ -25,45 +25,62 @@ function TimetableScraperScreenImpl() {
 
   return (
     <>
-      <Stack.Screen options={{ title: '時間割の取得' }} />
-      <View style={{ flex: 1 }}>
-        <TimetableScraperWebView
-          onLoad={() => {
-            setLoading(true);
+      <View style={{ flex: 1, position: 'relative' }}>
+        <View
+          style={{
+            flex: 1,
+            opacity: loading ? 0 : 1,
+            pointerEvents: loading ? 'none' : undefined,
           }}
-          onSuccess={async (timetable) => {
-            if (loading) {
-              setLoading(false);
-              setTimetable(timetable);
-              await alert('時間割の取得が完了しました');
-              router.dismiss();
-            }
-          }}
-          onFail={async () => {
-            if (loading) {
-              setLoading(false);
-              await alert('時間割の取得時にエラーが発生しました');
-              router.dismiss();
-            }
-          }}
-        />
-      </View>
-
-      <Portal>
-        <Dialog visible={loading}>
-          <Dialog.Content style={{ gap: 8 }}>
-            <ActivityIndicator size="large" />
-            <Button
-              onPress={() => {
-                setLoading(false);
+        >
+          <TimetableScraperWebView
+            onLoad={() => {
+              setLoading(true);
+            }}
+            onSuccess={async (timetable) => {
+              if (loading) {
+                setTimetable(timetable);
+                await alert('時間割の取得が完了しました');
                 router.dismiss();
-              }}
-            >
-              キャンセル
-            </Button>
-          </Dialog.Content>
-        </Dialog>
-      </Portal>
+                setLoading(false);
+              }
+            }}
+            onFail={async () => {
+              if (loading) {
+                await alert('時間割の取得時にエラーが発生しました');
+                router.dismiss();
+                setLoading(false);
+              }
+            }}
+          />
+        </View>
+        {loading ? (
+          <Host
+            style={{
+              position: 'absolute',
+              top: 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <VStack spacing={16}>
+              <CircularProgress />
+              <Button
+                variant="bordered"
+                onPress={() => {
+                  router.dismiss();
+                  setLoading(false);
+                }}
+              >
+                キャンセル
+              </Button>
+            </VStack>
+          </Host>
+        ) : null}
+      </View>
     </>
   );
 }

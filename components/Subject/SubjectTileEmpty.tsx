@@ -1,8 +1,7 @@
-import { useTheme } from 'react-native-paper';
+import { useThemeColors } from '@/constants/Colors';
 import { SubjectTileBase } from './SubjectTileBase';
 
 export function SubjectTileEmpty() {
-  const theme = useTheme();
-
-  return <SubjectTileBase backgroundColor={theme.colors.inverseOnSurface} />;
+  const theme = useThemeColors();
+  return <SubjectTileBase backgroundColor={theme.secondaryBackground} />;
 }

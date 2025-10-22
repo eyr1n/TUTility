@@ -1,17 +1,30 @@
-import { confirmDialogAtom } from '@/atoms/dialog';
-import { useSetAtom } from 'jotai';
-import { useCallback } from 'react';
+import { Alert } from 'react-native';
 
 export function useConfirmDialog() {
-  const setConfirmDialog = useSetAtom(confirmDialogAtom);
 
-  const confirm = useCallback(
-    (message: string) =>
-      new Promise<boolean>((resolve) => {
-        setConfirmDialog({ message, resolve });
-      }),
-    [setConfirmDialog],
-  );
+  function confirm(message: string) {
+    return new Promise<boolean>((resolve) => {
+      Alert.alert(
+        '',
+        message,
+        [
+          {
+            text: 'OK',
+            onPress: () => resolve(true),
+            style: 'destructive',
+          },
+          {
+            text: 'キャンセル',
+            onPress: () => resolve(false),
+            style: 'cancel',
+          },
+        ],
+        {
+          onDismiss: () => resolve(false),
+        },
+      );
+    });
+  }
 
   return confirm;
 }

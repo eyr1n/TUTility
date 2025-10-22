@@ -1,17 +1,35 @@
 import { Palette } from '@/constants/Palette';
 import { useScale } from '@/hooks/useScale';
 import { openBrowserAsync } from 'expo-web-browser';
-import { useState } from 'react';
-import { View } from 'react-native';
-import {
-  Button,
-  Dialog,
-  MD3LightTheme,
-  Portal,
-  Text,
-} from 'react-native-paper';
+import { Alert, Text, View } from 'react-native';
 import { Subject } from 'timetable-scraper';
 import { SubjectTileBase } from './SubjectTileBase';
+
+function showDetail(title: string, message: string, url: string) {
+  return new Promise<void>((resolve) => {
+    Alert.alert(
+      title,
+      message,
+      [
+        {
+          text: 'シラバス',
+          onPress: async () => {
+            await openBrowserAsync(url);
+          },
+          style: 'default',
+        },
+        {
+          text: '閉じる',
+          onPress: () => resolve(),
+          style: 'default',
+        },
+      ],
+      {
+        onDismiss: () => resolve(),
+      },
+    );
+  });
+}
 
 interface SubjectTileProps {
   subject: Subject;
@@ -19,8 +37,6 @@ interface SubjectTileProps {
 
 export function SubjectTile({ subject }: SubjectTileProps) {
   const scale = useScale();
-
-  const [showDetail, setShowDetail] = useState(false);
 
   const { backgroundColor, borderColor } =
     Palette[paletteIndexFromSubjectId(subject.id)];
@@ -31,7 +47,16 @@ export function SubjectTile({ subject }: SubjectTileProps) {
         backgroundColor={backgroundColor}
         borderColor={borderColor}
         onPress={() => {
-          setShowDetail(true);
+          showDetail(
+            subject.name,
+            `${subject.term} ${subject.required}
+${subject.units && '単位数: ' + subject.units}
+${subject.area && '区分: ' + subject.area}
+${subject.staff && '担当教員: ' + subject.staff}
+${subject.room && '教室: ' + subject.room}`,
+            subject.url,
+          );
+          //setShowDetail(true);
         }}
       >
         <View style={{ flex: 1, padding: 2 }}>
@@ -40,9 +65,9 @@ export function SubjectTile({ subject }: SubjectTileProps) {
               fontSize: 12 * scale,
               lineHeight: 1.2 * 12 * scale,
               textAlign: 'center',
-              color: MD3LightTheme.colors.onSurface,
             }}
             numberOfLines={3}
+            allowFontScaling={false}
           >
             {subject.name}
           </Text>
@@ -59,9 +84,9 @@ export function SubjectTile({ subject }: SubjectTileProps) {
               style={{
                 fontSize: 11 * scale,
                 textAlign: 'center',
-                color: MD3LightTheme.colors.onSurface,
               }}
               numberOfLines={1}
+              allowFontScaling={false}
             >
               {subject.room}
             </Text>
@@ -69,7 +94,7 @@ export function SubjectTile({ subject }: SubjectTileProps) {
         )}
       </SubjectTileBase>
 
-      <Portal>
+      {/* <Portal>
         <Dialog
           visible={showDetail}
           onDismiss={() => {
@@ -103,7 +128,7 @@ export function SubjectTile({ subject }: SubjectTileProps) {
             </Button>
           </Dialog.Actions>
         </Dialog>
-      </Portal>
+      </Portal> */}
     </>
   );
 }

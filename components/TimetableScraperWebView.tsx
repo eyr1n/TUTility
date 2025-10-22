@@ -88,9 +88,7 @@ async function mergeTimetable(timetable: Timetable): Promise<Timetable> {
   const syllabusJson = await fetch(
     `https://syllabus.opentut.gr.jp/ja/${timetable.year}/all.min.json`,
   );
-  const syllabus = await z
-    .record(Subject.partial())
-    .parse(await syllabusJson.json());
+  const syllabus = z.record(Subject.partial()).parse(await syllabusJson.json());
 
   const merge = (timetable: (Subject | null)[][]) =>
     timetable.map((row) =>

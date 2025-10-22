@@ -1,17 +1,24 @@
-import { alertDialogAtom } from '@/atoms/dialog';
-import { useSetAtom } from 'jotai';
-import { useCallback } from 'react';
+import { Alert } from 'react-native';
 
 export function useAlertDialog() {
-  const setAlertDialog = useSetAtom(alertDialogAtom);
-
-  const alert = useCallback(
-    (message: string) =>
-      new Promise<void>((resolve) => {
-        setAlertDialog({ message, resolve });
-      }),
-    [setAlertDialog],
-  );
+  function alert(message: string) {
+    return new Promise<void>((resolve) => {
+      Alert.alert(
+        '',
+        message,
+        [
+          {
+            text: '閉じる',
+            onPress: () => resolve(),
+            style: 'default',
+          },
+        ],
+        {
+          onDismiss: () => resolve(),
+        },
+      );
+    });
+  }
 
   return alert;
 }
