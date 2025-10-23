@@ -9,6 +9,7 @@ import { Timetable } from '@/components/Timetable/Timetable';
 import { useAtomValue } from 'jotai';
 import React from 'react';
 import { ScrollView, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export function TimetableView() {
   const timetable = useAtomValue(timetableAtom);
@@ -16,15 +17,29 @@ export function TimetableView() {
   const hideResearch = useAtomValue(hideResearchAtom);
   const hideInternship = useAtomValue(hideInternshipAtom);
 
+const { bottom } = useSafeAreaInsets();
+console.log(bottom)
+
+
   const firstOrSecond =
     term === 'firstHalf' ? timetable?.firstHalf : timetable?.secondHalf;
 
   return firstOrSecond ? (
     <ScrollView
       style={{ flex: 1 }}
-      contentContainerStyle={{ alignItems: 'center', padding: 8 }}
+      contentContainerStyle={{ alignItems: 'center', padding: 8}}
       contentInsetAdjustmentBehavior="automatic"
     >
+      <Timetable
+        timetable={firstOrSecond}
+        hideResearch={hideResearch}
+        hideInternship={hideInternship}
+      />
+      <Timetable
+        timetable={firstOrSecond}
+        hideResearch={hideResearch}
+        hideInternship={hideInternship}
+      />
       <Timetable
         timetable={firstOrSecond}
         hideResearch={hideResearch}
