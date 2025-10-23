@@ -1,21 +1,42 @@
-import { PlatformColor, useColorScheme } from 'react-native';
+import {
+  OpaqueColorValue,
+  Platform,
+  PlatformColor,
+  useColorScheme,
+} from 'react-native';
 
 export const ThemeColors = {
   light: {
-    tut: 'rgb(186, 26, 32)',
     primary: 'rgb(186, 26, 32)',
     primaryContainer: 'rgb(255, 218, 214)',
-    text: PlatformColor('label'),
-    background: PlatformColor('systemBackground'),
-    secondaryBackground: PlatformColor('secondarySystemBackground'),
+    text: Platform.select({
+      ios: PlatformColor('label'),
+      android: PlatformColor('?attr:colorForeground'),
+    }),
+    background: Platform.select({
+      ios: PlatformColor('systemBackground'),
+      android: 'rgb(255, 251, 255)',
+    }),
+    secondaryBackground: Platform.select<OpaqueColorValue | string>({
+      ios: PlatformColor('secondarySystemBackground'),
+      android: 'rgb(251, 238, 236)',
+    }),
   },
   dark: {
-    tut: 'rgb(186, 26, 32)',
     primary: 'rgb(255, 179, 172)',
     primaryContainer: 'rgb(147, 0, 16)',
-    text: PlatformColor('label'),
-    background: PlatformColor('systemBackground'),
-    secondaryBackground: PlatformColor('secondarySystemBackground'),
+    text: Platform.select({
+      ios: PlatformColor('label'),
+      android: PlatformColor('?attr:colorForeground'),
+    }),
+    background: Platform.select({
+      ios: PlatformColor('systemBackground'),
+      android: 'rgb(32, 26, 25)',
+    }),
+    secondaryBackground: Platform.select({
+      ios: PlatformColor('secondarySystemBackground'),
+      android: 'rgb(54, 47, 46)',
+    }),
   },
 } as const;
 

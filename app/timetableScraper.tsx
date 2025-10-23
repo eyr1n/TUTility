@@ -1,7 +1,6 @@
 import { timetableAtom } from '@/atoms/timetable';
 import { TimetableScraperWebView } from '@/components/TimetableScraperWebView';
 import { useAlertDialog } from '@/hooks/useAlertDialog';
-import { Button, CircularProgress, Host, VStack } from '@expo/ui/swift-ui';
 import { useRouter } from 'expo-router';
 import { useSetAtom } from 'jotai';
 import { Suspense, useState } from 'react';
@@ -54,8 +53,9 @@ function TimetableScraperScreenImpl() {
             }}
           />
         </View>
-        {loading ? (
-          <Host
+        {loading
+          ? null
+          : /* <Host
             style={{
               position: 'absolute',
               top: 0,
@@ -78,8 +78,8 @@ function TimetableScraperScreenImpl() {
                 キャンセル
               </Button>
             </VStack>
-          </Host>
-        ) : null}
+          </Host> */
+            null}
       </View>
     </>
   );

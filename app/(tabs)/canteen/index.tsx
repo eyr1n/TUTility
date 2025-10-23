@@ -12,17 +12,14 @@ export default function CanteenScreen() {
       <Stack.Screen
         options={{
           title: '食堂メニュー',
-          headerLargeTitle: true,
-          headerTransparent: true,
-          contentStyle: { backgroundColor: theme.background },
         }}
       />
-        <WebView
-          indicatorStyle={colorScheme === 'dark' ? 'white' : 'default'}
-          style={{ flex: 1, backgroundColor: 'transparent' }}
-          source={{ uri: 'https://canteen.opentut.gr.jp/inapp' }}
-          contentInsetAdjustmentBehavior="automatic"
-        />
+      <WebView
+        indicatorStyle={colorScheme === 'dark' ? 'white' : 'default'}
+        style={{ flex: 1, backgroundColor: 'transparent' }}
+        source={{ uri: 'https://canteen.opentut.gr.jp/inapp' }}
+        contentInsetAdjustmentBehavior="automatic"
+      />
     </>
   );
 }

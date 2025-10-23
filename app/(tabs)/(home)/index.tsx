@@ -10,11 +10,15 @@ import { TimetableView } from '@/components/Timetable/TimetableView';
 import { useThemeColors } from '@/constants/Colors';
 import { useAlertDialog } from '@/hooks/useAlertDialog';
 import { useConfirmDialog } from '@/hooks/useConfirmDialog';
+import { MaterialIcons } from '@expo/vector-icons';
+import PopupMenuAndroid, {
+  PopupMenuAndroidInstance,
+} from '@react-native/popup-menu-android';
+import { HeaderButton } from '@react-navigation/elements';
 import { Stack, useRouter } from 'expo-router';
 import { useAtom, useAtomValue } from 'jotai';
 import { useResetAtom } from 'jotai/utils';
-import React, { Suspense } from 'react';
-import { Platform } from 'react-native';
+import { Suspense, useRef } from 'react';
 
 export default function TimetableScreen() {
   const router = useRouter();
@@ -35,10 +39,7 @@ export default function TimetableScreen() {
 
   const theme = useThemeColors();
 
-  const majorVersionIOS =
-    typeof Platform.Version === 'string'
-      ? parseInt(Platform.Version, 10)
-      : Platform.Version;
+  const popupRef = useRef<PopupMenuAndroidInstance>(null);
 
   return (
     <>
@@ -47,84 +48,70 @@ export default function TimetableScreen() {
           title: firstOrSecond
             ? `${termLabel}${term === 'firstHalf' ? '1' : '2'}`
             : '時間割',
-          headerLargeTitle: true,
-          headerTransparent: true,
           contentStyle: { backgroundColor: theme.background },
-          /* headerRight: () => (
+          headerRight: () => (
             <>
               <HeaderButton
                 onPress={() => {
                   router.push('/timetableScraper');
                 }}
               >
-                <SymbolView
-                  name="arrow.down"
-                  tintColor={majorVersionIOS >= 26 ? theme.text : undefined}
-                />
+                <MaterialIcons name="download" size={24} color={theme.text} />
               </HeaderButton>
 
-              <Host matchContents>
-                <ContextMenu activationMethod="singlePress">
-                  <ContextMenu.Items>
-                    <Button
-                      onPress={() => {
+              <HeaderButton
+                onPress={() => {
+                  popupRef.current?.show();
+                }}
+              >
+                <PopupMenuAndroid
+                  menuItems={[
+                    `${termLabel}${term === 'firstHalf' ? '2' : '1'}に切り替え`,
+                    `卒業研究を${hideResearch ? '表示' : '非表示'}`,
+                    `実務訓練を${hideInternship ? '表示' : '非表示'}`,
+                    `お知らせを${doNotShowNews ? '表示' : '非表示'}`,
+                    '時間割をリセット',
+                    'ライセンス',
+                  ]}
+                  onSelectionChange={async (i) => {
+                    switch (i) {
+                      case 0:
                         setTerm(
                           term === 'firstHalf' ? 'secondHalf' : 'firstHalf',
                         );
-                      }}
-                    >
-                      {termLabel}
-                      {term === 'firstHalf' ? '2' : '1'}に切り替え
-                    </Button>
-                    <Switch
-                      value={hideResearch}
-                      onValueChange={setHideResearch}
-                      label="卒業研究を非表示"
-                    />
-                    <Switch
-                      value={hideInternship}
-                      onValueChange={setHideInternship}
-                      label="実務訓練を非表示"
-                    />
-                    <Switch
-                      value={doNotShowNews}
-                      onValueChange={setDoNotShowNews}
-                      label="お知らせを非表示"
-                    />
-                    <Button
-                      onPress={async () => {
+                        break;
+                      case 1:
+                        setHideResearch(!hideResearch);
+                        break;
+                      case 2:
+                        setHideInternship(!hideInternship);
+                        break;
+                      case 3:
+                        setDoNotShowNews(!doNotShowNews);
+                        break;
+                      case 4:
                         if (await confirm('時間割をリセットしますか?')) {
                           await resetTimetable();
                           await alert('時間割のリセットが完了しました');
                         }
-                      }}
-                    >
-                      時間割をリセット
-                    </Button>
-                    <Button
-                      onPress={() => {
+                        break;
+                      case 5:
                         router.push('/licenses');
-                      }}
-                    >
-                      ライセンス
-                    </Button>
-                  </ContextMenu.Items>
-                  <ContextMenu.Trigger>
-                    <View>
-                      <HeaderButton>
-                        <SymbolView
-                          name="ellipsis"
-                          tintColor={
-                            majorVersionIOS >= 26 ? theme.text : undefined
-                          }
-                        />
-                      </HeaderButton>
-                    </View>
-                  </ContextMenu.Trigger>
-                </ContextMenu>
-              </Host>
+                        break;
+                    }
+                  }}
+                  onDismiss={() => {}}
+                  instanceRef={popupRef}
+                >
+                  <MaterialIcons
+                    name="more-horiz"
+                    size={24}
+                    color={theme.text}
+                  />
+                </PopupMenuAndroid>
+              </HeaderButton>
             </>
-          ), */
+          ),
         }}
       />
       <TimetableView />
