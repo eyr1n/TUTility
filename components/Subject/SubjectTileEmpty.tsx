@@ -1,7 +1,7 @@
-import { useThemeColors } from '@/constants/Colors';
+import { useTheme } from '@/hooks/useTheme';
 import { SubjectTileBase } from './SubjectTileBase';
 
 export function SubjectTileEmpty() {
-  const theme = useThemeColors();
+  const theme = useTheme();
   return <SubjectTileBase backgroundColor={theme.secondaryBackground} />;
 }

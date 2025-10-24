@@ -6,8 +6,6 @@ export default function LinksScreen() {
       <Stack.Screen
         options={{
           title: 'リンク',
-          headerLargeTitle: true,
-          headerTransparent: true,
         }}
       />
       {/* <Host style={{ flex: 1 }}>

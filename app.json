@@ -2,7 +2,7 @@
   "expo": {
     "name": "TUTility",
     "slug": "TUTility",
-    "version": "3.1.2",
+    "version": "3.2.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "tutility",
@@ -29,8 +29,7 @@
     "plugins": [
       "expo-router",
       "expo-secure-store",
-      "expo-font",
-      "react-native-bottom-tabs"
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true,

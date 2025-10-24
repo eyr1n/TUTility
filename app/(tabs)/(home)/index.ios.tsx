@@ -7,9 +7,9 @@ import {
 } from '@/atoms/timetable';
 import { OpenNewsScreen } from '@/components/OpenNewsScreen';
 import { TimetableView } from '@/components/Timetable/TimetableView';
-import { useThemeColors } from '@/constants/Colors';
 import { useAlertDialog } from '@/hooks/useAlertDialog';
 import { useConfirmDialog } from '@/hooks/useConfirmDialog';
+import { useTheme } from '@/hooks/useTheme';
 import { Button, ContextMenu, Host, Switch } from '@expo/ui/swift-ui';
 import { HeaderButton } from '@react-navigation/elements';
 import { Stack, useRouter } from 'expo-router';
@@ -21,6 +21,7 @@ import { Platform, View } from 'react-native';
 
 export default function TimetableScreen() {
   const router = useRouter();
+    const theme = useTheme();
 
   const timetable = useAtomValue(timetableAtom);
   const [term, setTerm] = useAtom(termAtom);
@@ -36,7 +37,7 @@ export default function TimetableScreen() {
   const alert = useAlertDialog();
   const confirm = useConfirmDialog();
 
-  const theme = useThemeColors();
+
 
   const majorVersionIOS =
     typeof Platform.Version === 'string'
@@ -62,7 +63,7 @@ export default function TimetableScreen() {
               >
                 <SymbolView
                   name="arrow.down"
-                  tintColor={majorVersionIOS >= 26 ? theme.text : undefined}
+                  tintColor={majorVersionIOS >= 26 ? theme.foreground : undefined}
                 />
               </HeaderButton>
 
@@ -118,7 +119,7 @@ export default function TimetableScreen() {
                         <SymbolView
                           name="ellipsis"
                           tintColor={
-                            majorVersionIOS >= 26 ? theme.text : undefined
+                            majorVersionIOS >= 26 ? theme.foreground : undefined
                           }
                         />
                       </HeaderButton>

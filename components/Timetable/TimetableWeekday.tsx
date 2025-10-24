@@ -1,5 +1,5 @@
-import { useThemeColors } from '@/constants/Colors';
 import { useScale } from '@/hooks/useScale';
+import { useTheme } from '@/hooks/useTheme';
 import { View } from 'react-native';
 import { ThemedText } from '../ThemedText';
 
@@ -16,7 +16,7 @@ interface TimetableWeekdayProps {
 }
 
 export function TimetableWeekday({ weekday }: TimetableWeekdayProps) {
-  const theme = useThemeColors();
+  const theme = useTheme();
   const scale = useScale();
 
   return (
@@ -33,7 +33,7 @@ export function TimetableWeekday({ weekday }: TimetableWeekdayProps) {
           paddingVertical: 2 * scale,
           ...(weekday.value === new Date().getDay() && {
             borderRadius: 100,
-            backgroundColor: theme.primaryContainer,
+            backgroundColor: theme.secondary,
           }),
         }}
       >

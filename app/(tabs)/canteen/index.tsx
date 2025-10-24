@@ -1,10 +1,8 @@
-import { useThemeColors } from '@/constants/Colors';
 import { Stack } from 'expo-router';
 import { useColorScheme } from 'react-native';
 import { WebView } from 'react-native-webview';
 
 export default function CanteenScreen() {
-  const theme = useThemeColors();
   const colorScheme = useColorScheme();
 
   return (

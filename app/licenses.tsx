@@ -1,6 +1,6 @@
 import licenses from '@/assets/licenses.json';
 import { ThemedText } from '@/components/ThemedText';
-import { useThemeColors } from '@/constants/Colors';
+import { useTheme } from '@/hooks/useTheme';
 import { Stack } from 'expo-router';
 import { openBrowserAsync } from 'expo-web-browser';
 import { FlatList, TouchableOpacity, useColorScheme, View } from 'react-native';
@@ -12,7 +12,7 @@ function Card({
   children: React.ReactNode;
   onPress?: () => void;
 }) {
-  const theme = useThemeColors();
+  const theme = useTheme();
   const colorScheme = useColorScheme();
 
   return (
@@ -21,11 +21,6 @@ function Card({
         style={{
           borderRadius: 16,
           padding: 16,
-          //shadowColor: '#000',
-          //shadowOffset: { width: 0, height: 2 },
-          //shadowOpacity: 0.1,
-          //shadowRadius: 4,
-          //elevation: 2,
           gap: 8,
           backgroundColor:
             colorScheme === 'dark'

@@ -1,11 +1,12 @@
-import { useThemeColors } from '@/constants/Colors';
 import { useScale } from '@/hooks/useScale';
+import { useTheme } from '@/hooks/useTheme';
 import { Text, View } from 'react-native';
 import { SubjectTileBase } from './SubjectTileBase';
 
 export function SubjectTileDuringLot() {
+    const theme = useTheme();
   const scale = useScale();
-  const theme = useThemeColors();
+
 
   return (
     <SubjectTileBase backgroundColor={theme.secondaryBackground}>
