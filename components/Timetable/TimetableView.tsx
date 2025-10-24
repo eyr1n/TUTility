@@ -22,7 +22,7 @@ export function TimetableView() {
   return firstOrSecond ? (
     <ScrollView
       style={{ flex: 1 }}
-      contentContainerStyle={{ alignItems: 'center', padding: 8}}
+      contentContainerStyle={{ alignItems: 'center', padding: 8 }}
       contentInsetAdjustmentBehavior="automatic"
     >
       <Timetable

@@ -21,7 +21,7 @@ import { Platform, View } from 'react-native';
 
 export default function TimetableScreen() {
   const router = useRouter();
-    const theme = useTheme();
+  const theme = useTheme();
 
   const timetable = useAtomValue(timetableAtom);
   const [term, setTerm] = useAtom(termAtom);
@@ -36,8 +36,6 @@ export default function TimetableScreen() {
 
   const alert = useAlertDialog();
   const confirm = useConfirmDialog();
-
-
 
   const majorVersionIOS =
     typeof Platform.Version === 'string'
@@ -63,7 +61,9 @@ export default function TimetableScreen() {
               >
                 <SymbolView
                   name="arrow.down"
-                  tintColor={majorVersionIOS >= 26 ? theme.foreground : undefined}
+                  tintColor={
+                    majorVersionIOS >= 26 ? theme.foreground : undefined
+                  }
                 />
               </HeaderButton>
 

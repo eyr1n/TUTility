@@ -10,17 +10,19 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: theme.primary
+        tabBarActiveTintColor: theme.primary,
       }}
-      
-      
     >
       <Tabs.Screen
         name="(home)"
         options={{
           tabBarLabel: '時間割',
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="calendar-view-month" color={color} size={size} />
+            <MaterialIcons
+              name="calendar-view-month"
+              color={color}
+              size={size}
+            />
           ),
         }}
       />

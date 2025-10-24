@@ -22,7 +22,7 @@ import { Suspense, useRef } from 'react';
 
 export default function TimetableScreen() {
   const router = useRouter();
-  const theme = useTheme()
+  const theme = useTheme();
 
   const timetable = useAtomValue(timetableAtom);
   const [term, setTerm] = useAtom(termAtom);
@@ -37,7 +37,6 @@ export default function TimetableScreen() {
 
   const alert = useAlertDialog();
   const confirm = useConfirmDialog();
-
 
   const popupRef = useRef<PopupMenuAndroidInstance>(null);
 
@@ -56,7 +55,11 @@ export default function TimetableScreen() {
                   router.push('/timetableScraper');
                 }}
               >
-                <MaterialIcons name="download" size={24} color={theme.foreground} />
+                <MaterialIcons
+                  name="download"
+                  size={24}
+                  color={theme.foreground}
+                />
               </HeaderButton>
 
               <HeaderButton

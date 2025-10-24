@@ -4,9 +4,8 @@ import { Text, View } from 'react-native';
 import { SubjectTileBase } from './SubjectTileBase';
 
 export function SubjectTileDuringLot() {
-    const theme = useTheme();
+  const theme = useTheme();
   const scale = useScale();
-
 
   return (
     <SubjectTileBase backgroundColor={theme.secondaryBackground}>
