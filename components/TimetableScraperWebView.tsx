@@ -50,7 +50,7 @@ export function TimetableScraperWebView({
   ) {
     window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'loading' }));
     (
-      document.querySelector('#ctl00_bhHeader_ctl350_lnk') ??
+      document.querySelector('#ctl00_bhHeader_ctl355_lnk') ??
       document.querySelector('#ctl00_bhHeader_ctl33_lnk')
     ).click();
     return;
